@@ -15,19 +15,11 @@ def main():
     print('all_decisions')
     print(all_decisions)
 
-    dDependencies = DecisionDependencies(event_log, all_decisions)
+    dDependencies = DecisionDependencies(event_log, cfdMiner.net, all_decisions)
 
     dependencies = dDependencies.find_dependencies()
     print('dependencies.find')
     print(dependencies)
-    
-    # print('cfdMiner.relations')
-    # print(cfdMiner.relations)
-    # print('ddMiner.rule_base_data_decisions')
-    # print(ddMiner.rule_base_data_decisions)
-    # print('ddMiner.functional_data_decisions')
-    # print(ddMiner.functional_data_decisions)
-
 
 if __name__ == "__main__":
     main()
