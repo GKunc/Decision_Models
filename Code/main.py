@@ -7,7 +7,7 @@ from xes_to_dataframe import XesToDataFrameConverter
 
 def main():
     file_name = 'Log_Booleans'
-    file_name = 'Log_Numbers'
+    # file_name = 'Log_Numbers'
     # file_name = 'Log_From_Example'
     csvToXesConverter = CsvToXesConverter(f'./Logs/{file_name}.csv')
     csvToXesConverter.convert()

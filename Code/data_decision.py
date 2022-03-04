@@ -8,7 +8,6 @@ import itertools
 
 FUNCTIONAL_DECISION_OPERATORS = ['+', '-', '*', '/']
 
-# Change so that it returns data decision with influencing attributes
 class DataDecisionMiner:
   def __init__(self, net, log, attributes):
     self.net = net
@@ -38,12 +37,12 @@ class DataDecisionMiner:
       if attribute != None:
         functional_data_decisions.append((attribute, possible_attributes))
 
-    return rule_base_data_decisions, self.filter_duplicated_functional_decisions(functional_data_decisions)
+    return self.filter_duplicated_decisions(rule_base_data_decisions), self.filter_duplicated_decisions(functional_data_decisions)
 
-  def filter_duplicated_functional_decisions(self, functional_data_decisions):
+  def filter_duplicated_decisions(self, data_decisions):
     result = []
     result_set = []
-    for (decision, attributes) in functional_data_decisions:
+    for (decision, attributes) in data_decisions:
       element_to_check = []
       element_to_check.append(decision)
       element_to_check.extend(attributes)
@@ -176,8 +175,7 @@ class DataDecisionMiner:
       X = decision_table.drop(['label'], axis=1)
       decision_tree = DecisionTreeClassifier(criterion="entropy", min_samples_split=3, random_state=99)
       model = decision_tree.fit(X, y)
-      predictions_test = model.predict(X)
-      self.visualize_tree(decision_tree, X.columns) # not really necassary
+      # self.visualize_tree(decision_tree, X.columns) # not really necassary
       return model
 
   def visualize_tree(self, tree, feature_names):
