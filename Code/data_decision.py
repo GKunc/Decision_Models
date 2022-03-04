@@ -15,6 +15,7 @@ class DataDecisionMiner:
     self.log = log.fillna('')
     self.attributes = attributes
     self.rule_base_data_decisions, self.functional_data_decisions = self.find_data_decisions()
+    self.data_nodes = []
 
   def find_data_decisions(self):
     rule_base_data_decisions = []
@@ -22,6 +23,7 @@ class DataDecisionMiner:
     for attribute in self.attributes:
       possible_attributes = self.possible_influencing_attributes(attribute)
       decision_table = self.create_decision_table_for_attribute(attribute, possible_attributes)
+
       model = self.create_decision_tree(decision_table)
       real_labels = decision_table["label"]
       data = decision_table.drop(['label'], axis=1)
@@ -36,7 +38,21 @@ class DataDecisionMiner:
       if attribute != None:
         functional_data_decisions.append((attribute, possible_attributes))
 
-    return rule_base_data_decisions, functional_data_decisions
+    return rule_base_data_decisions, self.filter_duplicated_functional_decisions(functional_data_decisions)
+
+  def filter_duplicated_functional_decisions(self, functional_data_decisions):
+    result = []
+    result_set = []
+    for (decision, attributes) in functional_data_decisions:
+      element_to_check = []
+      element_to_check.append(decision)
+      element_to_check.extend(attributes)
+      element_to_check.sort()
+      if element_to_check not in result_set:
+        result.append((decision, attributes))
+        result_set.append(element_to_check)
+
+    return result
 
   def check_if_functional_data_decision(self, attribute):
     possible_attributes = self.possible_influencing_attributes(attribute)
@@ -131,7 +147,8 @@ class DataDecisionMiner:
         value_1 = decision_table.iloc[index][combination[0]]
         value_2 = decision_table.iloc[index][combination[1]]
         expected_result = decision_table.iloc[index]['label']
-
+        if value_2 == 0:
+          return (None, None)
         if value_1 / value_2 != expected_result:
           is_function = False
       if is_function == True:    
@@ -159,6 +176,7 @@ class DataDecisionMiner:
       X = decision_table.drop(['label'], axis=1)
       decision_tree = DecisionTreeClassifier(criterion="entropy", min_samples_split=3, random_state=99)
       model = decision_tree.fit(X, y)
+      predictions_test = model.predict(X)
       self.visualize_tree(decision_tree, X.columns) # not really necassary
       return model
 
@@ -235,8 +253,9 @@ class DataDecisionMiner:
         index += 1
       row.append(label)
       data.append(row)
-
-    return pd.DataFrame(data, columns = labels)
+    table = pd.DataFrame(data, columns = labels)
+    table = table.replace({'True': 1, 'False': 0})
+    return table
 
   def get_column_names(self, log, attribute):
     columns = []

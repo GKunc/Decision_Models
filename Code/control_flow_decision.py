@@ -70,7 +70,10 @@ class ControlFlowDecisionMiner():
       row.append(label)
       data.append(row)
       index += 2
-    return pandas.DataFrame(data, columns = labels)
+      table = pandas.DataFrame(data, columns = labels)
+      table = table.replace({'True': 1, 'False': 0})
+
+    return table
   
   def find_relationships(self):
     control_flow_decisions = self.find_decision_places()
@@ -79,7 +82,7 @@ class ControlFlowDecisionMiner():
       log = self.get_event_log_for_place(place)
       decision_table = self.create_decision_table(log)
       y = decision_table["label"]
-      X = decision_table.drop(['label'], axis=1)
+      X = decision_table.drop(['label'], axis=1) # tu jest problem
       self.attributes.extend(X.columns)
       decision_tree = DecisionTreeClassifier(criterion="entropy", min_samples_split=3, random_state=99)
       decision_tree.fit(X, y)
