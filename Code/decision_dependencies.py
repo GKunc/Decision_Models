@@ -18,14 +18,15 @@ class DecisionDependencies:
         for relation in relations:
             for (decision_node, _) in self.decisions:
                 if decision_node == relation:
-                    self.dependencies.append((decision, relation))
+                    self.dependencies.append((relation, decision))
 
     def find_non_trivial_dependencies(self, decision):
         control_flow_decisions = self.find_control_flow_decisions()
         for cfd in control_flow_decisions:
             if self.is_influencing_decision(cfd, decision) and self.attributes_are_subset(cfd, decision):
                 features = self.attributes_set_differance(cfd, decision)
-                self.dependencies.append((decision, cfd))       
+                if features:
+                    self.dependencies.append((cfd, decision))       
 
     def find_control_flow_decisions(self):
         control_flow_decisions = []
@@ -40,7 +41,7 @@ class DecisionDependencies:
                 attributes_cfd = relations
             elif found_decision == decision:
                 attributes_decision = relations
-        
+
         return set(attributes_decision).difference(set(attributes_cfd))
         
     def attributes_are_subset(self, cfd, decision):
