@@ -14,7 +14,17 @@ class DataDecisionMiner:
     self.log = log.fillna('')
     self.attributes = attributes
     self.rule_base_data_decisions, self.functional_data_decisions = self.find_data_decisions()
-    self.data_nodes = []
+    self.data_nodes = self.find_data_nodes()
+
+  def find_data_nodes(self):
+    result = self.attributes
+    for (decision, _) in self.rule_base_data_decisions:
+      if decision in self.attributes:
+        result.remove(decision)
+    for (decision, _) in self.functional_data_decisions:
+      if decision in self.attributes:
+        result.remove(decision)
+    return result
 
   def find_data_decisions(self):
     rule_base_data_decisions = []

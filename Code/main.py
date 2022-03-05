@@ -17,7 +17,7 @@ def main():
     ddMiner = DataDecisionMiner(cfdMiner.net, event_log, cfdMiner.attributes)
     print("================================")
     print('ddMiner.attributes')
-    print(ddMiner.attributes)
+    print(ddMiner.data_nodes)
     all_decisions = ddMiner.rule_base_data_decisions + ddMiner.functional_data_decisions + cfdMiner.relations
    
     print("================================")
@@ -32,7 +32,7 @@ def main():
     print('control flow places')
     print(cfdMiner.relations)
 
-    dDependencies = DecisionDependencies(event_log, cfdMiner.net, all_decisions)
+    dDependencies = DecisionDependencies(event_log, cfdMiner.net, all_decisions, ddMiner.data_nodes)
 
     dependencies = dDependencies.find_dependencies()
     print("================================")
