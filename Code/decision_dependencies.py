@@ -2,13 +2,16 @@ from numpy import NaN
 import pandas as pd
 
 class DecisionDependencies:
-    def __init__(self, event_log, net, decisions, data_nodes):
-        self.log = event_log
+    def __init__(self):
+        self.dependencies = []
+    
+    def apply(self, log, net, decisions, data_nodes):
+        self.log = log
         self.net = net
         self.decisions = decisions
         self.data_nodes = data_nodes
-        self.dependencies = []
-
+        return self.find_dependencies()
+        
     def find_dependencies(self):
         for (decision, relations) in self.decisions:
             self.find_trivial_dependencies(decision, relations)
@@ -27,7 +30,6 @@ class DecisionDependencies:
         
         for node in data_nodes:
             if node in relations:
-                print(f"({node} -> {decision}")
                 self.dependencies.append((node, decision))
                     
     def find_trivial_dependencies(self, decision, relations):

@@ -8,7 +8,7 @@ class CsvToXesConverter:
     def __init__(self, file_name):
         self.file_name = file_name
     
-    def convert(self):
+    def apply(self):
         log = pandas.read_csv(self.file_name, sep=',')
         log = pm4py.format_dataframe(log, case_id='case', activity_key='activity', timestamp_key='timestamp')
         log.drop(columns=['@@index'], inplace=True)

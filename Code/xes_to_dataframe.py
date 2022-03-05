@@ -6,7 +6,7 @@ class XesToDataFrameConverter:
     def __init__(self, file_name):
         self.file_name = file_name
 
-    def convert_xes_to_dataframe(self):
+    def apply(self):
         log_xes = xes_importer.apply(self.file_name)
         event_log = log_converter.apply(log_xes, variant=log_converter.Variants.TO_DATA_FRAME)
         event_log = event_log.rename(columns={"timestamp": "time:timestamp"})

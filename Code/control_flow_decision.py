@@ -5,12 +5,17 @@ from pm4py.algo.discovery.inductive import algorithm as inductive_miner
 from sklearn.tree import _tree
 from sklearn.tree import DecisionTreeClassifier, export_graphviz
 
+from decision_model_miner import DecisionModelMiner
+
 class ControlFlowDecisionMiner():
-  def __init__(self, event_log):
+  def __init__(self):
     self.attributes = []
-    self.event_log = event_log
-    self.net, self.im, self.fm = inductive_miner.apply(event_log)
-    self.relations = self.find_relationships()
+    self.relations = []
+
+  def apply(self, log, net):
+    self.log = log
+    self.net = net
+    return (self.find_relationships(), self.attributes)
 
   def find_decision_places(self):
     control_flow_decisions = []
@@ -42,7 +47,7 @@ class ControlFlowDecisionMiner():
     output_transitions = self.get_output_transitions(place)
     output_transitions.append(input_transitions)
 
-    return self.event_log.loc[self.event_log['concept:name'].isin(output_transitions)]
+    return self.log.loc[self.log['concept:name'].isin(output_transitions)]
 
   # is number of params always the same ?
   def get_column_names(self, params):

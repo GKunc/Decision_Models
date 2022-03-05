@@ -6,22 +6,25 @@ from sklearn.tree import DecisionTreeClassifier, export_graphviz
 from pandas.api.types import is_numeric_dtype
 import itertools
 
-FUNCTIONAL_DECISION_OPERATORS = ['+', '-', '*', '/']
-
 class DataDecisionMiner:
-  def __init__(self, net, log, attributes):
+  def apply(self, net, log, attributes):
     self.net = net
     self.log = log.fillna('')
     self.attributes = attributes
-    self.rule_base_data_decisions, self.functional_data_decisions = self.find_data_decisions()
-    self.data_nodes = self.find_data_nodes()
+    rule_base_data_decisions, functional_data_decisions = self.find_data_decisions()
+    data_nodes = self.find_data_nodes(rule_base_data_decisions, functional_data_decisions)
+    return (
+     rule_base_data_decisions, 
+      functional_data_decisions, 
+      data_nodes
+    )
 
-  def find_data_nodes(self):
+  def find_data_nodes(self, rule_base_data_decisions, functional_data_decisions):
     result = self.attributes
-    for (decision, _) in self.rule_base_data_decisions:
+    for (decision, _) in rule_base_data_decisions:
       if decision in self.attributes:
         result.remove(decision)
-    for (decision, _) in self.functional_data_decisions:
+    for (decision, _) in functional_data_decisions:
       if decision in self.attributes:
         result.remove(decision)
     return result
@@ -70,97 +73,33 @@ class DataDecisionMiner:
     columns = list(decision_table.columns)
     columns.remove('label')
     
-    # should check opposite - and / or get combination
-    # maybe function is not important
-    (value_1, value_2) = self.check_addition(decision_table)
+    (value_1, value_2) = self.check_all_functions(decision_table)
     if value_1 != None:
-      print('+')
-      return (attribute, [value_1, value_2])
-
-    (value_1, value_2) = self.check_substraction(decision_table)
-    if value_1 != None:
-      print('-')
-      return (attribute, [value_1, value_2])
-
-    (value_1, value_2) = self.check_multiplication(decision_table)
-    if value_1 != None:
-      print('*')
-      return (attribute, [value_1, value_2])
-
-    (value_1, value_2) = self.check_division(decision_table)
-    if value_1 != None:
-      print('/')
       return (attribute, [value_1, value_2])
 
     return (None, None)
 
-  def check_addition(self, decision_table):
+  def check_all_functions(self, decision_table):
     columns = list(decision_table.columns)
     columns.remove('label')
     combinations = itertools.combinations(columns, 2)
     for combination in combinations:
-      is_function = True
+      is_function = [True, True, True, True]
       for index in range(decision_table.shape[1]):
         value_1 = decision_table.iloc[index][combination[0]]
         value_2 = decision_table.iloc[index][combination[1]]
         expected_result = decision_table.iloc[index]['label']
 
         if value_1 + value_2 != expected_result:
-          is_function = False
-      if is_function == True:    
-        return (combination[0], combination[1])
-    return (None, None)
+          is_function[0] = False
+        elif value_1 - value_2 != expected_result:
+          is_function[1] = False
+        elif value_1 * value_2 != expected_result:
+          is_function[2] = False
+        elif value_2 != 0 and value_1 / value_2 != expected_result:
+          is_function[3] = False
 
-  def check_substraction(self, decision_table):
-    columns = list(decision_table.columns)
-    columns.remove('label')
-    combinations = itertools.combinations(columns, 2)
-    for combination in combinations:
-      is_function = True
-      for index in range(decision_table.shape[1]):
-        value_1 = decision_table.iloc[index][combination[0]]
-        value_2 = decision_table.iloc[index][combination[1]]
-        expected_result = decision_table.iloc[index]['label']
-
-        if value_1 - value_2 != expected_result:
-          is_function = False
-      if is_function == True:    
-        return (combination[0], combination[1])
-    return (None, None)
-
-  def check_multiplication(self, decision_table):
-    columns = list(decision_table.columns)
-    columns.remove('label')
-    combinations = itertools.combinations(columns, 2)
-    
-    for combination in combinations:
-      is_function = True
-      for index in range(decision_table.shape[1]):
-        value_1 = decision_table.iloc[index][combination[0]]
-        value_2 = decision_table.iloc[index][combination[1]]
-        expected_result = decision_table.iloc[index]['label']
-
-        if value_1 * value_2 != expected_result:
-          is_function = False
-      if is_function == True:    
-        return (combination[0], combination[1])
-    return (None, None)
-
-  def check_division(self, decision_table):
-    columns = list(decision_table.columns)
-    columns.remove('label')
-    combinations = itertools.combinations(columns, 2)
-    for combination in combinations:
-      is_function = True
-      for index in range(decision_table.shape[1]):
-        value_1 = decision_table.iloc[index][combination[0]]
-        value_2 = decision_table.iloc[index][combination[1]]
-        expected_result = decision_table.iloc[index]['label']
-        if value_2 == 0:
-          return (None, None)
-        if value_1 / value_2 != expected_result:
-          is_function = False
-      if is_function == True:    
+      if True in is_function:    
         return (combination[0], combination[1])
     return (None, None)
 
