@@ -6,11 +6,14 @@ from sklearn.tree import DecisionTreeClassifier, export_graphviz
 from pandas.api.types import is_numeric_dtype
 import itertools
 
+from utils.log_utils import LogUtils
+
 class DataDecisionMiner:
-  def apply(self, net, log, attributes):
+  def apply(self, net, log):
     self.net = net
-    self.log = log.fillna('')
-    self.attributes = attributes
+    self.log = log
+    self.log_utils = LogUtils()
+    self.attributes = self.log_utils.get_all_attributes_from_log(self.log)
     rule_base_data_decisions, functional_data_decisions = self.find_data_decisions()
     data_nodes = self.find_data_nodes(rule_base_data_decisions, functional_data_decisions)
     return (

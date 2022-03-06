@@ -1,6 +1,6 @@
 from convert_csv_to_xes import CsvToXesConverter
 from decision_dependencies import DecisionDependencies
-from control_flow_decision import ControlFlowDecisionMiner
+from control_flow_decision_miner import ControlFlowDecisionMiner
 from decision_model_miner import DecisionModelMiner
 from data_decision import DataDecisionMiner
 from xes_to_dataframe import XesToDataFrameConverter
@@ -20,8 +20,8 @@ def main():
     csvToXesConverter.apply(f'./Logs/{file_name}.csv')
     log = xesToDataFrameConverter.apply(f'./Logs/{file_name}.xes')
     net = decision_model_miner.apply(log)
-    (relations, attributes) = cfdMiner.apply(log, net)
-    (rule_base_data_decisions, functional_data_decisions, data_nodes) = ddMiner.apply(net, log, attributes)
+    relations = cfdMiner.apply(log, net)
+    (rule_base_data_decisions, functional_data_decisions, data_nodes) = ddMiner.apply(net, log)
     all_decisions = rule_base_data_decisions + functional_data_decisions + relations
     dependencies = dDependencies.apply(log, net, all_decisions, data_nodes)
 
