@@ -10,15 +10,15 @@ def main():
     # file_name = 'Log_Booleans'
     # file_name = 'Log_Numbers'
     file_name = 'Log_From_Example'
-    csvToXesConverter = CsvToXesConverter(f'./Logs/{file_name}.csv')
-    xestToDataFrameConverter = XesToDataFrameConverter(f'./Logs/{file_name}.xes')
+    csvToXesConverter = CsvToXesConverter()
+    xesToDataFrameConverter = XesToDataFrameConverter()
     decision_model_miner = DecisionModelMiner()
     cfdMiner = ControlFlowDecisionMiner()
     ddMiner = DataDecisionMiner()
     dDependencies = DecisionDependencies()
 
-    csvToXesConverter.apply()
-    log = xestToDataFrameConverter.apply()
+    csvToXesConverter.apply(f'./Logs/{file_name}.csv')
+    log = xesToDataFrameConverter.apply(f'./Logs/{file_name}.xes')
     net = decision_model_miner.apply(log)
     (relations, attributes) = cfdMiner.apply(log, net)
     (rule_base_data_decisions, functional_data_decisions, data_nodes) = ddMiner.apply(net, log, attributes)
