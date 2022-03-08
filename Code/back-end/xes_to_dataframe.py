@@ -3,8 +3,8 @@ from pm4py.objects.conversion.log import converter as log_converter
 from pm4py.objects.log.util import dataframe_utils
 
 class XesToDataFrameConverter:
-    def apply(self, file_name):
-        log_xes = xes_importer.apply(file_name)
+    def apply(self, file):
+        log_xes = xes_importer.apply(file)
         log = log_converter.apply(log_xes, variant=log_converter.Variants.TO_DATA_FRAME)
         log = log.rename(columns={"timestamp": "time:timestamp"})
         log = self.__fill_empty_values(log)

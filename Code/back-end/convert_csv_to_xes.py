@@ -4,6 +4,7 @@ from pathlib import Path
 
 class CsvToXesConverter:    
     def apply(self, file_name):
+        print('CsvToXesConverter')
         log = pandas.read_csv(file_name, sep=',')
         log = pm4py.format_dataframe(log, case_id='case', activity_key='activity', timestamp_key='timestamp')
         log.drop(columns=['@@index'], inplace=True)
