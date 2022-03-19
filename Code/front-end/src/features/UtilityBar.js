@@ -1,5 +1,5 @@
 import React from 'react';
-import UtilityButton from './UtilityButton';
+import UtilityButton from './shared/UtilityButton';
 
 export default function UtilityBar(props) {
   return (
@@ -8,6 +8,7 @@ export default function UtilityBar(props) {
         <UtilityButton text={"Upload File"} clickDelegate={() => alert('upload')} />
         <UtilityButton text={"Configuration"} clickDelegate={() => alert('configure')} />
         <UtilityButton text={"Save to file"} clickDelegate={() => alert('save')} />
+        <UtilityButton text={"Read from file"} clickDelegate={() => alert('read')} />
         <UtilityButton text={"Print"} clickDelegate={() => alert('print')} />
       </div>
       <h1 className="text-3xl font-bold underline mr-2">Decision Model Miner</h1>
