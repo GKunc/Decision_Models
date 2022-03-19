@@ -27,17 +27,58 @@ export default function FileUpload(props) {
         }))
   }
 
+  const handleDragEnter = e => {
+    e.preventDefault();
+    e.stopPropagation();
+    const dropZone = document.getElementById('drop-zone')
+    dropZone.classList.add('active-dropzone')
+    dropZone.classList.remove('inactive-dropzone')
+  };
+
+  const handleDragLeave = e => {
+    e.preventDefault();
+    e.stopPropagation();
+    const dropZone = document.getElementById('drop-zone')
+    dropZone.classList.remove('active-dropzone')
+    dropZone.classList.add('inactive-dropzone')
+  };
+
+  const handleDragOver = e => {
+    e.preventDefault();
+    e.stopPropagation();
+    const dropZone = document.getElementById('drop-zone')
+    dropZone.classList.add('active-dropzone')
+    dropZone.classList.remove('inactive-dropzone')
+  };
+
+  const handleDrop = e => {
+    e.preventDefault();
+    e.stopPropagation();
+    const dropZone = document.getElementById('drop-zone')
+    dropZone.classList.remove('active-dropzone')
+    dropZone.classList.add('inactive-dropzone')
+    console.log(e.dataTransfer.files[0])
+    inputFileRef.current.files = e.dataTransfer.files
+    handleFileSelected()
+  };
+
+  console.log(file)
+  console.log(decisionModel)
   if (file && !decisionModel) {
     return (
       <Spinner />
     );
-  } else if (file && decisionModel) {
+  } else if (file === null && decisionModel === null) {
     return (
       <DecisionModelVisualisation decision_model={decisionModel} />
     );
   } else {
     return (
-      <div className='border border-white border-dashed h-full'>
+      <div id="drop-zone" className={'border border-dashed h-full'}
+        onDrop={e => handleDrop(e)}
+        onDragOver={e => handleDragOver(e)}
+        onDragEnter={e => handleDragEnter(e)}
+        onDragLeave={e => handleDragLeave(e)} >
         <form id="myForm" className='flex flex-col items-center justify-center h-full' enctype="multipart/form-data" target="dummyframe" method="POST">
           <input className='hidden' ref={inputFileRef} onChange={handleFileSelected} type="file" name="file" />
           <div>
@@ -50,7 +91,7 @@ export default function FileUpload(props) {
         </form>
 
         <iframe className='hidden' title="dummyframe" name="dummyframe" id="dummyframe"></iframe>
-      </div>
+      </ div >
     );
   }
 }
