@@ -1,17 +1,73 @@
 from decision_dependencies import DecisionDependencies
 from control_flow_decision_miner import ControlFlowDecisionMiner
-from decision_model_miner import DecisionModelMiner
+from process_model_miner import ProcessModelMiner
 from data_decision import DataDecisionMiner
 
 class DecisionModelService:
+    def get_attributes(self, log):
+        process_model_miner = ProcessModelMiner()
+        ddMiner = DataDecisionMiner()
+
+        net = process_model_miner.apply(log)
+        (_, _, atttibutes) = ddMiner.apply(net, log)
+
+        return atttibutes
+
+    def get_nodes(self, log):
+        process_model_miner = ProcessModelMiner()
+        ddMiner = DataDecisionMiner()
+        cfdMiner = ControlFlowDecisionMiner()
+
+        net = process_model_miner.apply(log)
+        relations = cfdMiner.apply(log, net)
+
+        (rule_base_data_decisions, functional_data_decisions, atttibutes) = ddMiner.apply(net, log)
+
+        decisions = rule_base_data_decisions + functional_data_decisions
+        nodes = []
+
+        row = []
+        for (decision, _) in decisions:
+            row.append(decision)
+        nodes.append(list(set(row)))
+
+        row = []
+        for (relation, _) in relations:
+            row.append(relation)
+        nodes.append(list(set(row)))
+
+        return nodes
+
+    def get_process_model(self, log):
+        process_model_miner = ProcessModelMiner()
+        net = process_model_miner.apply(log)
+
+        data = []
+        for arc in net.arcs:
+            element = []
+            if hasattr(arc.source, 'label'):
+                element.append(arc.source.label)
+            else:
+                element.append(arc.source.name)
+
+            if hasattr(arc.target, 'label'):
+                element.append(arc.target.label)
+            else:
+                element.append(arc.target.name)
+            
+            data.append(element)
+
+        data = [list(x) for x in set(tuple(x) for x in data)]
+        return data
+
     def get_decision_model(self, log):
-        decision_model_miner = DecisionModelMiner()
+        process_model_miner = ProcessModelMiner()
         cfdMiner = ControlFlowDecisionMiner()
         ddMiner = DataDecisionMiner()
         dDependencies = DecisionDependencies()
 
 
-        net = decision_model_miner.apply(log)
+        net = process_model_miner.apply(log)
         relations = cfdMiner.apply(log, net)
         (rule_base_data_decisions, functional_data_decisions, data_nodes) = ddMiner.apply(net, log)
         all_decisions = rule_base_data_decisions + functional_data_decisions + relations

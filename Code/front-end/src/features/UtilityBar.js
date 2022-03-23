@@ -8,9 +8,9 @@ export default function UtilityBar(props) {
       <div className='flex flex-row gap-x-4 p-2'>
         <UtilityButton text={"Upload File"} clickDelegate={props.openUploadFileModalClick} />
         <UtilityButton text={"Configuration"} clickDelegate={props.openConfigurationModalClick} />
-        <UtilityButton text={"Save to file"} clickDelegate={() => alert('save')} />
-        <UtilityButton text={"Read from file"} clickDelegate={() => alert('read')} />
-        <UtilityButton text={"Print"} clickDelegate={() => alert('print')} />
+        <UtilityButton text={"Save to file"} clickDelegate={props.saveToFile} />
+        <UtilityButton text={"Read from file"} clickDelegate={props.readFromFile} />
+        <UtilityButton text={"Print Model"} clickDelegate={props.printModel} />
       </div>
       <h1 className="text-3xl font-bold underline mr-2">Decision Model Miner</h1>
     </div>

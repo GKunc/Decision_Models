@@ -7,21 +7,16 @@ import ConfigurationScreen from './features/sreens/ConfigurationScreen';
 
 export default function App(props) {
   const [attributes, setAttributes] = useState(null)
-  const [nodes, setNodes] = useState(null)
+  const [decisionNodes, setDecisionNodes] = useState(null)
+  const [dataDecisions, setDataDecisions] = useState(null)
   const [processModel, setProcessModel] = useState(null)
-  const [decisionModel, setDecisionModel] = useState([])
+  const [decisionModel, setDecisionModel] = useState(null)
 
   const [openModal, setOpenModal] = React.useState(false)
   const [openUpload, setOpenUpload] = React.useState(false)
   const [openConfig, setOpenConfig] = React.useState(false)
 
-  function setDecisionModelFun(dec) {
-    console.log("DECISION")
-    setDecisionModel(dec)
-  }
-
   function closeModal() {
-    console.log(decisionModel)
     setOpenModal(false)
   }
 
@@ -43,9 +38,11 @@ export default function App(props) {
     if (openUpload) {
       return <FileUploadScreen
         setAttributes={setAttributes}
-        setNodes={setNodes}
+        setDecisionNodes={setDecisionNodes}
+        setDataDecisions={setDataDecisions}
         setProcessModel={setProcessModel}
-        setDecisionModel={setDecisionModelFun}
+        setDecisionModel={setDecisionModel}
+        decisionModel={decisionModel}
         closeModal={closeModal} />
     }
     if (openConfig) {
@@ -53,10 +50,27 @@ export default function App(props) {
     }
   }
 
+  function saveToFile() {
+    alert("saveToFile")
+  }
+
+  function readFromFile() {
+    alert("readFromFile")
+  }
+
+  function printModel() {
+    alert("printModel")
+  }
+
   return (
-    <div id='app' className="bg-gray-800 flex flex-col h-full overflow-hidden text-white">
-      <UtilityBar openUploadFileModalClick={openUploadFileModal} openConfigurationModalClick={openConfigModal} />
-      <SummaryScreen attributes={attributes} nodes={nodes} processModel={processModel} decisionModel={decisionModel} />
+    <div id='app' className="bg-gray-800 flex flex-col h-full overflow-auto text-white">
+      <UtilityBar
+        openUploadFileModalClick={openUploadFileModal}
+        openConfigurationModalClick={openConfigModal}
+        saveToFile={saveToFile}
+        readFromFile={readFromFile}
+        printModel={printModel} />
+      <SummaryScreen attributes={attributes} decisionNodes={decisionNodes} dataDecisions={dataDecisions} processModel={processModel} decisionModel={decisionModel} />
 
       <ReactModal
         appElement={document.getElementById('app')}

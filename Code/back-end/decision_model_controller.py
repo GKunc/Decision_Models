@@ -11,6 +11,78 @@ app = Flask(__name__)
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+@app.route('/nodes', methods = ['GET', 'POST'])
+def get_nodes():
+    csvToXesConverter = CsvToXesConverter()
+    xesToDataFrameConverter = XesToDataFrameConverter()
+    decision_model_service = DecisionModelService()
+    print(request)
+    f = request.files['file']
+    file_path = f.filename
+    f.save(file_path)    
+    file_ext = f.filename.split('.')[1]
+    if file_ext != 'csv' and file_ext != 'xes':
+        raise Exception("Not supported file extension")
+
+    if f.filename.split('.')[1] == 'csv':
+        csvToXesConverter.apply(file_path)
+    
+    log = xesToDataFrameConverter.apply(file_path)
+    data = decision_model_service.get_nodes(log)
+    print("data NODES")
+    print(data)
+    data = json.dumps(data)
+    content_type = "application/json"
+
+    return create_http_request(data, content_type)
+
+@app.route('/attributes', methods = ['GET', 'POST'])
+def get_attributes():
+    csvToXesConverter = CsvToXesConverter()
+    xesToDataFrameConverter = XesToDataFrameConverter()
+    decision_model_service = DecisionModelService()
+    print(request)
+    f = request.files['file']
+    file_path = f.filename
+    f.save(file_path)    
+    file_ext = f.filename.split('.')[1]
+    if file_ext != 'csv' and file_ext != 'xes':
+        raise Exception("Not supported file extension")
+
+    if f.filename.split('.')[1] == 'csv':
+        csvToXesConverter.apply(file_path)
+    
+    log = xesToDataFrameConverter.apply(file_path)
+    data = decision_model_service.get_attributes(log)
+    data = json.dumps(data)
+    content_type = "application/json"
+
+    return create_http_request(data, content_type)
+
+@app.route('/process_model', methods = ['GET', 'POST'])
+def process_model():
+    csvToXesConverter = CsvToXesConverter()
+    xesToDataFrameConverter = XesToDataFrameConverter()
+    decision_model_service = DecisionModelService()
+    print(request)
+    f = request.files['file']
+    file_path = f.filename
+    f.save(file_path)    
+    file_ext = f.filename.split('.')[1]
+    if file_ext != 'csv' and file_ext != 'xes':
+        raise Exception("Not supported file extension")
+
+    if f.filename.split('.')[1] == 'csv':
+        csvToXesConverter.apply(file_path)
+    
+    log = xesToDataFrameConverter.apply(file_path)
+    data = decision_model_service.get_process_model(log)
+
+    data = json.dumps(data)
+    content_type = "application/json"
+
+    return create_http_request(data, content_type)
+
 @app.route('/decision_model', methods = ['GET', 'POST'])
 def decision_model():
     csvToXesConverter = CsvToXesConverter()
