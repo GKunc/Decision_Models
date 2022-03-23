@@ -1,15 +1,15 @@
 import React, { useRef, useState } from 'react';
-import Spinner from './shared/Spinner';
-import SummaryScreen from './SummaryScreen';
 
-export default function FileUpload(props) {
+export default function FileUploadScreen(props) {
   const inputFileRef = useRef()
   const submitButton = useRef()
-  // const [file, setFile] = useState(null);
-  // const [attributes, setAttributes] = useState(null);
-  // const [nodes, setNodes] = useState(null);
-  // const [processModel, setProcessModel] = useState(null);
-  // const [decisionModel, setDecisionModel] = useState(null);
+
+  const [file, setFile] = useState(null)
+  const setAttributes = props.setAttributes
+  const setNodes = props.setNodes
+  const setProcessModel = props.setProcessModel
+  const setDecisionModel = props.setDecisionModel
+  const closeModal = props.closeModal
 
   const browseForFile = () => {
     inputFileRef.current.click()
@@ -22,16 +22,18 @@ export default function FileUpload(props) {
 
   const getModel = () => {
     // ToDo fix this
-    setAttributes(['A1', 'A2', 'A3'])
-    setNodes(['N1', 'N2', 'N3'])
-    setProcessModel([('X', 'Q'), ('Y', 'W'), ('Z', 'E')])
+    setAttributes([])
+    setNodes([])
+    setProcessModel([])
 
     var url = "http://127.0.0.1:5000/decision_model"
     var formElement = document.querySelector("form");
     fetch(url, { method: 'post', body: new FormData(formElement), mode: 'cors' })
       .then(r => r.json()
         .then(data => {
+          console.log(data)
           setDecisionModel(data)
+          closeModal()
         }))
   }
 
@@ -80,7 +82,7 @@ export default function FileUpload(props) {
   //   );
   // } else {
   return (
-    <div id="drop-zone" className={'border border-dashed h-full'}
+    <div id="drop-zone" className={'bg-gray-800 border border-dashed h-full'}
       onDrop={e => handleDrop(e)}
       onDragOver={e => handleDragOver(e)}
       onDragEnter={e => handleDragEnter(e)}
