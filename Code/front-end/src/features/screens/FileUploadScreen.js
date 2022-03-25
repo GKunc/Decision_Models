@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import Error from '../shared/Error';
+import ErrorBox from '../shared/ErrorBox';
 import Spinner from '../shared/Spinner';
 
 export default function FileUploadScreen(props) {
@@ -7,7 +7,7 @@ export default function FileUploadScreen(props) {
   const submitButton = useRef()
 
   const [file, setFile] = useState(null)
-  const [error, setError] = useState(null)
+  const [errorMessage, setErrorMessage] = useState(null)
   const setAttributes = props.setAttributes
   const setDecisionNodes = props.setDecisionNodes
   const setDataDecisions = props.setDataDecisions
@@ -34,7 +34,8 @@ export default function FileUploadScreen(props) {
           setAttributes(data)
           closeModal()
         })).catch((error) => {
-          setError(error)
+          console.log(error.message)
+          setErrorMessage(error.message)
         })
   }
 
@@ -48,7 +49,7 @@ export default function FileUploadScreen(props) {
           setDataDecisions(data[1])
           closeModal()
         })).catch((error) => {
-          setError(error)
+          setErrorMessage(error.message)
         })
   }
 
@@ -61,7 +62,7 @@ export default function FileUploadScreen(props) {
           setProcessModel(data)
           closeModal()
         })).catch((error) => {
-          setError(error)
+          setErrorMessage(error.message)
         })
   }
 
@@ -74,11 +75,14 @@ export default function FileUploadScreen(props) {
           setDecisionModel(data)
           closeModal()
         })).catch((error) => {
-          setError(error)
+          setErrorMessage(error.message)
         })
   }
 
   const getDataFromServer = () => {
+    setErrorMessage(null)
+    setDecisionModel(null)
+
     getAttributes()
     getNodes()
     getProcessModel()
@@ -120,40 +124,43 @@ export default function FileUploadScreen(props) {
     handleFileSelected()
   };
 
-  const resetScreen = () => {
-    setError(null)
-    setFile(null)
+  const resetError = () => {
+    setErrorMessage(null)
   }
 
-  if (error !== null) {
-    return (
-      <Error resetScreen={resetScreen} />
-    )
-  }
-  else if (file && !decisionModel) {
+  if (file && !decisionModel && !errorMessage) {
     return (
       <Spinner />
     );
   } else {
     return (
-      <div id="drop-zone" className={'bg-gray-800 border border-dashed h-full'}
-        onDrop={e => handleDrop(e)}
-        onDragOver={e => handleDragOver(e)}
-        onDragEnter={e => handleDragEnter(e)}
-        onDragLeave={e => handleDragLeave(e)} >
-        <form id="myForm" className='flex flex-col items-center justify-center h-full' enctype="multipart/form-data" target="dummyframe" method="POST">
-          <input className='hidden' ref={inputFileRef} onChange={handleFileSelected} type="file" name="file" />
-          <div>
-            Drop your <span className='font-bold'>.csv</span> or <span className='font-bold'>.xes</span> log here
-          </div>
-          <div>
-            or <span className='underline font-bold text-green-500 hover:text-green-600 cursor-pointer' onClick={browseForFile}>select from your PC</span>
-          </div>
-          <button className='hidden' type='' ref={submitButton} onClick={getDataFromServer}></button>
-        </form>
+      <div className='h-full flex flex-col'>
+        <div className="flex items-center justify-between">
+          <div className="text-xl m-2">Upload file</div>
+          <div onClick={props.closeDelegate} className="bg-green-500 hover:bg-green-600 text-white rounded-full w-[24px] h-[24px] flex items-center justify-center cursor-pointer">X</div>
+        </div>
 
-        <iframe className='hidden' title="dummyframe" name="dummyframe" id="dummyframe"></iframe>
-      </ div >
+        <ErrorBox resetError={resetError} errorMessage={errorMessage} />
+
+        <div id="drop-zone" className={'bg-gray-800 border border-dashed grow'}
+          onDrop={e => handleDrop(e)}
+          onDragOver={e => handleDragOver(e)}
+          onDragEnter={e => handleDragEnter(e)}
+          onDragLeave={e => handleDragLeave(e)} >
+          <form id="myForm" className='flex flex-col items-center justify-center h-full' enctype="multipart/form-data" target="dummyframe" method="POST">
+            <input className='hidden' ref={inputFileRef} onChange={handleFileSelected} type="file" name="file" />
+            <div>
+              Drop your <span className='font-bold'>.csv</span> or <span className='font-bold'>.xes</span> log here
+            </div>
+            <div>
+              or <span className='underline font-bold text-green-500 hover:text-green-600 cursor-pointer' onClick={browseForFile}>select from your PC</span>
+            </div>
+            <button className='hidden' type='' ref={submitButton} onClick={getDataFromServer}></button>
+          </form>
+
+          <iframe className='hidden' title="dummyframe" name="dummyframe" id="dummyframe"></iframe>
+        </div>
+      </div>
     );
   }
 }
