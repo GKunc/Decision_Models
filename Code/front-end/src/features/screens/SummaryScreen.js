@@ -6,30 +6,26 @@ import ProcessModelVisualisation from "../Visualization/ProcessModelVisualisatio
 import SetAttributesVisualisation from "../Visualization/SetAttribute";
 
 export default function SummaryScreen(props) {
-    const [hiddenExample, setHiddenExample] = useState(null);
-    const [hiddenNodes, setHiddenNodes] = useState(null);
-    const [hiddenProcess, setHiddenProcess] = useState(null);
-    const [hiddenDecision, setHiddenDecision] = useState(null);
 
 
     return (
         <div className='flex flex-auto flex-row flex-wrap items-stretch items-center justify-center m-2 h-full'>
-            <FeatureBox title='Set Attributes' hidden={hiddenExample} content={
+            <FeatureBox title='Set Attributes' hidden={props.hiddenExample} content={
                 <SetAttributesVisualisation attributes={props.attributes} />
-            } hideDelegate={() => setHiddenExample(true)} />
+            } hideDelegate={() => props.setHiddenExample(true)} />
 
-            <FeatureBox title='Nodes' hidden={hiddenNodes} content={
+            <FeatureBox title='Nodes' hidden={props.hiddenNodes} content={
                 <NodesModelVisualisation decisionNodes={props.decisionNodes} dataDecisions={props.dataDecisions} attributes={props.attributes} />
-            } hideDelegate={() => setHiddenNodes(true)} />
+            } hideDelegate={() => props.setHiddenNodes(true)} />
 
-            <FeatureBox title='Process Model' hidden={hiddenProcess} content={
+            <FeatureBox title='Process Model' hidden={props.hiddenProcess} content={
                 <ProcessModelVisualisation processModel={props.processModel} />
             }
-                hideDelegate={() => setHiddenProcess(true)} />
+                hideDelegate={() => props.setHiddenProcess(true)} />
 
-            <FeatureBox title='Decision Model' hidden={hiddenDecision} content={
+            <FeatureBox title='Decision Model' hidden={props.hiddenDecision} content={
                 <DecisionModelVisualisation decisionModel={props.decisionModel} />
-            } hideDelegate={() => setHiddenDecision(true)} />
+            } hideDelegate={() => props.setHiddenDecision(true)} />
         </div>
     )
 }

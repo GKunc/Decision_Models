@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import Error from '../shared/Error';
 import Spinner from '../shared/Spinner';
 
 export default function FileUploadScreen(props) {
@@ -6,6 +7,7 @@ export default function FileUploadScreen(props) {
   const submitButton = useRef()
 
   const [file, setFile] = useState(null)
+  const [error, setError] = useState(null)
   const setAttributes = props.setAttributes
   const setDecisionNodes = props.setDecisionNodes
   const setDataDecisions = props.setDataDecisions
@@ -31,7 +33,9 @@ export default function FileUploadScreen(props) {
         .then(data => {
           setAttributes(data)
           closeModal()
-        }))
+        })).catch((error) => {
+          setError(error)
+        })
   }
 
   const getNodes = () => {
@@ -40,12 +44,12 @@ export default function FileUploadScreen(props) {
     fetch(url, { method: 'post', body: new FormData(formElement), mode: 'cors' })
       .then(r => r.json()
         .then(data => {
-          console.log(data[0])
-          console.log(data[1])
           setDecisionNodes(data[0])
           setDataDecisions(data[1])
           closeModal()
-        }))
+        })).catch((error) => {
+          setError(error)
+        })
   }
 
   const getProcessModel = () => {
@@ -56,7 +60,9 @@ export default function FileUploadScreen(props) {
         .then(data => {
           setProcessModel(data)
           closeModal()
-        }))
+        })).catch((error) => {
+          setError(error)
+        })
   }
 
   const getDecisionModel = () => {
@@ -67,7 +73,9 @@ export default function FileUploadScreen(props) {
         .then(data => {
           setDecisionModel(data)
           closeModal()
-        }))
+        })).catch((error) => {
+          setError(error)
+        })
   }
 
   const getDataFromServer = () => {
@@ -112,7 +120,17 @@ export default function FileUploadScreen(props) {
     handleFileSelected()
   };
 
-  if (file && !decisionModel) {
+  const resetScreen = () => {
+    setError(null)
+    setFile(null)
+  }
+
+  if (error !== null) {
+    return (
+      <Error resetScreen={resetScreen} />
+    )
+  }
+  else if (file && !decisionModel) {
     return (
       <Spinner />
     );

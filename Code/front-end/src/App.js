@@ -1,36 +1,78 @@
 import React, { useState } from 'react';
 import UtilityBar from './features/UtilityBar';
 import ReactModal from 'react-modal';
-import SummaryScreen from './features/sreens/SummaryScreen';
-import FileUploadScreen from './features/sreens/FileUploadScreen';
-import ConfigurationScreen from './features/sreens/ConfigurationScreen';
+import SummaryScreen from './features/screens/SummaryScreen';
+import FileUploadScreen from './features/screens/FileUploadScreen';
+import ConfigurationScreen from './features/screens/ConfigurationScreen';
+import SaveToFileScreen from './features/screens/SaveToFileScreen';
+import PrintModelScreen from './features/screens/PrintModelScreen';
 
 export default function App(props) {
+  const [modalWidth, setModalWidth] = useState(null)
+  const [modalHeight, setModalHeight] = useState(null)
+  const [openModal, setOpenModal] = useState(false)
+
+  const [openUpload, setOpenUpload] = useState(false)
+  const [openConfig, setOpenConfig] = useState(false)
+  const [openSaveToFile, setOpenSaveToFile] = useState(false)
+  const [openPrintModel, setOpenPrintModel] = useState(false)
+
   const [attributes, setAttributes] = useState(null)
   const [decisionNodes, setDecisionNodes] = useState(null)
   const [dataDecisions, setDataDecisions] = useState(null)
   const [processModel, setProcessModel] = useState(null)
   const [decisionModel, setDecisionModel] = useState(null)
 
-  const [openModal, setOpenModal] = React.useState(false)
-  const [openUpload, setOpenUpload] = React.useState(false)
-  const [openConfig, setOpenConfig] = React.useState(false)
+  const [hiddenExample, setHiddenExample] = useState(null);
+  const [hiddenNodes, setHiddenNodes] = useState(null);
+  const [hiddenProcess, setHiddenProcess] = useState(null);
+  const [hiddenDecision, setHiddenDecision] = useState(null);
 
   function closeModal() {
     setOpenModal(false)
   }
 
   function openUploadFileModal() {
+    setModalWidth('50%')
+    setModalHeight('400px')
     setOpenUpload(true)
     setOpenConfig(false)
+    setOpenSaveToFile(false)
+    setOpenPrintModel(false)
 
     setOpenModal(true)
   }
 
   function openConfigModal() {
+    setModalWidth('20%')
+    setModalHeight('300px')
     setOpenUpload(false)
     setOpenConfig(true)
-    console.log(decisionModel)
+    setOpenSaveToFile(false)
+    setOpenPrintModel(false)
+
+    setOpenModal(true)
+  }
+
+  function openSaveToFileModal() {
+    setModalWidth('20%')
+    setModalHeight('40%')
+    setOpenUpload(false)
+    setOpenConfig(false)
+    setOpenSaveToFile(true)
+    setOpenPrintModel(false)
+
+    setOpenModal(true)
+  }
+
+  function openPrintModelModal() {
+    setModalWidth('20%')
+    setModalHeight('40%')
+    setOpenUpload(false)
+    setOpenConfig(false)
+    setOpenSaveToFile(false)
+    setOpenPrintModel(true)
+
     setOpenModal(true)
   }
 
@@ -46,7 +88,24 @@ export default function App(props) {
         closeModal={closeModal} />
     }
     if (openConfig) {
-      return <ConfigurationScreen />
+      return <ConfigurationScreen
+        hiddenExample={hiddenExample}
+        setHiddenExample={setHiddenExample}
+
+        hiddenNodes={hiddenNodes}
+        setHiddenNodes={setHiddenNodes}
+
+        hiddenProcess={hiddenProcess}
+        setHiddenProcess={setHiddenProcess}
+
+        hiddenDecision={hiddenDecision}
+        setHiddenDecision={setHiddenDecision} />
+    }
+    if (openSaveToFile) {
+      return <SaveToFileScreen />
+    }
+    if (openPrintModel) {
+      return <PrintModelScreen />
     }
   }
 
@@ -67,16 +126,36 @@ export default function App(props) {
       <UtilityBar
         openUploadFileModalClick={openUploadFileModal}
         openConfigurationModalClick={openConfigModal}
+        openSaveToFileModalClick={openSaveToFileModal}
+        printModelModalClick={openPrintModelModal}
         saveToFile={saveToFile}
         readFromFile={readFromFile}
         printModel={printModel} />
-      <SummaryScreen attributes={attributes} decisionNodes={decisionNodes} dataDecisions={dataDecisions} processModel={processModel} decisionModel={decisionModel} />
+
+      <SummaryScreen
+        attributes={attributes}
+        hiddenExample={hiddenExample}
+        setHiddenExample={setHiddenExample}
+
+        decisionNodes={decisionNodes}
+        hiddenNodes={hiddenNodes}
+        dataDecisions={dataDecisions}
+        setHiddenNodes={setHiddenNodes}
+
+        processModel={processModel}
+        hiddenProcess={hiddenProcess}
+        setHiddenProcess={setHiddenProcess}
+
+        decisionModel={decisionModel}
+        hiddenDecision={hiddenDecision}
+        setHiddenDecision={setHiddenDecision}
+      />
 
       <ReactModal
         appElement={document.getElementById('app')}
         isOpen={openModal}
         contentLabel="Example Modal"
-        style={{ overlay: {}, content: { background: 'rgb(31 41 55 / 1', color: 'white', width: '50%', height: '50%', top: '25%', left: '25%', } }}
+        style={{ overlay: {}, content: { background: 'rgb(31 41 55 / 1', color: 'white', width: modalWidth, height: modalHeight, top: '0', left: '0', margin: 'auto' } }}
         centered
       >
 
