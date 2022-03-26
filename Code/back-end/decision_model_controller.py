@@ -29,8 +29,6 @@ def get_nodes():
     
     log = xesToDataFrameConverter.apply(file_path)
     data = decision_model_service.get_nodes(log)
-    print("data NODES")
-    print(data)
     data = json.dumps(data)
     content_type = "application/json"
 

@@ -14,25 +14,18 @@ class DecisionDependencies:
         
     def find_dependencies(self):
         for (decision, relations) in self.decisions:
-            self.find_trivial_dependencies(decision, relations)
-            self.find_non_trivial_dependencies(decision)
-            self.find_dependencies_between_attributes(decision, relations, self.data_nodes)
-        return list(set(self.dependencies))
+            # self.find_trivial_dependencies(decision, relations)
+            # self.find_non_trivial_dependencies(decision)
+            self.find_dependencies_between_attributes(decision, relations)
+        return self.dependencies
 
-    def find_dependencies_between_attributes(self, decision, relations, data_nodes):
-        all_decisions = []
-        for (dec, _) in self.decisions:
-            all_decisions.append(dec)
-
-        for all_dec in all_decisions:
-            if all_dec in relations:
-                return
-        
-        for node in data_nodes:
+    def find_dependencies_between_attributes(self, decision, relations): # verify this
+    
+        for node in self.data_nodes:
             if node in relations:
                 self.dependencies.append((node, decision))
-                    
-    def find_trivial_dependencies(self, decision, relations):
+
+    def find_trivial_dependencies(self, decision, relations): # wrong here probably
         for relation in relations:
             for (decision_node, _) in self.decisions:
                 if decision_node == relation:

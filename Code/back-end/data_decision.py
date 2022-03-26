@@ -17,7 +17,7 @@ class DataDecisionMiner:
     rule_base_data_decisions, functional_data_decisions = self.find_data_decisions()
     data_nodes = self.find_data_nodes(rule_base_data_decisions, functional_data_decisions)
     return (
-     rule_base_data_decisions, 
+      rule_base_data_decisions, 
       functional_data_decisions, 
       data_nodes
     )
@@ -95,14 +95,14 @@ class DataDecisionMiner:
 
         if value_1 + value_2 != expected_result:
           is_function[0] = False
-        elif value_1 - value_2 != expected_result:
+        if value_1 - value_2 != expected_result:
           is_function[1] = False
-        elif value_1 * value_2 != expected_result:
+        if value_1 * value_2 != expected_result:
           is_function[2] = False
-        elif value_2 != 0 and value_1 / value_2 != expected_result:
+        if value_2 != 0 and value_1 / value_2 != expected_result:
           is_function[3] = False
 
-      if True in is_function:    
+      if True in is_function:  
         return (combination[0], combination[1])
     return (None, None)
 
@@ -204,7 +204,7 @@ class DataDecisionMiner:
       row.append(label)
       data.append(row)
     table = pd.DataFrame(data, columns = labels)
-    table = table.replace({'True': 1, 'False': 0})
+    table = table.replace({'True': '1', 'False': '0'})
     return table
 
   def get_column_names(self, log, attribute):

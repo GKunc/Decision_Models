@@ -10,7 +10,6 @@ class DecisionModelService:
 
         net = process_model_miner.apply(log)
         (_, _, atttibutes) = ddMiner.apply(net, log)
-
         return atttibutes
 
     def get_nodes(self, log):
@@ -19,9 +18,9 @@ class DecisionModelService:
         cfdMiner = ControlFlowDecisionMiner()
 
         net = process_model_miner.apply(log)
-        relations = cfdMiner.apply(log, net)
+        cfd = cfdMiner.apply(log, net)
 
-        (rule_base_data_decisions, functional_data_decisions, atttibutes) = ddMiner.apply(net, log)
+        (rule_base_data_decisions, functional_data_decisions, _) = ddMiner.apply(net, log)
 
         decisions = rule_base_data_decisions + functional_data_decisions
         nodes = []
@@ -32,7 +31,7 @@ class DecisionModelService:
         nodes.append(list(set(row)))
 
         row = []
-        for (relation, _) in relations:
+        for (relation, _) in cfd:
             row.append(relation)
         nodes.append(list(set(row)))
 
@@ -68,12 +67,12 @@ class DecisionModelService:
 
 
         net = process_model_miner.apply(log)
-        relations = cfdMiner.apply(log, net)
+        cfd = cfdMiner.apply(log, net)
         (rule_base_data_decisions, functional_data_decisions, data_nodes) = ddMiner.apply(net, log)
-        all_decisions = rule_base_data_decisions + functional_data_decisions + relations
+        all_decisions = rule_base_data_decisions + functional_data_decisions + cfd
         dependencies = dDependencies.apply(log, net, all_decisions, data_nodes)
 
-        self.print_result(data_nodes, rule_base_data_decisions, functional_data_decisions, all_decisions, dependencies, relations)
+        self.print_result(data_nodes, rule_base_data_decisions, functional_data_decisions, all_decisions, dependencies, cfd)
 
         return dependencies
 

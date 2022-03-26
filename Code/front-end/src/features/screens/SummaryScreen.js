@@ -1,4 +1,3 @@
-import { useState } from "react";
 import FeatureBox from "../shared/FeatureBox";
 import DecisionModelVisualisation from "../Visualization/DecisionModelVisualisation";
 import NodesModelVisualisation from "../Visualization/NodesVisualisation";
@@ -6,7 +5,6 @@ import ProcessModelVisualisation from "../Visualization/ProcessModelVisualisatio
 import SetAttributesVisualisation from "../Visualization/SetAttribute";
 
 export default function SummaryScreen(props) {
-
 
     return (
         <div className='flex-1 flex flex-row flex-wrap items-stretch items-center justify-center m-2 '>

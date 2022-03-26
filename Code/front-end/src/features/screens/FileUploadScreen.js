@@ -45,8 +45,8 @@ export default function FileUploadScreen(props) {
     fetch(url, { method: 'post', body: new FormData(formElement), mode: 'cors' })
       .then(r => r.json()
         .then(data => {
-          setDecisionNodes(data[0])
-          setDataDecisions(data[1])
+          setDataDecisions(data[0])
+          setDecisionNodes(data[1])
           closeModal()
         })).catch((error) => {
           setErrorMessage(error.message)
@@ -147,7 +147,7 @@ export default function FileUploadScreen(props) {
           onDragOver={e => handleDragOver(e)}
           onDragEnter={e => handleDragEnter(e)}
           onDragLeave={e => handleDragLeave(e)} >
-          <form id="myForm" className='flex flex-col items-center justify-center h-full' enctype="multipart/form-data" target="dummyframe" method="POST">
+          <form id="myForm" className='flex flex-col items-center justify-center h-full' encType="multipart/form-data" target="dummyframe" method="POST">
             <input className='hidden' ref={inputFileRef} onChange={handleFileSelected} type="file" name="file" />
             <div>
               Drop your <span className='font-bold'>.csv</span> or <span className='font-bold'>.xes</span> log here

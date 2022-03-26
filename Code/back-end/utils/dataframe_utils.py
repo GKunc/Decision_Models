@@ -33,7 +33,7 @@ class DataframeUtils:
             data.append(row)
             index += 2
             decision_table = pandas.DataFrame(data, columns = labels)
-            decision_table = decision_table.replace({'True': 1, 'False': 0})
+            decision_table = decision_table.replace({'True': '1', 'False': '0'})
 
         return self.__get_traning_data(decision_table)     
 

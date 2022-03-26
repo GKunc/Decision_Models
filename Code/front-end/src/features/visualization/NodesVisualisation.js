@@ -5,6 +5,13 @@ export default function NodesModelVisualisation(props) {
             <div>
                 <div className="p-2 flex items-center border border-dashed border-white">
                     <div className="w-[200px]">Attributes</div>
+
+                    {
+                        props.attributes.map((element) => <div className="m-1 p-1 border border-white">{element}</div>)
+                    }
+                </div>
+                <div className="p-2 flex items-center border border-dashed border-white">
+                    <div className="w-[200px]">Data Decisions</div>
                     {
                         props.decisionNodes.map((element) => <div className="m-1 p-1 border border-white">{element}</div>)
                     }
@@ -13,13 +20,6 @@ export default function NodesModelVisualisation(props) {
                     <div className="w-[200px]">Control flow decisions</div>
                     {
                         props.dataDecisions.map((element) => <div className="m-1 p-1 border border-white">{element}</div>)
-                    }
-                </div>
-                <div className="p-2 flex items-center border border-dashed border-white">
-                    <div className="w-[200px]">Data Decisions</div>
-
-                    {
-                        props.attributes.map((element) => <div className="m-1 p-1 border border-white">{element}</div>)
                     }
                 </div>
 
