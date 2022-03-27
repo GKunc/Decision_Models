@@ -13,10 +13,6 @@ html, body, #root {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.content {
-  max-height: calc(100% - 60px);
-}
-
 .loader {
   border: 10px solid #f3f3f3;
   border-top: 10px solid #3498db;
@@ -24,18 +20,6 @@ html, body, #root {
   width: 120px;
   height: 120px;
   animation: spin 1s linear infinite;
-}
-
-.error {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 80px;
-  border: 10px solid red;
-  background-color: red;
-  border-radius: 50%;
-  width: 120px;
-  height: 120px;
 }
 
 .active-dropzone {

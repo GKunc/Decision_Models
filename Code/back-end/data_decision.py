@@ -53,7 +53,7 @@ class DataDecisionMiner:
       if attribute != None:
         functional_data_decisions.append((attribute, possible_attributes))
 
-    return self.filter_duplicated_decisions(rule_base_data_decisions), self.filter_duplicated_decisions(functional_data_decisions)
+    return self.filter_duplicated_decisions(rule_base_data_decisions), (functional_data_decisions) # come up with idea how to handle duplicates
 
   def filter_duplicated_decisions(self, data_decisions):
     result = []

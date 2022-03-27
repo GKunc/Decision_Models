@@ -101,7 +101,7 @@ export default function App(props) {
   }
 
   return (
-    <div id='app' className="bg-gray-800 flex-col flex items-stretch h-full overflow-auto text-white">
+    <div id='app' className="bg-gray-800 flex flex-row h-full overflow-auto text-white">
       <UtilityBar
         openUploadFileModalClick={openUploadFileModal}
         openConfigurationModalClick={openConfigModal}

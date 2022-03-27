@@ -28,19 +28,12 @@ export default function DecisionModelVisualisation(props) {
                             'curve-style': 'bezier'
                         }
                     }
-                ],
-
-                layout: {
-                    name: 'grid',
-                    rows: 1
-                }
-
+                ]
             })
-
-            console.log(props.decisionModel)
 
             addAllNodes(cy)
             addAllConnections(cy)
+            cy.layout({ name: 'cose' }).run();
         }
     }, [props.decisionModel]);
 
