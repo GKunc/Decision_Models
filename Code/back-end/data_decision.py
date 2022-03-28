@@ -5,6 +5,7 @@ from sklearn.metrics import accuracy_score
 from sklearn.tree import DecisionTreeClassifier, export_graphviz
 from pandas.api.types import is_numeric_dtype
 import itertools
+import random
 
 from utils.log_utils import LogUtils
 
@@ -53,16 +54,20 @@ class DataDecisionMiner:
       if attribute != None:
         functional_data_decisions.append((attribute, possible_attributes))
 
-    return self.filter_duplicated_decisions(rule_base_data_decisions), (functional_data_decisions) # come up with idea how to handle duplicates
+    return self.filter_duplicated_decisions(rule_base_data_decisions), self.filter_duplicated_decisions(functional_data_decisions) # come up with idea how to handle duplicates
 
   def filter_duplicated_decisions(self, data_decisions):
     result = []
     result_set = []
+
+    random.shuffle(data_decisions)
+    print(data_decisions)
     for (decision, attributes) in data_decisions:
       element_to_check = []
       element_to_check.append(decision)
       element_to_check.extend(attributes)
       element_to_check.sort()
+
       if element_to_check not in result_set:
         result.append((decision, attributes))
         result_set.append(element_to_check)

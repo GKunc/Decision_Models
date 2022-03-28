@@ -1,9 +1,8 @@
-import { useEffect } from "react";
 import FeatureBox from "../shared/FeatureBox";
 import DecisionModelVisualisation from "../Visualization/DecisionModelVisualisation";
+import DecisionRulesVisualisation from "../Visualization/DecisionRulesVisualisation";
 import NodesModelVisualisation from "../Visualization/NodesVisualisation";
 import ProcessModelVisualisation from "../Visualization/ProcessModelVisualisation";
-import SetAttributesVisualisation from "../Visualization/SetAttribute";
 
 export default function SummaryScreen(props) {
     const calculateNumberOfBoxes = () => {
@@ -21,10 +20,10 @@ export default function SummaryScreen(props) {
         <div className='flex flex-row flex-wrap items-stretch items-center justify-center max-h-screen w-full overflow-hidden content-containter'>
             <FeatureBox
                 numberOfBoxes={numberOfBoxes}
-                title='Set Attributes'
+                title='Decision Rules'
                 hidden={props.hiddenExample}
                 content={
-                    < SetAttributesVisualisation attributes={props.attributes} />
+                    < DecisionRulesVisualisation decisionRules={props.decisionRules} />
                 }
                 hideDelegate={() => props.setHiddenExample(true)} />
 

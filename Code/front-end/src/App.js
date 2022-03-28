@@ -16,6 +16,7 @@ export default function App(props) {
   const [openSaveToFile, setOpenSaveToFile] = useState(false)
 
   const [attributes, setAttributes] = useState(null)
+  const [decisionRules, setDecisionRules] = useState(null)
   const [decisionNodes, setDecisionNodes] = useState(null)
   const [dataDecisions, setDataDecisions] = useState(null)
   const [processModel, setProcessModel] = useState(null)
@@ -67,8 +68,7 @@ export default function App(props) {
   function modalContent() {
     if (openUpload) {
       return <FileUploadScreen
-        closeDelegate={closeModal}
-
+        setDecisionRules={setDecisionRules}
         setAttributes={setAttributes}
         setDecisionNodes={setDecisionNodes}
         setDataDecisions={setDataDecisions}
@@ -110,6 +110,9 @@ export default function App(props) {
         disableButtons={!decisionModel} />
 
       <SummaryScreen
+        decisionRules={decisionRules}
+        setDecisionRules={setDecisionRules}
+
         attributes={attributes}
         hiddenExample={hiddenExample}
         setHiddenExample={setHiddenExample}

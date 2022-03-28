@@ -9,6 +9,7 @@ export default function FileUploadScreen(props) {
   const [file, setFile] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
   const setAttributes = props.setAttributes
+  const setDecisionRules = props.setDecisionRules
   const setDecisionNodes = props.setDecisionNodes
   const setDataDecisions = props.setDataDecisions
   const setProcessModel = props.setProcessModel
@@ -79,10 +80,25 @@ export default function FileUploadScreen(props) {
         })
   }
 
+  const getDecisionRules = () => {
+    var url = "http://127.0.0.1:5000/decision_rules"
+    var formElement = document.querySelector("form");
+    fetch(url, { method: 'post', body: new FormData(formElement), mode: 'cors' })
+      .then(r => r.json()
+        .then(data => {
+          console.log(data)
+          setDecisionRules(data)
+          closeModal()
+        })).catch((error) => {
+          setErrorMessage(error.message)
+        })
+  }
+
   const getDataFromServer = () => {
     setErrorMessage(null)
     setDecisionModel(null)
 
+    getDecisionRules()
     getAttributes()
     getNodes()
     getProcessModel()

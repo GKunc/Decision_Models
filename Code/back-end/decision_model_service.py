@@ -3,7 +3,11 @@ from control_flow_decision_miner import ControlFlowDecisionMiner
 from process_model_miner import ProcessModelMiner
 from data_decision import DataDecisionMiner
 
+
 class DecisionModelService:
+    def get_decision_rules(self, log):
+        return ["To be implemented"]
+
     def get_attributes(self, log):
         process_model_miner = ProcessModelMiner()
         ddMiner = DataDecisionMiner()
@@ -20,7 +24,8 @@ class DecisionModelService:
         net = process_model_miner.apply(log)
         cfd = cfdMiner.apply(log, net)
 
-        (rule_base_data_decisions, functional_data_decisions, _) = ddMiner.apply(net, log)
+        (rule_base_data_decisions, functional_data_decisions,
+         _) = ddMiner.apply(net, log)
 
         decisions = rule_base_data_decisions + functional_data_decisions
         nodes = []
@@ -53,7 +58,7 @@ class DecisionModelService:
                 element.append(arc.target.label)
             else:
                 element.append(arc.target.name)
-            
+
             data.append(element)
 
         data = [list(x) for x in set(tuple(x) for x in data)]
@@ -65,14 +70,15 @@ class DecisionModelService:
         ddMiner = DataDecisionMiner()
         dDependencies = DecisionDependencies()
 
-
         net = process_model_miner.apply(log)
         cfd = cfdMiner.apply(log, net)
-        (rule_base_data_decisions, functional_data_decisions, data_nodes) = ddMiner.apply(net, log)
+        (rule_base_data_decisions, functional_data_decisions,
+         data_nodes) = ddMiner.apply(net, log)
         all_decisions = rule_base_data_decisions + functional_data_decisions + cfd
         dependencies = dDependencies.apply(log, net, all_decisions, data_nodes)
 
-        self.print_result(data_nodes, rule_base_data_decisions, functional_data_decisions, all_decisions, dependencies, cfd)
+        self.print_result(data_nodes, rule_base_data_decisions,
+                          functional_data_decisions, all_decisions, dependencies, cfd)
 
         return dependencies
 
@@ -80,7 +86,7 @@ class DecisionModelService:
         print("================================")
         print('ddMiner.attributes')
         print(data_nodes)
-    
+
         print("================================")
         print('all_decisions')
         print(all_decisions)
