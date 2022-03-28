@@ -1,4 +1,3 @@
-from operator import not_
 from numpy import NaN
 import pandas as pd
 
@@ -20,9 +19,10 @@ class DecisionDependencies:
             self.find_trivial_dependencies(decision, relations)
             self.find_non_trivial_dependencies(decision)
             self.find_dependencies_between_attributes(decision, relations)
-        return self.dependencies
+        return self.get_unique_dependencies(self.dependencies)
 
     def find_dependencies_between_attributes(self, decision, relations):
+        # still something wrong
         for node in self.data_nodes:
             if node in relations:
                 for not_connect_list, not_connected in self.not_to_connect:
@@ -157,3 +157,7 @@ class DecisionDependencies:
         if len(result) > 0:
             return result
         return []
+
+    def get_unique_dependencies(self, dependencies):
+
+        return list(set(dependencies))

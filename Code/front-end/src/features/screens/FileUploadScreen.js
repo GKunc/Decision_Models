@@ -26,68 +26,19 @@ export default function FileUploadScreen(props) {
     submitButton.current.click()
   }
 
-  const getAttributes = () => {
-    var url = "http://127.0.0.1:5000/attributes"
-    var formElement = document.querySelector("form");
-    fetch(url, { method: 'post', body: new FormData(formElement), mode: 'cors' })
-      .then(r => r.json()
-        .then(data => {
-          setAttributes(data)
-          closeModal()
-        })).catch((error) => {
-          console.log(error.message)
-          setErrorMessage(error.message)
-        })
-  }
-
-  const getNodes = () => {
-    var url = "http://127.0.0.1:5000/nodes"
-    var formElement = document.querySelector("form");
-    fetch(url, { method: 'post', body: new FormData(formElement), mode: 'cors' })
-      .then(r => r.json()
-        .then(data => {
-          setDataDecisions(data[0])
-          setDecisionNodes(data[1])
-          closeModal()
-        })).catch((error) => {
-          setErrorMessage(error.message)
-        })
-  }
-
-  const getProcessModel = () => {
-    var url = "http://127.0.0.1:5000/process_model"
-    var formElement = document.querySelector("form");
-    fetch(url, { method: 'post', body: new FormData(formElement), mode: 'cors' })
-      .then(r => r.json()
-        .then(data => {
-          setProcessModel(data)
-          closeModal()
-        })).catch((error) => {
-          setErrorMessage(error.message)
-        })
-  }
-
   const getDecisionModel = () => {
     var url = "http://127.0.0.1:5000/decision_model"
     var formElement = document.querySelector("form");
     fetch(url, { method: 'post', body: new FormData(formElement), mode: 'cors' })
       .then(r => r.json()
         .then(data => {
-          setDecisionModel(data)
-          closeModal()
-        })).catch((error) => {
-          setErrorMessage(error.message)
-        })
-  }
-
-  const getDecisionRules = () => {
-    var url = "http://127.0.0.1:5000/decision_rules"
-    var formElement = document.querySelector("form");
-    fetch(url, { method: 'post', body: new FormData(formElement), mode: 'cors' })
-      .then(r => r.json()
-        .then(data => {
           console.log(data)
-          setDecisionRules(data)
+          setAttributes(data['attributes'])
+          setDecisionRules(data['decisionRules'])
+          setDecisionNodes(data['decisionNodes'][0])
+          setDataDecisions(data['decisionNodes'][1])
+          setProcessModel(data['processModel'])
+          setDecisionModel(data['decisionModel'])
           closeModal()
         })).catch((error) => {
           setErrorMessage(error.message)
@@ -98,10 +49,6 @@ export default function FileUploadScreen(props) {
     setErrorMessage(null)
     setDecisionModel(null)
 
-    getDecisionRules()
-    getAttributes()
-    getNodes()
-    getProcessModel()
     getDecisionModel()
   }
 

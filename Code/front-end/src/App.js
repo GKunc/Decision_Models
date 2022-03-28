@@ -75,7 +75,9 @@ export default function App(props) {
         setProcessModel={setProcessModel}
         setDecisionModel={setDecisionModel}
         decisionModel={decisionModel}
-        closeModal={closeModal} />
+        closeModal={closeModal}
+        closeDelegate={closeModal}
+      />
     }
     if (openConfig) {
       return <ConfigurationScreen

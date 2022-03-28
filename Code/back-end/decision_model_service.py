@@ -80,7 +80,7 @@ class DecisionModelService:
         self.print_result(data_nodes, rule_base_data_decisions,
                           functional_data_decisions, all_decisions, dependencies, cfd)
 
-        return dependencies
+        return cfd, rule_base_data_decisions, functional_data_decisions, data_nodes, dependencies, ["Not implemented"]
 
     def print_result(self, data_nodes, rule_base_data_decisions, functional_data_decisions, all_decisions, dependencies, relations):
         print("================================")
