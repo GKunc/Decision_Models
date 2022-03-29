@@ -66,7 +66,7 @@ class DataDecisionMiner:
         result = []
         result_set = []
 
-        # random.shuffle(data_decisions)
+        random.shuffle(data_decisions)
         for (decision, attributes) in data_decisions:
             element_to_check = []
             element_to_check.append(decision)
