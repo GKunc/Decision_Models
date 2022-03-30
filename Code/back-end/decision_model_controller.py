@@ -20,16 +20,20 @@ def decision_model():
     decision_model_service = DecisionModelService()
 
     f = request.files['file']
-    file_path = UPLOAD_FOLDER + f.filename.split('.')[0]
+    file_path = UPLOAD_FOLDER + f.filename
     f.save(file_path)
+    file_name = f.filename.split('.')[0]
     file_ext = f.filename.split('.')[1]
     if file_ext != 'csv' and file_ext != 'xes':
         raise Exception("Not supported file extension")
 
     if file_ext == 'csv':
-        csvToXesConverter.apply(file_path + '.csv')
+        csvToXesConverter.apply(UPLOAD_FOLDER, file_path)
 
-    log = xesToDataFrameConverter.apply(file_path + '.xes')
+    if file_ext == 'json':
+        print('Reading model from file')
+
+    log = xesToDataFrameConverter.apply(UPLOAD_FOLDER + file_name + '.xes')
     processModel = decision_model_service.get_process_model(log)
     cfd, rule_base_data_decisions, functional_data_decisions, attributes, decisionModel, decisionRules = decision_model_service.get_decision_model(
         log)

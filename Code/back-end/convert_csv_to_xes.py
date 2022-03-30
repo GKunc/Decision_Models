@@ -4,7 +4,7 @@ from pathlib import Path
 
 
 class CsvToXesConverter:
-    def apply(self, file_name):
+    def apply(self, folder_name, file_name):
         print('CsvToXesConverter')
         print(file_name)
         log = pandas.read_csv(file_name, sep=',')
@@ -15,5 +15,5 @@ class CsvToXesConverter:
             'time:timestamp': 'timestamp'
         }, inplace=True)
 
-        new_file_name = './Logs/' + Path(file_name).stem + '.xes'
+        new_file_name = folder_name + Path(file_name).stem + '.xes'
         pm4py.write_xes(log, new_file_name)
