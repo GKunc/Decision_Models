@@ -3,6 +3,30 @@ import { useEffect } from 'react';
 
 export default function DecisionModelVisualisation(props) {
     useEffect(() => {
+        const addAllNodes = (cy) => {
+            let allNodes = []
+            props.decisionModel.forEach(elements => {
+                elements.forEach(element => {
+                    allNodes.push(element)
+                })
+            });
+
+            allNodes = [...new Set(allNodes)]
+
+            allNodes.forEach(element => {
+                cy.add({
+                    group: 'nodes',
+                    data: { id: element }
+                })
+            });
+        }
+
+        const addAllConnections = (cy) => {
+            props.decisionModel.forEach((element, id) => {
+                cy.add({ group: 'edges', data: { id: 'e' + id, source: element[0], target: element[1] } })
+            });
+        }
+
         if (props.decisionModel) {
             var cy = cytoscape({
                 container: document.getElementById('cy'),
@@ -37,29 +61,6 @@ export default function DecisionModelVisualisation(props) {
         }
     }, [props.decisionModel]);
 
-    const addAllNodes = (cy) => {
-        let allNodes = []
-        props.decisionModel.forEach(elements => {
-            elements.forEach(element => {
-                allNodes.push(element)
-            })
-        });
-
-        allNodes = [...new Set(allNodes)]
-
-        allNodes.forEach(element => {
-            cy.add({
-                group: 'nodes',
-                data: { id: element }
-            })
-        });
-    }
-
-    const addAllConnections = (cy) => {
-        props.decisionModel.forEach((element, id) => {
-            cy.add({ group: 'edges', data: { id: 'e' + id, source: element[0], target: element[1] } })
-        });
-    }
 
     return (
         props.decisionModel !== null ?

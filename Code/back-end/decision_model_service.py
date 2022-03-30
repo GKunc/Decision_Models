@@ -73,14 +73,14 @@ class DecisionModelService:
         net = process_model_miner.apply(log)
         cfd = cfdMiner.apply(log, net)
         (rule_base_data_decisions, functional_data_decisions,
-         data_nodes) = ddMiner.apply(net, log)
+         data_nodes, decision_rules) = ddMiner.apply(net, log)
         all_decisions = rule_base_data_decisions + functional_data_decisions + cfd
         dependencies = dDependencies.apply(log, net, all_decisions, data_nodes)
 
         self.print_result(data_nodes, rule_base_data_decisions,
                           functional_data_decisions, all_decisions, dependencies, cfd)
 
-        return cfd, rule_base_data_decisions, functional_data_decisions, data_nodes, dependencies, ["Not implemented"]
+        return cfd, rule_base_data_decisions, functional_data_decisions, data_nodes, dependencies, decision_rules
 
     def print_result(self, data_nodes, rule_base_data_decisions, functional_data_decisions, all_decisions, dependencies, relations):
         print("================================")

@@ -1,3 +1,4 @@
+from this import d
 from numpy import NaN
 import pandas as pd
 import subprocess
@@ -6,23 +7,26 @@ from sklearn.tree import DecisionTreeClassifier, export_graphviz
 from pandas.api.types import is_numeric_dtype
 import itertools
 import random
-
+from sklearn.tree import _tree
 from utils.log_utils import LogUtils
 
 
 class DataDecisionMiner:
+    # ADD RULES TO RESULT
     def apply(self, net, log):
         self.net = net
         self.log = log
         self.log_utils = LogUtils()
         self.attributes = self.log_utils.get_all_attributes_from_log(self.log)
-        rule_base_data_decisions, functional_data_decisions = self.find_data_decisions()
+        rule_base_data_decisions, functional_data_decisions, decision_rules = self.find_data_decisions()
         data_nodes = self.find_data_nodes(
             rule_base_data_decisions, functional_data_decisions)
+
         return (
             rule_base_data_decisions,
             functional_data_decisions,
-            data_nodes
+            data_nodes,
+            decision_rules
         )
 
     def find_data_nodes(self, rule_base_data_decisions, functional_data_decisions):
@@ -38,6 +42,7 @@ class DataDecisionMiner:
     def find_data_decisions(self):
         rule_base_data_decisions = []
         functional_data_decisions = []
+        decision_rules = []
         for attribute in self.attributes:
             possible_attributes = self.possible_influencing_attributes(
                 attribute)
@@ -51,16 +56,20 @@ class DataDecisionMiner:
             columns.remove('label')
 
             if self.is_rule_base_data_decision(model, data, real_labels):
+                self.tree_to_code(model, columns, attribute)
+                print(decision_table)
                 rule_base_data_decisions.append((attribute, columns))
+                decision_rules.append('X = Y > 2 and Z = 3')
 
-            (attribute, possible_attributes) = self.check_if_functional_data_decision(
+            (attribute, possible_attributes, decision_rule) = self.check_if_functional_data_decision(
                 attribute)
 
             if attribute != None:
                 functional_data_decisions.append(
                     (attribute, possible_attributes))
+                decision_rules.append(decision_rule)
 
-        return self.filter_duplicated_decisions(rule_base_data_decisions), self.filter_duplicated_decisions(functional_data_decisions)
+        return self.filter_duplicated_decisions(rule_base_data_decisions), self.filter_duplicated_decisions(functional_data_decisions), decision_rules
 
     def filter_duplicated_decisions(self, data_decisions):
         result = []
@@ -87,11 +96,11 @@ class DataDecisionMiner:
         columns = list(decision_table.columns)
         columns.remove('label')
 
-        (value_1, value_2) = self.check_all_functions(decision_table)
+        (value_1, value_2, func) = self.check_all_functions(decision_table)
         if value_1 != None:
-            return (attribute, [value_1, value_2])
+            return (attribute, [value_1, value_2], f'{attribute} = {value_1} {func} {value_2}')
 
-        return (None, None)
+        return (None, None, None)
 
     def check_all_functions(self, decision_table):
         columns = list(decision_table.columns)
@@ -113,9 +122,17 @@ class DataDecisionMiner:
                 if value_2 != 0 and value_1 / value_2 != expected_result:
                     is_function[3] = False
 
-            if True in is_function:
-                return (combination[0], combination[1])
-        return (None, None)
+            # there can be multiple
+            if is_function[0]:
+                return (combination[0], combination[1], '+')
+            elif is_function[1]:
+                return (combination[0], combination[1], '-')
+            elif is_function[2]:
+                return (combination[0], combination[1], '*')
+            elif is_function[0]:
+                return (combination[0], combination[1], '/')
+
+        return (None, None, None)
 
     def get_only_numeric_columns(self, decision_table):
         decision_table = decision_table.apply(pd.to_numeric, errors='ignore')
@@ -237,3 +254,40 @@ class DataDecisionMiner:
             index += 1
         columns.append('label')
         return columns
+
+    def tree_to_code(self, tree, feature_names, attribute):
+        tree_ = tree.tree_
+        feature_name = [
+            feature_names[i] if i != _tree.TREE_UNDEFINED else "undefined!"
+            for i in tree_.feature
+        ]
+        pathto = dict()
+
+        global k
+        k = 0
+
+        def recurse(node, depth, parent):
+            global k
+
+            if tree_.feature[node] != _tree.TREE_UNDEFINED:
+                name = feature_name[node]
+                threshold = tree_.threshold[node]
+                s = "{} <= {} ".format(name, threshold, node)
+                if node == 0:
+                    pathto[node] = s
+                else:
+                    pathto[node] = pathto[parent] + ' and ' + s
+
+                recurse(tree_.children_left[node], depth + 1, node)
+                s = "{} > {}".format(name, threshold)
+                if node == 0:
+                    pathto[node] = s
+                else:
+                    pathto[node] = pathto[parent] + ' and ' + s
+                recurse(tree_.children_right[node], depth + 1, node)
+            else:
+                k = k+1
+                value = [i for i, e in enumerate(
+                    tree_.value[node][0]) if e != 0]
+                print(k, ')', pathto[parent], attribute, '=', value[0] + 1)
+        recurse(0, 1, 0)

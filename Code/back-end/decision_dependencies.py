@@ -18,7 +18,7 @@ class DecisionDependencies:
         for (decision, relations) in self.decisions:
             self.find_trivial_dependencies(decision, relations)
             self.find_non_trivial_dependencies(decision)
-            self.find_dependencies_between_attributes(decision, relations)
+            # self.find_dependencies_between_attributes(decision, relations)
         return self.get_unique_dependencies(self.dependencies)
 
     def find_dependencies_between_attributes(self, decision, relations):
