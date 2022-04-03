@@ -64,7 +64,7 @@ export default function DecisionModelVisualisation(props) {
 
     return (
         props.decisionModel !== null ?
-            <div id='cy' className='flex w-[100%] min-h-[80%]'></div>
+            <div id='cy' className='flex w-[100%] min-h-[100%] border  rounded-md'></div>
             : <div className="underline">No data</div>
     )
 }

@@ -7,16 +7,21 @@ from sklearn.tree import DecisionTreeClassifier, export_graphviz
 from pandas.api.types import is_numeric_dtype
 import itertools
 import random
-from sklearn.tree import _tree
 from utils.log_utils import LogUtils
+from utils.decision_tree_utils import DecisionTreeUtils
+from utils.dataframe_utils import DataframeUtils
 
 
 class DataDecisionMiner:
-    # ADD RULES TO RESULT
+    def __init__(self):
+        self.log_utils = LogUtils()
+        self.decision_tree_utils = DecisionTreeUtils()
+        self.dataframe_utils = DataframeUtils()
+
+        # ADD RULES TO RESULT
     def apply(self, net, log):
         self.net = net
         self.log = log
-        self.log_utils = LogUtils()
         self.attributes = self.log_utils.get_all_attributes_from_log(self.log)
         rule_base_data_decisions, functional_data_decisions, decision_rules = self.find_data_decisions()
         data_nodes = self.find_data_nodes(
@@ -49,17 +54,24 @@ class DataDecisionMiner:
             decision_table = self.create_decision_table_for_attribute(
                 attribute, possible_attributes)
 
-            model = self.create_decision_tree(decision_table)
+            y = decision_table["label"]
+            X = decision_table.drop(['label'], axis=1)
+            model = self.decision_tree_utils.classify(X, y)
             real_labels = decision_table["label"]
             data = decision_table.drop(['label'], axis=1)
             columns = list(decision_table.columns)
             columns.remove('label')
 
             if self.is_rule_base_data_decision(model, data, real_labels):
-                self.tree_to_code(model, columns, attribute)
-                print(decision_table)
+                decision_list = self.decision_tree_utils.get_decision_rules(
+                    model, columns, attribute)
+                for decision_rule in decision_list:
+                    rule = ''
+                    for str_d in decision_rule:
+                        rule += str(str_d)
+                    decision_rules.append(rule)
+
                 rule_base_data_decisions.append((attribute, columns))
-                decision_rules.append('X = Y > 2 and Z = 3')
 
             (attribute, possible_attributes, decision_rule) = self.check_if_functional_data_decision(
                 attribute)
@@ -92,7 +104,8 @@ class DataDecisionMiner:
         possible_attributes = self.possible_influencing_attributes(attribute)
         decision_table = self.create_decision_table_for_attribute(
             attribute, possible_attributes)
-        decision_table = self.get_only_numeric_columns(decision_table)
+        decision_table = self.dataframe_utils.get_only_numeric_columns(
+            decision_table)
         columns = list(decision_table.columns)
         columns.remove('label')
 
@@ -134,42 +147,12 @@ class DataDecisionMiner:
 
         return (None, None, None)
 
-    def get_only_numeric_columns(self, decision_table):
-        decision_table = decision_table.apply(pd.to_numeric, errors='ignore')
-        columns = decision_table.columns
-        numeric_columns = []
-        for column in columns:
-            if is_numeric_dtype(decision_table[column]):
-                numeric_columns.append(column)
-        return decision_table[numeric_columns]
-
     def is_rule_base_data_decision(self, model, data, real_labels):
         predicted_labels = model.predict(data)
         acc = accuracy_score(real_labels, predicted_labels)
         if (acc == 1.0):
             return True
         return False
-
-    def create_decision_tree(self, decision_table):
-        y = decision_table["label"]
-        X = decision_table.drop(['label'], axis=1)
-        decision_tree = DecisionTreeClassifier(
-            criterion="entropy", min_samples_split=3, random_state=99)
-        model = decision_tree.fit(X, y)
-        # self.visualize_tree(decision_tree, X.columns) # not really necassary
-        return model
-
-    def visualize_tree(self, tree, feature_names):
-        with open("dt.dot", 'w') as f:
-            export_graphviz(tree, out_file=f,
-                            feature_names=feature_names)
-
-        command = ["dot", "-Tpng", "dt.dot", "-o", "dt.png"]
-        try:
-            subprocess.check_call(command)
-        except:
-            exit("Could not run dot, ie graphviz, to "
-                 "produce visualization")
 
     def find_transition_in_log(self, attribute):
         index = 0
@@ -254,40 +237,3 @@ class DataDecisionMiner:
             index += 1
         columns.append('label')
         return columns
-
-    def tree_to_code(self, tree, feature_names, attribute):
-        tree_ = tree.tree_
-        feature_name = [
-            feature_names[i] if i != _tree.TREE_UNDEFINED else "undefined!"
-            for i in tree_.feature
-        ]
-        pathto = dict()
-
-        global k
-        k = 0
-
-        def recurse(node, depth, parent):
-            global k
-
-            if tree_.feature[node] != _tree.TREE_UNDEFINED:
-                name = feature_name[node]
-                threshold = tree_.threshold[node]
-                s = "{} <= {} ".format(name, threshold, node)
-                if node == 0:
-                    pathto[node] = s
-                else:
-                    pathto[node] = pathto[parent] + ' and ' + s
-
-                recurse(tree_.children_left[node], depth + 1, node)
-                s = "{} > {}".format(name, threshold)
-                if node == 0:
-                    pathto[node] = s
-                else:
-                    pathto[node] = pathto[parent] + ' and ' + s
-                recurse(tree_.children_right[node], depth + 1, node)
-            else:
-                k = k+1
-                value = [i for i, e in enumerate(
-                    tree_.value[node][0]) if e != 0]
-                print(k, ')', pathto[parent], attribute, '=', value[0] + 1)
-        recurse(0, 1, 0)

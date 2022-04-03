@@ -68,7 +68,7 @@ export default function ProcessModelVisualisation(props) {
 
     return (
         props.processModel !== null ?
-            <div id='cy-process-model' className='flex w-[100%] min-h-[80%]'></div>
+            <div id='cy-process-model' className='flex w-[100%] min-h-[100%] border rounded-md'></div>
             : <div className="underline">No data</div>
     )
 }

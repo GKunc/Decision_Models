@@ -6,6 +6,7 @@ class DecisionDependencies:
     def __init__(self):
         self.dependencies = []
         self.not_to_connect = []
+        self.attribute_connections = []
 
     def apply(self, log, net, decisions, data_nodes):
         self.log = log
@@ -18,16 +19,31 @@ class DecisionDependencies:
         for (decision, relations) in self.decisions:
             self.find_trivial_dependencies(decision, relations)
             self.find_non_trivial_dependencies(decision)
-            # self.find_dependencies_between_attributes(decision, relations)
+
+        for (decision, relations) in self.decisions:
+            self.find_dependencies_between_attributes(decision, relations)
+        print('self.not_to_connect')
+        print(self.not_to_connect)
+        print('self.attribute_connections')
+        print(self.attribute_connections)
+
         return self.get_unique_dependencies(self.dependencies)
 
     def find_dependencies_between_attributes(self, decision, relations):
         # still something wrong
+        attribute_connections = []
         for node in self.data_nodes:
-            if node in relations:
-                for not_connect_list, not_connected in self.not_to_connect:
-                    if not_connected != decision or not node in not_connect_list:
-                        self.dependencies.append((node, decision))
+            if node in relations and not self.decision_has_input_dependencies(decision):
+                self.attribute_connections.append((node, decision))
+                attribute_connections.append((node, decision))
+        self.dependencies += attribute_connections
+
+    def decision_has_input_dependencies(self, decision):
+        # problem when first it doesnt have dependency but later we add it
+        for _, target in self.dependencies:
+            if decision == target:
+                return True
+        return False
 
     def add_to_not_connect(self, relationships, decision):
         add_new = True
