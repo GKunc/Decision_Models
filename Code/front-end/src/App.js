@@ -19,8 +19,10 @@ export default function App(props) {
   const [decisionRules, setDecisionRules] = useState(null)
   const [decisionNodes, setDecisionNodes] = useState(null)
   const [dataDecisions, setDataDecisions] = useState(null)
-  const [processModel, setProcessModel] = useState(null)
   const [decisionModel, setDecisionModel] = useState(null)
+
+  const [bpmn, setBpmn] = useState(null)
+
 
   const [hiddenExample, setHiddenExample] = useState(null);
   const [hiddenNodes, setHiddenNodes] = useState(null);
@@ -72,11 +74,11 @@ export default function App(props) {
         setAttributes={setAttributes}
         setDecisionNodes={setDecisionNodes}
         setDataDecisions={setDataDecisions}
-        setProcessModel={setProcessModel}
         setDecisionModel={setDecisionModel}
         decisionModel={decisionModel}
         closeModal={closeModal}
         closeDelegate={closeModal}
+        setBpmn={setBpmn}
       />
     }
     if (openConfig) {
@@ -124,7 +126,7 @@ export default function App(props) {
         dataDecisions={dataDecisions}
         setHiddenNodes={setHiddenNodes}
 
-        processModel={processModel}
+        bpmn={bpmn}
         hiddenProcess={hiddenProcess}
         setHiddenProcess={setHiddenProcess}
 
@@ -140,7 +142,6 @@ export default function App(props) {
         style={{ overlay: {}, content: { background: 'rgb(31 41 55 / 1', color: 'white', width: modalWidth, height: modalHeight, top: '0', left: '0', margin: 'auto' } }}
         centered
       >
-
         {modalContent()}
       </ReactModal>
     </div >

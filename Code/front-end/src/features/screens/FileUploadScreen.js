@@ -12,10 +12,11 @@ export default function FileUploadScreen(props) {
   const setDecisionRules = props.setDecisionRules
   const setDecisionNodes = props.setDecisionNodes
   const setDataDecisions = props.setDataDecisions
-  const setProcessModel = props.setProcessModel
   const setDecisionModel = props.setDecisionModel
   const decisionModel = props.decisionModel
   const closeModal = props.closeModal
+
+  const setBpmn = props.setBpmn
 
   const browseForFile = () => {
     inputFileRef.current.click()
@@ -27,8 +28,17 @@ export default function FileUploadScreen(props) {
   }
 
   const getDecisionModel = () => {
-    var url = "http://127.0.0.1:5000/decision_model"
+    var url1 = "http://127.0.0.1:5000/get_bpmn"
     var formElement = document.querySelector("form");
+    fetch(url1, { method: 'post', body: new FormData(formElement), mode: 'cors' })
+      .then(r => r.text())
+      .then(async (data) => {
+        setBpmn(data)
+      }).catch((error) => {
+        setErrorMessage(error.message)
+      })
+
+    var url = "http://127.0.0.1:5000/decision_model"
     fetch(url, { method: 'post', body: new FormData(formElement), mode: 'cors' })
       .then(r => r.json()
         .then(data => {
@@ -37,7 +47,6 @@ export default function FileUploadScreen(props) {
           setDecisionRules(data['decisionRules'])
           setDecisionNodes(data['decisionNodes'][0])
           setDataDecisions(data['decisionNodes'][1])
-          setProcessModel(data['processModel'])
           setDecisionModel(data['decisionModel'])
           closeModal()
         })).catch((error) => {

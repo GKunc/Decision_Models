@@ -33,7 +33,7 @@ export default function SaveToFileScreen(props) {
                             onChange={(e) => setFileName(e.target.value)} />
                     </div>
                 </div>
-                <a href="" id="fileHook"></a>
+                <a href="none" id="fileHook" className="hidden">x</a>
                 <UtilityButton text="Save" clickDelegate={saveToFile} />
             </div>
         </div>

@@ -1,17 +1,53 @@
 import json
 import os
 import glob
-from flask import Flask, make_response, request
+from flask import Flask, make_response, request, send_file
 from decision_model_service import DecisionModelService
 from convert_csv_to_xes import CsvToXesConverter
 from xes_to_dataframe import XesToDataFrameConverter
 import pandas
+import pm4py
+from process_model_miner import ProcessModelMiner
+from pm4py.objects.conversion.process_tree import converter
 
 UPLOAD_FOLDER = './uploads/'
 
 app = Flask(__name__)
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+
+@app.route('/get_bpmn', methods=['GET', 'POST'])
+def get_bpmn():
+    csvToXesConverter = CsvToXesConverter()
+    xesToDataFrameConverter = XesToDataFrameConverter()
+
+    f = request.files['file']
+    file_path = UPLOAD_FOLDER + f.filename
+    f.save(file_path)
+    file_name = f.filename.split('.')[0]
+    file_ext = f.filename.split('.')[1]
+    if file_ext != 'csv' and file_ext != 'xes':
+        raise Exception("Not supported file extension")
+
+    if file_ext == 'csv':
+        csvToXesConverter.apply(UPLOAD_FOLDER, file_path)
+
+    if file_ext == 'json':
+        print('Reading model from file')
+
+    log = xesToDataFrameConverter.apply(UPLOAD_FOLDER + file_name + '.xes')
+    tree = pm4py.discover_process_tree_inductive(log)
+    bpmn_graph = converter.apply(tree, variant=converter.Variants.TO_BPMN)
+    pm4py.write_bpmn(bpmn_graph,
+                     "result.bpmn", enable_layout=True)
+
+    response = make_response(
+        send_file('result.bpmn', attachment_filename='result.bpmn'))
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    response.headers.add("Access-Control-Allow-Headers", "*")
+    response.headers.add("Access-Control-Allow-Methods", "*")
+    return response
 
 
 @app.route('/decision_model', methods=['GET', 'POST'])
@@ -40,6 +76,11 @@ def decision_model():
     # print(log.info())
     # print(log.head(100))
     processModel = decision_model_service.get_process_model(log)
+
+    tree = pm4py.discover_process_tree_inductive(log)
+    bpmn_graph = converter.apply(tree, variant=converter.Variants.TO_BPMN)
+    pm4py.write_bpmn(bpmn_graph, "test.bpmn", enable_layout=True)
+
     cfd, rule_base_data_decisions, functional_data_decisions, attributes, decisionModel, decisionRules = decision_model_service.get_decision_model(
         log)
 

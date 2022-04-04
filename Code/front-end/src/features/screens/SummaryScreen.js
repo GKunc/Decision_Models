@@ -41,7 +41,7 @@ export default function SummaryScreen(props) {
                 title='Process Model'
                 hidden={props.hiddenProcess}
                 content={
-                    < ProcessModelVisualisation processModel={props.processModel} />
+                    < ProcessModelVisualisation bpmn={props.bpmn} />
                 }
                 hideDelegate={() => props.setHiddenProcess(true)} />
 
