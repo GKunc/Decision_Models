@@ -14,7 +14,6 @@ class DataDecisionMiner:
         self.decision_tree_utils = DecisionTreeUtils()
         self.dataframe_utils = DataframeUtils()
 
-        # ADD RULES TO RESULT
     def apply(self, net, log):
         self.net = net
         self.log = log
@@ -47,18 +46,14 @@ class DataDecisionMiner:
         for attribute in self.attributes:
             possible_attributes = self.possible_influencing_attributes(
                 attribute)
-            decision_table = self.create_decision_table_for_attribute(
+            X, y = self.create_decision_table_for_attribute(
                 attribute, possible_attributes)
 
-            y = decision_table["label"]
-            X = decision_table.drop(['label'], axis=1)
             model = self.decision_tree_utils.classify(X, y)
-            real_labels = decision_table["label"]
-            data = decision_table.drop(['label'], axis=1)
-            columns = list(decision_table.columns)
-            columns.remove('label')
 
-            if self.is_rule_base_data_decision(model, data, real_labels):
+            columns = list(X.columns)
+
+            if self.is_rule_base_data_decision(model, X, y):
                 decision_list = self.decision_tree_utils.get_decision_rules(
                     model, columns, attribute)
                 for decision_rule in decision_list:
@@ -98,29 +93,28 @@ class DataDecisionMiner:
 
     def check_if_functional_data_decision(self, attribute):
         possible_attributes = self.possible_influencing_attributes(attribute)
-        decision_table = self.create_decision_table_for_attribute(
+        X, y = self.create_decision_table_for_attribute(
             attribute, possible_attributes)
-        decision_table = self.dataframe_utils.get_only_numeric_columns(
-            decision_table)
-        columns = list(decision_table.columns)
-        columns.remove('label')
+        X = self.dataframe_utils.get_only_numeric_columns(
+            X)
+        columns = list(X.columns)
 
-        (value_1, value_2, func) = self.check_all_functions(decision_table)
+        (value_1, value_2, func) = self.check_all_functions(X, y)
         if value_1 != None:
             return (attribute, [value_1, value_2], f'{attribute} = {value_1} {func} {value_2}')
 
         return (None, None, None)
 
-    def check_all_functions(self, decision_table):
+    def check_all_functions(self, decision_table, expected_results):
         columns = list(decision_table.columns)
-        columns.remove('label')
+
         combinations = itertools.combinations(columns, 2)
         for combination in combinations:
             is_function = [True, True, True, True]
             for index in range(decision_table.shape[1]):
                 value_1 = decision_table.iloc[index][combination[0]]
                 value_2 = decision_table.iloc[index][combination[1]]
-                expected_result = decision_table.iloc[index]['label']
+                expected_result = float(expected_results[index])
 
                 if value_1 + value_2 != expected_result:
                     is_function[0] = False
@@ -150,56 +144,20 @@ class DataDecisionMiner:
             return True
         return False
 
-    def find_transition_in_log(self, attribute):
-        index = 0
-        while index < self.log.shape[0]:
-            if self.log.iloc[index]['data'] != NaN and self.log.iloc[index]['data'] != '':
-                row_data = self.log.iloc[index]['data'].split(';')
-                for single_var in row_data:
-                    split_value = single_var.split('=')
-                    name = split_value[0].strip()
-                    if (name == attribute):
-                        return self.log.iloc[index]['activity']
-            index += 1
-        raise Exception('Attribute not found in log')
-
-    def get_all_previous_transitions(self, last_transition):
-        objects_to_check = [last_transition]
-        result = []
-        while len(objects_to_check) > 0:
-            to_delete = []
-            for arc in self.net.arcs:
-                # it is transition
-                if (hasattr(arc.target, 'label') and arc.target.label in objects_to_check):
-                    if(arc.source.name != 'source'):
-                        # can be multiple objs
-                        objects_to_check.append(arc.source)
-                    result.append(arc.target.label)
-                    to_delete.append(arc.target.label)
-                elif (arc.target and arc.target in objects_to_check):
-                    # can be multiple objs
-                    objects_to_check.append(arc.source.label)
-                    to_delete.append(arc.target)
-
-            for object in set(to_delete):
-                objects_to_check.remove(object)
-
-        return list(set(result))
-
     def possible_influencing_attributes(self, attribute):
-        transition = self.find_transition_in_log(attribute)
-        return self.get_all_previous_transitions(transition)
+        transition = self.log_utils.find_transition_in_log(self.log, attribute)
+        return self.log_utils.get_all_previous_transitions(self.net, transition)
 
     def create_decision_table_for_attribute(self, attribute, possible_attributes):
+        data = []
         filtered_log = self.log.loc[self.log['activity'].isin(
             possible_attributes)]
-        data = []
         labels = self.get_column_names(filtered_log, attribute)
         traces_id = list(set(filtered_log['case']))
         for trace_id in traces_id:
             single_trace_log = filtered_log.loc[filtered_log['case'] == trace_id]
             index = 0
-            label = None
+            expected_result = None
             row = []
             while index < single_trace_log.shape[0]:
                 if single_trace_log.iloc[index]['data'] != NaN and single_trace_log.iloc[index]['data'] != '':
@@ -210,13 +168,12 @@ class DataDecisionMiner:
                         if(name != attribute):
                             row.append(value)
                         else:
-                            label = value
+                            expected_result = value
                 index += 1
-            row.append(label)
+            row.append(expected_result)
             data.append(row)
-        table = pd.DataFrame(data, columns=labels)
-        table = table.replace({'True': '1', 'False': '0'})
-        return table
+
+        return self.dataframe_utils.get_traning_data(self.dataframe_utils.convert_to_dataframe(data, labels))
 
     def get_column_names(self, log, attribute):
         columns = []

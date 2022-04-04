@@ -25,6 +25,29 @@ class LogUtils:
             index += 1
         return list(set(attributes))
 
+    def get_all_previous_transitions(self, net, last_transition):
+        objects_to_check = [last_transition]
+        result = []
+        while len(objects_to_check) > 0:
+            to_delete = []
+            for arc in net.arcs:
+                # it is transition
+                if (hasattr(arc.target, 'label') and arc.target.label in objects_to_check):
+                    if(arc.source.name != 'source'):
+                        # can be multiple objs
+                        objects_to_check.append(arc.source)
+                    result.append(arc.target.label)
+                    to_delete.append(arc.target.label)
+                elif (arc.target and arc.target in objects_to_check):
+                    # can be multiple objs
+                    objects_to_check.append(arc.source.label)
+                    to_delete.append(arc.target)
+
+            for object in set(to_delete):
+                objects_to_check.remove(object)
+
+        return list(set(result))
+
     def find_transition_in_log(self, log, attribute):
         index = 0
         while index < log.shape[0]:
