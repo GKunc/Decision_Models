@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.signavio.com/bpmn20" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath">
+	<bpmndi:BPMNDiagram id="idd455710c-ebe1-4395-b479-db24e073a7d7" name="diagram">
+		<bpmndi:BPMNPlane bpmnElement="ide138a00c-0ece-4789-8f3b-989cbb4c5a56" id="id116b75dd-8774-4033-9d4b-293b82a3d95e">
+			<bpmndi:BPMNShape bpmnElement="id6b548f06-3b27-42ab-b473-b9425244da1a" id="id6b548f06-3b27-42ab-b473-b9425244da1a_gui">
+				<omgdc:Bounds height="60" width="115" x="400" y="-675"/>
+			</bpmndi:BPMNShape>
+			<bpmndi:BPMNShape bpmnElement="id61030745-91d1-44bd-8087-c12b171c5a38" id="id61030745-91d1-44bd-8087-c12b171c5a38_gui">
+				<omgdc:Bounds height="60" width="60" x="650" y="-675"/>
+			</bpmndi:BPMNShape>
+			<bpmndi:BPMNShape bpmnElement="idce39f007-e604-45ea-a430-4d6883eddac2" id="idce39f007-e604-45ea-a430-4d6883eddac2_gui">
+				<omgdc:Bounds height="60" width="93" x="900" y="-270"/>
+			</bpmndi:BPMNShape>
+			<bpmndi:BPMNShape bpmnElement="id1d53f0f7-aa0c-4e32-b05b-0a3c32cc01f0" id="id1d53f0f7-aa0c-4e32-b05b-0a3c32cc01f0_gui">
+				<omgdc:Bounds height="60" width="60" x="2150" y="-675"/>
+			</bpmndi:BPMNShape>
+			<bpmndi:BPMNShape bpmnElement="id0a746bb6-eeda-43c6-9f68-470e1256c596" id="id0a746bb6-eeda-43c6-9f68-470e1256c596_gui">
+				<omgdc:Bounds height="60" width="82" x="1400" y="-675"/>
+			</bpmndi:BPMNShape>
+			<bpmndi:BPMNShape bpmnElement="id13ad0561-f436-4047-865d-af929fa60c1a" id="id13ad0561-f436-4047-865d-af929fa60c1a_gui">
+				<omgdc:Bounds height="60" width="115" x="900" y="-1080"/>
+			</bpmndi:BPMNShape>
+			<bpmndi:BPMNShape bpmnElement="id134eee81-8d0d-415f-ad50-c57ba0611891" id="id134eee81-8d0d-415f-ad50-c57ba0611891_gui">
+				<omgdc:Bounds height="60" width="60" x="1150" y="-675"/>
+			</bpmndi:BPMNShape>
+			<bpmndi:BPMNShape bpmnElement="id81b6468a-f584-4d58-8649-8cca4ac90b5f" id="id81b6468a-f584-4d58-8649-8cca4ac90b5f_gui">
+				<omgdc:Bounds height="60" width="82" x="900" y="-675"/>
+			</bpmndi:BPMNShape>
+			<bpmndi:BPMNShape bpmnElement="id35387a5e-9f70-4891-a218-91b3d97b850e" id="id35387a5e-9f70-4891-a218-91b3d97b850e_gui">
+				<omgdc:Bounds height="60" width="109" x="1900" y="-472"/>
+			</bpmndi:BPMNShape>
+			<bpmndi:BPMNShape bpmnElement="id149b82df-d8e0-47b2-a40a-12eab9c2ddd3" id="id149b82df-d8e0-47b2-a40a-12eab9c2ddd3_gui">
+				<omgdc:Bounds height="60" width="60" x="150" y="-675"/>
+			</bpmndi:BPMNShape>
+			<bpmndi:BPMNShape bpmnElement="id82812685-7c83-48c7-8a03-c94efef20b93" id="id82812685-7c83-48c7-8a03-c94efef20b93_gui">
+				<omgdc:Bounds height="60" width="60" x="1650" y="-675"/>
+			</bpmndi:BPMNShape>
+			<bpmndi:BPMNShape bpmnElement="id96e3e989-9692-4b5c-b3c4-7595bd095caf" id="id96e3e989-9692-4b5c-b3c4-7595bd095caf_gui">
+				<omgdc:Bounds height="60" width="115" x="1900" y="-878"/>
+			</bpmndi:BPMNShape>
+			<bpmndi:BPMNShape bpmnElement="id8c06c007-91d4-4a67-bff8-7c0c22d18ee4" id="id8c06c007-91d4-4a67-bff8-7c0c22d18ee4_gui">
+				<omgdc:Bounds height="60" width="60" x="2400" y="-675"/>
+			</bpmndi:BPMNShape>
+			<bpmndi:BPMNEdge bpmnElement="id26cb6c87-fcc1-4228-acf1-18a6e8f50b8c" id="id26cb6c87-fcc1-4228-acf1-18a6e8f50b8c_gui">
+				<omgdi:waypoint x="515" y="-645"/>
+				<omgdi:waypoint x="582.5" y="-645"/>
+				<omgdi:waypoint x="582.5" y="-645"/>
+				<omgdi:waypoint x="650" y="-645"/>
+			</bpmndi:BPMNEdge>
+			<bpmndi:BPMNEdge bpmnElement="ida4bc3c90-c5e1-4e12-838f-5b58507101d1" id="ida4bc3c90-c5e1-4e12-838f-5b58507101d1_gui">
+				<omgdi:waypoint x="993" y="-240"/>
+				<omgdi:waypoint x="1180" y="-240"/>
+				<omgdi:waypoint x="1180" y="-615"/>
+			</bpmndi:BPMNEdge>
+			<bpmndi:BPMNEdge bpmnElement="id1c92538c-915a-4c0c-98bd-80af1e3b2f81" id="id1c92538c-915a-4c0c-98bd-80af1e3b2f81_gui">
+				<omgdi:waypoint x="1210" y="-645"/>
+				<omgdi:waypoint x="1305.0" y="-645"/>
+				<omgdi:waypoint x="1305.0" y="-645"/>
+				<omgdi:waypoint x="1400" y="-645"/>
+			</bpmndi:BPMNEdge>
+			<bpmndi:BPMNEdge bpmnElement="id20850fde-fcb9-4fee-bf12-16ff3a182067" id="id20850fde-fcb9-4fee-bf12-16ff3a182067_gui">
+				<omgdi:waypoint x="680" y="-675"/>
+				<omgdi:waypoint x="680" y="-1050"/>
+				<omgdi:waypoint x="900" y="-1050"/>
+			</bpmndi:BPMNEdge>
+			<bpmndi:BPMNEdge bpmnElement="id810ad4c3-719c-4a6c-a053-2d16828bbcee" id="id810ad4c3-719c-4a6c-a053-2d16828bbcee_gui">
+				<omgdi:waypoint x="2210" y="-645"/>
+				<omgdi:waypoint x="2305.0" y="-645"/>
+				<omgdi:waypoint x="2305.0" y="-645"/>
+				<omgdi:waypoint x="2400" y="-645"/>
+			</bpmndi:BPMNEdge>
+			<bpmndi:BPMNEdge bpmnElement="id015ecca7-928e-4d71-92ba-73c4337a8682" id="id015ecca7-928e-4d71-92ba-73c4337a8682_gui">
+				<omgdi:waypoint x="710" y="-645"/>
+				<omgdi:waypoint x="805.0" y="-645"/>
+				<omgdi:waypoint x="805.0" y="-645"/>
+				<omgdi:waypoint x="900" y="-645"/>
+			</bpmndi:BPMNEdge>
+			<bpmndi:BPMNEdge bpmnElement="idf6e5c4db-0241-493a-94fd-b6a2775957e8" id="idf6e5c4db-0241-493a-94fd-b6a2775957e8_gui">
+				<omgdi:waypoint x="1680" y="-615"/>
+				<omgdi:waypoint x="1680" y="-442"/>
+				<omgdi:waypoint x="1900" y="-442"/>
+			</bpmndi:BPMNEdge>
+			<bpmndi:BPMNEdge bpmnElement="ida580ed12-3317-42ac-af30-979cb02093e8" id="ida580ed12-3317-42ac-af30-979cb02093e8_gui">
+				<omgdi:waypoint x="982" y="-645"/>
+				<omgdi:waypoint x="1066.0" y="-645"/>
+				<omgdi:waypoint x="1066.0" y="-645"/>
+				<omgdi:waypoint x="1150" y="-645"/>
+			</bpmndi:BPMNEdge>
+			<bpmndi:BPMNEdge bpmnElement="id249af28f-be61-45ff-9224-f7a876689534" id="id249af28f-be61-45ff-9224-f7a876689534_gui">
+				<omgdi:waypoint x="2015" y="-848"/>
+				<omgdi:waypoint x="2180" y="-848"/>
+				<omgdi:waypoint x="2180" y="-675"/>
+			</bpmndi:BPMNEdge>
+			<bpmndi:BPMNEdge bpmnElement="ida81ec404-f478-44e8-9bd7-8a5f6f3d1f7d" id="ida81ec404-f478-44e8-9bd7-8a5f6f3d1f7d_gui">
+				<omgdi:waypoint x="1482" y="-645"/>
+				<omgdi:waypoint x="1566.0" y="-645"/>
+				<omgdi:waypoint x="1566.0" y="-645"/>
+				<omgdi:waypoint x="1650" y="-645"/>
+			</bpmndi:BPMNEdge>
+			<bpmndi:BPMNEdge bpmnElement="id23c8533f-3f34-4e59-b4ea-57fb9bf9ec0b" id="id23c8533f-3f34-4e59-b4ea-57fb9bf9ec0b_gui">
+				<omgdi:waypoint x="210" y="-645"/>
+				<omgdi:waypoint x="305.0" y="-645"/>
+				<omgdi:waypoint x="305.0" y="-645"/>
+				<omgdi:waypoint x="400" y="-645"/>
+			</bpmndi:BPMNEdge>
+			<bpmndi:BPMNEdge bpmnElement="id79c3334a-8c94-425a-b709-a221fc1fb7ac" id="id79c3334a-8c94-425a-b709-a221fc1fb7ac_gui">
+				<omgdi:waypoint x="1015" y="-1050"/>
+				<omgdi:waypoint x="1180" y="-1050"/>
+				<omgdi:waypoint x="1180" y="-675"/>
+			</bpmndi:BPMNEdge>
+			<bpmndi:BPMNEdge bpmnElement="id2c688b22-c452-41db-8e8f-a457af003b71" id="id2c688b22-c452-41db-8e8f-a457af003b71_gui">
+				<omgdi:waypoint x="1680" y="-675"/>
+				<omgdi:waypoint x="1680" y="-848"/>
+				<omgdi:waypoint x="1900" y="-848"/>
+			</bpmndi:BPMNEdge>
+			<bpmndi:BPMNEdge bpmnElement="ide836638a-2106-4f51-b49e-ea85017303c5" id="ide836638a-2106-4f51-b49e-ea85017303c5_gui">
+				<omgdi:waypoint x="680" y="-615"/>
+				<omgdi:waypoint x="680" y="-240"/>
+				<omgdi:waypoint x="900" y="-240"/>
+			</bpmndi:BPMNEdge>
+			<bpmndi:BPMNEdge bpmnElement="idf653da9b-5401-4c70-b5f0-c5c2bd16cc7b" id="idf653da9b-5401-4c70-b5f0-c5c2bd16cc7b_gui">
+				<omgdi:waypoint x="2009" y="-442"/>
+				<omgdi:waypoint x="2180" y="-442"/>
+				<omgdi:waypoint x="2180" y="-615"/>
+			</bpmndi:BPMNEdge>
+		</bpmndi:BPMNPlane>
+	</bpmndi:BPMNDiagram>
+	<bpmn:process id="ide138a00c-0ece-4789-8f3b-989cbb4c5a56" isClosed="false" isExecutable="false" processType="None">
+		<bpmn:task id="id6b548f06-3b27-42ab-b473-b9425244da1a" name="Register Claim">
+			<bpmn:incoming>id23c8533f-3f34-4e59-b4ea-57fb9bf9ec0b</bpmn:incoming>
+			<bpmn:outgoing>id26cb6c87-fcc1-4228-acf1-18a6e8f50b8c</bpmn:outgoing>
+		</bpmn:task>
+		<bpmn:exclusiveGateway id="id61030745-91d1-44bd-8087-c12b171c5a38" gatewayDirection="diverging" name="">
+			<bpmn:incoming>id26cb6c87-fcc1-4228-acf1-18a6e8f50b8c</bpmn:incoming>
+			<bpmn:outgoing>id015ecca7-928e-4d71-92ba-73c4337a8682</bpmn:outgoing>
+			<bpmn:outgoing>ide836638a-2106-4f51-b49e-ea85017303c5</bpmn:outgoing>
+			<bpmn:outgoing>id20850fde-fcb9-4fee-bf12-16ff3a182067</bpmn:outgoing>
+		</bpmn:exclusiveGateway>
+		<bpmn:task id="idce39f007-e604-45ea-a430-4d6883eddac2" name="Full Check">
+			<bpmn:incoming>ide836638a-2106-4f51-b49e-ea85017303c5</bpmn:incoming>
+			<bpmn:outgoing>ida4bc3c90-c5e1-4e12-838f-5b58507101d1</bpmn:outgoing>
+		</bpmn:task>
+		<bpmn:exclusiveGateway id="id1d53f0f7-aa0c-4e32-b05b-0a3c32cc01f0" gatewayDirection="converging" name="">
+			<bpmn:incoming>idf653da9b-5401-4c70-b5f0-c5c2bd16cc7b</bpmn:incoming>
+			<bpmn:incoming>id249af28f-be61-45ff-9224-f7a876689534</bpmn:incoming>
+			<bpmn:outgoing>id810ad4c3-719c-4a6c-a053-2d16828bbcee</bpmn:outgoing>
+		</bpmn:exclusiveGateway>
+		<bpmn:task id="id0a746bb6-eeda-43c6-9f68-470e1256c596" name="Evaluate">
+			<bpmn:incoming>id1c92538c-915a-4c0c-98bd-80af1e3b2f81</bpmn:incoming>
+			<bpmn:outgoing>ida81ec404-f478-44e8-9bd7-8a5f6f3d1f7d</bpmn:outgoing>
+		</bpmn:task>
+		<bpmn:task id="id13ad0561-f436-4047-865d-af929fa60c1a" name="Standard Check">
+			<bpmn:incoming>id20850fde-fcb9-4fee-bf12-16ff3a182067</bpmn:incoming>
+			<bpmn:outgoing>id79c3334a-8c94-425a-b709-a221fc1fb7ac</bpmn:outgoing>
+		</bpmn:task>
+		<bpmn:exclusiveGateway id="id134eee81-8d0d-415f-ad50-c57ba0611891" gatewayDirection="converging" name="">
+			<bpmn:incoming>ida580ed12-3317-42ac-af30-979cb02093e8</bpmn:incoming>
+			<bpmn:incoming>ida4bc3c90-c5e1-4e12-838f-5b58507101d1</bpmn:incoming>
+			<bpmn:incoming>id79c3334a-8c94-425a-b709-a221fc1fb7ac</bpmn:incoming>
+			<bpmn:outgoing>id1c92538c-915a-4c0c-98bd-80af1e3b2f81</bpmn:outgoing>
+		</bpmn:exclusiveGateway>
+		<bpmn:task id="id81b6468a-f584-4d58-8649-8cca4ac90b5f" name="No Check">
+			<bpmn:incoming>id015ecca7-928e-4d71-92ba-73c4337a8682</bpmn:incoming>
+			<bpmn:outgoing>ida580ed12-3317-42ac-af30-979cb02093e8</bpmn:outgoing>
+		</bpmn:task>
+		<bpmn:task id="id35387a5e-9f70-4891-a218-91b3d97b850e" name="Send Approval">
+			<bpmn:incoming>idf6e5c4db-0241-493a-94fd-b6a2775957e8</bpmn:incoming>
+			<bpmn:outgoing>idf653da9b-5401-4c70-b5f0-c5c2bd16cc7b</bpmn:outgoing>
+		</bpmn:task>
+		<bpmn:startEvent id="id149b82df-d8e0-47b2-a40a-12eab9c2ddd3" isInterrupting="true" name="start" parallelMultiple="false">
+			<bpmn:outgoing>id23c8533f-3f34-4e59-b4ea-57fb9bf9ec0b</bpmn:outgoing>
+		</bpmn:startEvent>
+		<bpmn:exclusiveGateway id="id82812685-7c83-48c7-8a03-c94efef20b93" gatewayDirection="diverging" name="">
+			<bpmn:incoming>ida81ec404-f478-44e8-9bd7-8a5f6f3d1f7d</bpmn:incoming>
+			<bpmn:outgoing>idf6e5c4db-0241-493a-94fd-b6a2775957e8</bpmn:outgoing>
+			<bpmn:outgoing>id2c688b22-c452-41db-8e8f-a457af003b71</bpmn:outgoing>
+		</bpmn:exclusiveGateway>
+		<bpmn:task id="id96e3e989-9692-4b5c-b3c4-7595bd095caf" name="Send Rejection">
+			<bpmn:incoming>id2c688b22-c452-41db-8e8f-a457af003b71</bpmn:incoming>
+			<bpmn:outgoing>id249af28f-be61-45ff-9224-f7a876689534</bpmn:outgoing>
+		</bpmn:task>
+		<bpmn:endEvent id="id8c06c007-91d4-4a67-bff8-7c0c22d18ee4" name="end">
+			<bpmn:incoming>id810ad4c3-719c-4a6c-a053-2d16828bbcee</bpmn:incoming>
+		</bpmn:endEvent>
+		<bpmn:sequenceFlow id="id26cb6c87-fcc1-4228-acf1-18a6e8f50b8c" name="" sourceRef="id6b548f06-3b27-42ab-b473-b9425244da1a" targetRef="id61030745-91d1-44bd-8087-c12b171c5a38"/>
+		<bpmn:sequenceFlow id="ida4bc3c90-c5e1-4e12-838f-5b58507101d1" name="" sourceRef="idce39f007-e604-45ea-a430-4d6883eddac2" targetRef="id134eee81-8d0d-415f-ad50-c57ba0611891"/>
+		<bpmn:sequenceFlow id="id1c92538c-915a-4c0c-98bd-80af1e3b2f81" name="" sourceRef="id134eee81-8d0d-415f-ad50-c57ba0611891" targetRef="id0a746bb6-eeda-43c6-9f68-470e1256c596"/>
+		<bpmn:sequenceFlow id="id20850fde-fcb9-4fee-bf12-16ff3a182067" name="" sourceRef="id61030745-91d1-44bd-8087-c12b171c5a38" targetRef="id13ad0561-f436-4047-865d-af929fa60c1a"/>
+		<bpmn:sequenceFlow id="id810ad4c3-719c-4a6c-a053-2d16828bbcee" name="" sourceRef="id1d53f0f7-aa0c-4e32-b05b-0a3c32cc01f0" targetRef="id8c06c007-91d4-4a67-bff8-7c0c22d18ee4"/>
+		<bpmn:sequenceFlow id="id015ecca7-928e-4d71-92ba-73c4337a8682" name="" sourceRef="id61030745-91d1-44bd-8087-c12b171c5a38" targetRef="id81b6468a-f584-4d58-8649-8cca4ac90b5f"/>
+		<bpmn:sequenceFlow id="idf6e5c4db-0241-493a-94fd-b6a2775957e8" name="" sourceRef="id82812685-7c83-48c7-8a03-c94efef20b93" targetRef="id35387a5e-9f70-4891-a218-91b3d97b850e"/>
+		<bpmn:sequenceFlow id="ida580ed12-3317-42ac-af30-979cb02093e8" name="" sourceRef="id81b6468a-f584-4d58-8649-8cca4ac90b5f" targetRef="id134eee81-8d0d-415f-ad50-c57ba0611891"/>
+		<bpmn:sequenceFlow id="id249af28f-be61-45ff-9224-f7a876689534" name="" sourceRef="id96e3e989-9692-4b5c-b3c4-7595bd095caf" targetRef="id1d53f0f7-aa0c-4e32-b05b-0a3c32cc01f0"/>
+		<bpmn:sequenceFlow id="ida81ec404-f478-44e8-9bd7-8a5f6f3d1f7d" name="" sourceRef="id0a746bb6-eeda-43c6-9f68-470e1256c596" targetRef="id82812685-7c83-48c7-8a03-c94efef20b93"/>
+		<bpmn:sequenceFlow id="id23c8533f-3f34-4e59-b4ea-57fb9bf9ec0b" name="" sourceRef="id149b82df-d8e0-47b2-a40a-12eab9c2ddd3" targetRef="id6b548f06-3b27-42ab-b473-b9425244da1a"/>
+		<bpmn:sequenceFlow id="id79c3334a-8c94-425a-b709-a221fc1fb7ac" name="" sourceRef="id13ad0561-f436-4047-865d-af929fa60c1a" targetRef="id134eee81-8d0d-415f-ad50-c57ba0611891"/>
+		<bpmn:sequenceFlow id="id2c688b22-c452-41db-8e8f-a457af003b71" name="" sourceRef="id82812685-7c83-48c7-8a03-c94efef20b93" targetRef="id96e3e989-9692-4b5c-b3c4-7595bd095caf"/>
+		<bpmn:sequenceFlow id="ide836638a-2106-4f51-b49e-ea85017303c5" name="" sourceRef="id61030745-91d1-44bd-8087-c12b171c5a38" targetRef="idce39f007-e604-45ea-a430-4d6883eddac2"/>
+		<bpmn:sequenceFlow id="idf653da9b-5401-4c70-b5f0-c5c2bd16cc7b" name="" sourceRef="id35387a5e-9f70-4891-a218-91b3d97b850e" targetRef="id1d53f0f7-aa0c-4e32-b05b-0a3c32cc01f0"/>
+	</bpmn:process>
+</bpmn:definitions>

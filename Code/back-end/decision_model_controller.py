@@ -5,12 +5,10 @@ from flask import Flask, make_response, request, send_file
 from decision_model_service import DecisionModelService
 from convert_csv_to_xes import CsvToXesConverter
 from xes_to_dataframe import XesToDataFrameConverter
-import pandas
 import pm4py
-from process_model_miner import ProcessModelMiner
 from pm4py.objects.conversion.process_tree import converter
 
-UPLOAD_FOLDER = './uploads/'
+UPLOAD_FOLDER = '/Users/grzegorzkunc/Desktop/Decision_Models/uploads/'
 
 app = Flask(__name__)
 
@@ -40,13 +38,16 @@ def get_bpmn():
     tree = pm4py.discover_process_tree_inductive(log)
     bpmn_graph = converter.apply(tree, variant=converter.Variants.TO_BPMN)
     pm4py.write_bpmn(bpmn_graph,
-                     "result.bpmn", enable_layout=True)
+                     UPLOAD_FOLDER + "result.bpmn", enable_layout=True)
 
     response = make_response(
-        send_file('result.bpmn', attachment_filename='result.bpmn'))
+        send_file(UPLOAD_FOLDER + 'result.bpmn', attachment_filename='result.bpmn'))
     response.headers.add("Access-Control-Allow-Origin", "*")
     response.headers.add("Access-Control-Allow-Headers", "*")
     response.headers.add("Access-Control-Allow-Methods", "*")
+
+    remove_files()
+
     return response
 
 
@@ -76,10 +77,6 @@ def decision_model():
     # print(log.info())
     # print(log.head(100))
     processModel = decision_model_service.get_process_model(log)
-
-    tree = pm4py.discover_process_tree_inductive(log)
-    bpmn_graph = converter.apply(tree, variant=converter.Variants.TO_BPMN)
-    pm4py.write_bpmn(bpmn_graph, "test.bpmn", enable_layout=True)
 
     cfd, rule_base_data_decisions, functional_data_decisions, attributes, decisionModel, decisionRules = decision_model_service.get_decision_model(
         log)
