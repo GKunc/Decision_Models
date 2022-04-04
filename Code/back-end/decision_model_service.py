@@ -5,9 +5,6 @@ from data_decision import DataDecisionMiner
 
 
 class DecisionModelService:
-    def get_decision_rules(self, log):
-        return ["To be implemented"]
-
     def get_attributes(self, log):
         process_model_miner = ProcessModelMiner()
         ddMiner = DataDecisionMiner()

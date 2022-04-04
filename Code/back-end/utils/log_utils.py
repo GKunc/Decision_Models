@@ -37,3 +37,27 @@ class LogUtils:
                         return log.iloc[index]['activity']
             index += 1
         raise Exception('Attribute not found in log')
+
+    def find_starting_transition(self, log, net, decision):
+        if 'p' not in decision:
+            return self.find_transition_in_log(log, decision)
+        for arc in net.arcs:
+            if arc.source == decision and hasattr(arc.source, 'label'):
+                return arc.target.label
+            elif arc.target == decision and hasattr(arc.source, 'label'):
+                return arc.source.label
+        # raise Exception('Transition not found in log')
+
+    def is_before_start_transition(self, net, end_transition, decision):
+        to_check = ['source']
+        while len(to_check) > 0:
+            for check in to_check:
+                targets = self.net_utils.find_arc_in_net(net, check)
+                if end_transition in to_check:
+                    return False
+                elif decision in targets:
+                    return True
+                else:
+                    to_check.extend(targets)
+                to_check.remove(check)
+        return False

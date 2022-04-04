@@ -2,6 +2,7 @@ from numpy import NaN
 import pandas as pd
 from utils.log_utils import LogUtils
 from utils.net_utils import NetUtils
+from utils.list_utils import ListUtils
 
 
 class DecisionDependencies:
@@ -9,6 +10,7 @@ class DecisionDependencies:
         self.dependencies = []
         self.log_utils = LogUtils()
         self.net_utils = NetUtils()
+        self.list_utils = ListUtils()
 
     def apply(self, log, net, decisions, data_nodes):
         self.log = log
@@ -49,72 +51,19 @@ class DecisionDependencies:
         return False
 
     def find_non_trivial_dependencies(self, decision):
-        control_flow_decisions = self.find_control_flow_decisions()
+        control_flow_decisions = self.net_utils.find_decision_places(self.net)
         for cfd in control_flow_decisions:
-            if self.is_influencing_decision(cfd, decision) and self.attributes_are_subset(cfd, decision):
-                features = self.attributes_set_differance(
-                    cfd, decision)
+            if self.is_influencing_decision(cfd, decision):
+                features = self.list_utils.attributes_set_differance(
+                    self.decisions, cfd, decision)
                 if features:
                     self.dependencies.append((cfd, decision))
 
-    def find_control_flow_decisions(self):
-        control_flow_decisions = []
-        for (decision, _) in self.decisions:
-            if 'p' in decision:
-                control_flow_decisions.append(decision)
-        return control_flow_decisions
-
-    def attributes_set_differance(self, cfd, decision):
-        for (found_decision, relations) in self.decisions:
-            if found_decision == cfd:
-                attributes_cfd = relations
-            elif found_decision == decision:
-                attributes_decision = relations
-
-        return set(attributes_decision).difference(set(attributes_cfd))
-
-    def attributes_are_subset(self, cfd, decision):
-        attributes_cfd = []
-        attributes_decision = []
-        for (found_decision, relations) in self.decisions:
-            if found_decision == cfd:
-                attributes_cfd = relations
-
-            elif found_decision == decision:
-                attributes_decision = relations
-
-        if set(attributes_cfd).issubset(set(attributes_decision)):
-            return True
-        return False
-
     def is_influencing_decision(self, cfd, decision):
-        end_transition = self.find_starting_transition(decision)
+        end_transition = self.log_utils.find_starting_transition(
+            self.log, self.net, decision)
         if decision == cfd:
             return False
-        if self.is_before_start_transition(end_transition, cfd):
+        if self.log_utils.is_before_start_transition(self.net, end_transition, cfd) and self.list_utils.attributes_are_subset(self.decisions, cfd, decision):
             return True
-        return False
-
-    def find_starting_transition(self, decision):
-        if 'p' not in decision:
-            return self.log_utils.find_transition_in_log(self.log, decision)
-        for arc in self.net.arcs:
-            if arc.source == decision and hasattr(arc.source, 'label'):
-                return arc.target.label
-            elif arc.target == decision and hasattr(arc.source, 'label'):
-                return arc.source.label
-        # raise Exception('Transition not found in log')
-
-    def is_before_start_transition(self, end_transition, decision):
-        to_check = ['source']
-        while len(to_check) > 0:
-            for check in to_check:
-                targets = self.net_utils.find_arc_in_net(self.net, check)
-                if end_transition in to_check:
-                    return False
-                elif decision in targets:
-                    return True
-                else:
-                    to_check.extend(targets)
-                to_check.remove(check)
         return False
