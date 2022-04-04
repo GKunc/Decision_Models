@@ -37,8 +37,8 @@ class DataframeUtils:
         labels.append('label')
         return self.get_traning_data(self.convert_to_dataframe(data, labels))
 
-    def create_decision_table_for_attribute(self, attribute, possible_attributes):
-        filtered_log = self.log.loc[self.log['activity'].isin(
+    def create_decision_table_for_attribute(self, log, attribute, possible_attributes):
+        filtered_log = log.loc[log['activity'].isin(
             possible_attributes)]
         data = []
         labels = self.get_column_names(filtered_log, attribute)
@@ -63,6 +63,22 @@ class DataframeUtils:
             data.append(row)
 
         return self.get_traning_data(self.convert_to_dataframe(data, labels))
+
+    def get_column_names(self, log, attribute):
+        columns = []
+        first_index = log['case'].iloc[0]
+        single_trace_log = log.loc[log['case'] == first_index]
+        index = 0
+        while index < single_trace_log.shape[0]:
+            if single_trace_log.iloc[index]['data'] != nan and single_trace_log.iloc[index]['data'] != '':
+                row_data = single_trace_log.iloc[index]['data'].split(';')
+                for single_var in row_data:
+                    name = single_var.split('=')[0].strip()
+                    if(name != attribute):
+                        columns.append(name)
+            index += 1
+        columns.append('label')
+        return columns
 
     def get_only_numeric_columns(self, decision_table):
         decision_table = decision_table.apply(pd.to_numeric, errors='ignore')
