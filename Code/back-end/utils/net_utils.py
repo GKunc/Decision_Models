@@ -23,3 +23,14 @@ class NetUtils():
             if arc.source.name == place:
                 outputs.append(arc.target.label)
         return outputs
+
+    def find_arc_in_net(self, net, source):
+        result = []
+        for arc in net.arcs:
+            if hasattr(arc.source, 'name') and arc.source.name == source:
+                result.append(arc.target.label)
+            elif hasattr(arc.source, 'label') and arc.source.label == source:
+                result.append(arc.target.name)
+        if len(result) > 0:
+            return result
+        return []
