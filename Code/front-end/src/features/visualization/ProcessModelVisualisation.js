@@ -3,6 +3,10 @@ import BpmnJS from 'bpmn-js';
 
 export default function ProcessModelVisualisation(props) {
     useEffect(() => {
+        function clearContainer() {
+            document.getElementById('bpmn').innerHTML = "";
+        }
+
         async function createBPMN() {
             var bpmnViewer = new BpmnJS({
                 container: '#bpmn'
@@ -18,7 +22,8 @@ export default function ProcessModelVisualisation(props) {
             }
         }
         if (props.bpmn)
-            createBPMN();
+            clearContainer()
+        createBPMN();
     }, [props.bpmn]);
 
     return (

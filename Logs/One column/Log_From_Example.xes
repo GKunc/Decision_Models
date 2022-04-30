@@ -504,7 +504,7 @@
 			<int key="case" value="24" />
 			<string key="activity" value="Register Claim" />
 			<date key="timestamp" value="2021-01-04T22:10:00+00:00" />
-			<string key="data" value="Amount=33; Rate=1; Duration = 3; Premium=False" />
+			<string key="data" value="Amount=33; Rate=11; Duration = 3; Premium=False" />
 			<string key="concept:name" value="Register Claim" />
 		</event>
 		<event>
@@ -535,15 +535,15 @@
 			<int key="case" value="3" />
 			<string key="activity" value="Register Claim" />
 			<date key="timestamp" value="2021-01-04T22:10:00+00:00" />
-			<string key="data" value="Amount=61.5; Rate=3; Duration = 20.5; Premium=False" />
+			<string key="data" value="Amount=61.5; Rate=3; Duration = 20.5; Premium=True" />
 			<string key="concept:name" value="Register Claim" />
 		</event>
 		<event>
 			<int key="case" value="3" />
-			<string key="activity" value="Full Check" />
+			<string key="activity" value="No Check" />
 			<date key="timestamp" value="2021-01-04T22:11:00+00:00" />
 			<float key="data" value="nan" />
-			<string key="concept:name" value="Full Check" />
+			<string key="concept:name" value="No Check" />
 		</event>
 		<event>
 			<int key="case" value="3" />
@@ -690,15 +690,15 @@
 			<int key="case" value="8" />
 			<string key="activity" value="Register Claim" />
 			<date key="timestamp" value="2021-01-04T22:10:00+00:00" />
-			<string key="data" value="Amount=102; Rate=8.5; Duration = 12; Premium=False" />
+			<string key="data" value="Amount=102; Rate=8.5; Duration = 12; Premium=True" />
 			<string key="concept:name" value="Register Claim" />
 		</event>
 		<event>
 			<int key="case" value="8" />
-			<string key="activity" value="Full Check" />
+			<string key="activity" value="No Check" />
 			<date key="timestamp" value="2021-01-04T22:11:00+00:00" />
 			<float key="data" value="nan" />
-			<string key="concept:name" value="Full Check" />
+			<string key="concept:name" value="No Check" />
 		</event>
 		<event>
 			<int key="case" value="8" />

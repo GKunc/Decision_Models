@@ -7,8 +7,8 @@ case,activity,timestamp,data
 2,No Check,01.04.21 22:11,
 2,Evaluate,01.04.21 22:12,Risk=4
 2,Send Rejection,01.04.21 22:13,
-3,Register Claim,01.04.21 22:10,Amount=61.5; Rate=3; Duration = 20.5; Premium=False
-3,Full Check,01.04.21 22:11,
+3,Register Claim,01.04.21 22:10,Amount=61.5; Rate=3; Duration = 20.5; Premium=True
+3,No Check,01.04.21 22:11,
 3,Evaluate,01.04.21 22:12,Risk=4
 3,Send Rejection,01.04.21 22:13,
 4,Register Claim,01.04.21 22:10,Amount=66; Rate=3; Duration = 22; Premium=True
@@ -27,8 +27,8 @@ case,activity,timestamp,data
 7,Full Check,01.04.21 22:11,
 7,Evaluate,01.04.21 22:12,Risk=3
 7,Send Rejection,01.04.21 22:13,
-8,Register Claim,01.04.21 22:10,Amount=102; Rate=8.5; Duration = 12; Premium=False
-8,Full Check,01.04.21 22:11,
+8,Register Claim,01.04.21 22:10,Amount=102; Rate=8.5; Duration = 12; Premium=True
+8,No Check,01.04.21 22:11,
 8,Evaluate,01.04.21 22:12,Risk=3
 8,Send Rejection,01.04.21 22:13,
 9,Register Claim,01.04.21 22:10,Amount=60; Rate=15; Duration = 4; Premium=False
@@ -91,7 +91,7 @@ case,activity,timestamp,data
 23,No Check,01.04.21 22:11,
 23,Evaluate,01.04.21 22:12,Risk=1
 23,Send Approval,01.04.21 22:13,
-24,Register Claim,01.04.21 22:10,Amount=33; Rate=1; Duration = 3; Premium=False
+24,Register Claim,01.04.21 22:10,Amount=33; Rate=11; Duration = 3; Premium=False
 24,Full Check,01.04.21 22:11,
 24,Evaluate,01.04.21 22:12,Risk=1
 24,Send Approval,01.04.21 22:13,
