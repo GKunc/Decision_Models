@@ -18,6 +18,8 @@ class DataDecisionMiner:
         self.net = net
         self.log = log
         self.attributes = self.log_utils.get_all_attributes_from_log(self.log)
+        print("ATTRIVUTES")
+        print(self.attributes)
         rule_base_data_decisions, functional_data_decisions, decision_rules = self.find_data_decisions()
         data_nodes = self.find_data_nodes(
             rule_base_data_decisions, functional_data_decisions)

@@ -8,7 +8,8 @@ class CsvToXesConverter:
         log = pandas.read_csv(file_name, sep=',')
         log = pm4py.format_dataframe(
             log, case_id='case', activity_key='activity', timestamp_key='timestamp')
-        log.drop(columns=['@@index'], inplace=True)
+        log.drop(columns=['@@index', 'case',
+                 'activity', 'timestamp'], inplace=True)
         log.rename(columns={
             'time:timestamp': 'timestamp'
         }, inplace=True)

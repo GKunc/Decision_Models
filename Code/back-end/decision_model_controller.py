@@ -72,12 +72,7 @@ def decision_model():
         print('Reading model from file')
 
     log = xesToDataFrameConverter.apply(UPLOAD_FOLDER + file_name + '.xes')
-    # pandas.set_option('display.max_colwidth', None)
-    # pandas.set_option('display.max_columns', 100)
-    # print(log.info())
-    # print(log.head(100))
     processModel = decision_model_service.get_process_model(log)
-
     cfd, rule_base_data_decisions, functional_data_decisions, attributes, decisionModel, decisionRules = decision_model_service.get_decision_model(
         log)
 

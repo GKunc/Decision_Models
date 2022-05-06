@@ -16,9 +16,30 @@ class DataframeUtils:
         table = table.replace({'True': '1', 'False': '0'})
         return table
 
+    def create_decision_table(self, log):
+        log = log.reset_index()
+        log = log.drop(['time:timestamp',
+                       'case:concept:name', 'index'], axis=1)
+        log = log.rename(columns={"concept:name": "label"})
+
+        index = 0
+        rows_to_remove = []
+        while index < log.shape[0]:
+            log.at[index, 'label'] = log.at[index+1, 'label']
+            rows_to_remove.append(index+1)
+            index += 2
+
+        log = log.drop(log.index[rows_to_remove])
+        table = log.replace({'True': '1', 'False': '0'})
+        nan_value = float("NaN")
+        table.replace("", nan_value, inplace=True)
+        table.dropna(how='all', axis=1, inplace=True)
+
+        return self.get_traning_data(table)
+
     # make sure that I can just take 2 values next to each other (SORT BY CASE ID)
     # get event log where all data are in one column (easier to parse)
-    def create_decision_table(self, log):
+    def create_decision_table_old(self, log):
         data = []
         index = 0
         while index < log.shape[0]:
