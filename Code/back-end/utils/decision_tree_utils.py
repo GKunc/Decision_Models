@@ -1,5 +1,7 @@
+import pandas
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.tree import _tree
+from sklearn import preprocessing
 
 
 class DecisionTreeUtils:
@@ -9,7 +11,12 @@ class DecisionTreeUtils:
     def classify(self, X, y):
         decision_tree = DecisionTreeClassifier(
             criterion="entropy", min_samples_split=3, random_state=99)
-        decision_tree.fit(X, y)
+        X = X.apply(
+            pandas.to_numeric, errors='ignore')
+
+        lab = preprocessing.LabelEncoder()
+        y_transformed = lab.fit_transform(y)
+        decision_tree.fit(X, y_transformed)
         return decision_tree
 
     def get_dependand_features(self, tree, feature_names):

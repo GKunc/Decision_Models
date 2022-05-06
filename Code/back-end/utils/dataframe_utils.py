@@ -2,6 +2,7 @@ import pandas
 from math import nan
 import pandas as pd
 from pandas.api.types import is_numeric_dtype
+import numpy as np
 
 
 class DataframeUtils:
@@ -31,8 +32,7 @@ class DataframeUtils:
 
         log = log.drop(log.index[rows_to_remove])
         table = log.replace({'True': '1', 'False': '0'})
-        nan_value = float("NaN")
-        table.replace("", nan_value, inplace=True)
+        table.replace("", float("NaN"), inplace=True)
         table.dropna(how='all', axis=1, inplace=True)
 
         return self.get_traning_data(table)
@@ -58,7 +58,39 @@ class DataframeUtils:
         labels.append('label')
         return self.get_traning_data(self.convert_to_dataframe(data, labels))
 
+    # should only have one row for each trace id
     def create_decision_table_for_attribute(self, log, attribute, possible_attributes):
+        data = []
+        filtered_log = log.loc[log['concept:name'].isin(
+            possible_attributes)]
+        labels = self.get_column_names(filtered_log, attribute)
+        filtered_log = filtered_log.rename(columns={attribute: "label"})
+        filtered_log.replace("", float("NaN"), inplace=True)
+        filtered_log.dropna(how='all', axis=1, inplace=True)
+
+        traces_id = list(set(filtered_log['case:concept:name']))
+        for trace_id in traces_id:
+            single_trace_log = filtered_log.loc[filtered_log['case:concept:name'] == trace_id]
+            single_trace_log = single_trace_log.reset_index()
+
+            index = 0
+            row = []
+            print(single_trace_log)
+            while index < single_trace_log.shape[0]:
+                for column_name in labels:
+                    value = single_trace_log.at[index, column_name]  # nan
+                    isNaN = np.isnan(value)
+                    if not isNaN:
+                        row.append(value)
+                index += 1
+            data.append(row)
+
+        table = self.convert_to_dataframe(data, labels)
+        table = table.drop(
+            table.columns.difference(labels), axis=1)
+        return self.get_traning_data(table)
+
+    def create_decision_table_for_attribute_old(self, log, attribute, possible_attributes):
         filtered_log = log.loc[log['activity'].isin(
             possible_attributes)]
         data = []
@@ -86,6 +118,14 @@ class DataframeUtils:
         return self.get_traning_data(self.convert_to_dataframe(data, labels))
 
     def get_column_names(self, log, attribute):
+        log = log.drop(['concept:name', 'time:timestamp',
+                        'case:concept:name'], axis=1)
+        log.replace("", float("NaN"), inplace=True)
+        log.dropna(how='all', axis=1, inplace=True)
+        log.rename(columns={attribute: "label"}, inplace=True)
+        return list(log.columns)
+
+    def get_column_names_old(self, log, attribute):
         columns = []
         first_index = log['case'].iloc[0]
         single_trace_log = log.loc[log['case'] == first_index]
@@ -111,6 +151,8 @@ class DataframeUtils:
         return decision_table[numeric_columns]
 
     def get_traning_data(self, decision_table):
-        y = decision_table["label"]
+        print('get_traning_dataget_traning_dataget_traning_dataget_traning_data')
+        print(decision_table)
+        y = decision_table["label"].to_frame(name='label')
         X = decision_table.drop(['label'], axis=1)
         return (X, y)

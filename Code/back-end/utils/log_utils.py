@@ -54,6 +54,16 @@ class LogUtils:
         return list(set(result))
 
     def find_transition_in_log(self, log, attribute):
+        log = log.replace({'True': '1', 'False': '0'})
+        log.replace("", float("NaN"), inplace=True)
+        index = 0
+        while index < log.shape[0]:
+            if log.iloc[index][attribute] != nan and not pd.isna(log.iloc[index][attribute]):
+                return log.iloc[index]['concept:name']
+            index += 1
+        raise Exception('Attribute not found in log')
+
+    def find_transition_in_log_old(self, log, attribute):
         index = 0
         while index < log.shape[0]:
             if log.iloc[index]['data'] != nan and not pd.isnull(log.iloc[index]['data']) and log.iloc[index]['data'] != '':

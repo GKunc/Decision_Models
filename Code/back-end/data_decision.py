@@ -6,6 +6,7 @@ import random
 from utils.log_utils import LogUtils
 from utils.decision_tree_utils import DecisionTreeUtils
 from utils.dataframe_utils import DataframeUtils
+from sklearn import preprocessing
 
 
 class DataDecisionMiner:
@@ -17,9 +18,9 @@ class DataDecisionMiner:
     def apply(self, net, log):
         self.net = net
         self.log = log
+        print('self.log.info()')
+        print(self.log.info())
         self.attributes = self.log_utils.get_all_attributes_from_log(self.log)
-        print("ATTRIVUTES")
-        print(self.attributes)
         rule_base_data_decisions, functional_data_decisions, decision_rules = self.find_data_decisions()
         data_nodes = self.find_data_nodes(
             rule_base_data_decisions, functional_data_decisions)
@@ -48,9 +49,9 @@ class DataDecisionMiner:
         for attribute in self.attributes:
             possible_attributes = self.possible_influencing_attributes(
                 attribute)
-
             X, y = self.dataframe_utils.create_decision_table_for_attribute(
                 self.log, attribute, possible_attributes)
+
             model = self.decision_tree_utils.classify(X, y)
 
             columns = list(X.columns)
@@ -108,7 +109,7 @@ class DataDecisionMiner:
 
     def check_all_functions(self, decision_table, expected_results):
         columns = list(decision_table.columns)
-
+        expected_results = expected_results['label'].values.tolist()
         combinations = itertools.combinations(columns, 2)
         for combination in combinations:
             is_function = [True, True, True, True]
@@ -139,7 +140,13 @@ class DataDecisionMiner:
         return (None, None, None)
 
     def is_rule_base_data_decision(self, model, data, real_labels):
+        print('is_rule_base_data_decisionis_rule_base_data_decision')
+        print(data)
+        print(real_labels)
         predicted_labels = model.predict(data)
+        lab = preprocessing.LabelEncoder()
+        predicted_labels = lab.fit_transform(predicted_labels)
+        real_labels = lab.fit_transform(real_labels)
         acc = accuracy_score(real_labels, predicted_labels)
         if (acc == 1.0):
             return True
@@ -147,4 +154,9 @@ class DataDecisionMiner:
 
     def possible_influencing_attributes(self, attribute):
         transition = self.log_utils.find_transition_in_log(self.log, attribute)
+        print("TRANSITION")
+        print(transition)
+        print("ATTRIBUTE TO TRAN")
+        print(attribute)
+
         return self.log_utils.get_all_previous_transitions(self.net, transition)
