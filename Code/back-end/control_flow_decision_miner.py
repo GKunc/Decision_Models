@@ -23,6 +23,8 @@ class ControlFlowDecisionMiner():
         for place in control_flow_decisions:
             dataframe_for_place = self.log_utils.filter_log_for_place(
                 self.log, self.net, place)
+            print('dataframe_for_place')
+            print(dataframe_for_place)
             (X, y) = self.dataframe_utils.create_decision_table(dataframe_for_place)
             decision_tree = self.decision_tree_utils.classify(X, y)
             places_with_relations.append(

@@ -46,11 +46,14 @@ export default function SummaryScreen(props) {
                 hideDelegate={() => props.setHiddenProcess(true)} />
 
             < FeatureBox
+
                 numberOfBoxes={numberOfBoxes}
                 title='Decision Model'
                 hidden={props.hiddenDecision}
                 content={
-                    < DecisionModelVisualisation decisionModel={props.decisionModel} />
+                    <div id="decision-model" className="flex w-[100%] min-h-[100%] justify-center">
+                        < DecisionModelVisualisation decisionModel={props.decisionModel} />
+                    </div>
                 }
                 hideDelegate={() => props.setHiddenDecision(true)} />
         </div >

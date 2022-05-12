@@ -54,8 +54,8 @@ export default function App(props) {
   }
 
   function openSaveToFileModal() {
-    setModalWidth('360px')
-    setModalHeight('200px')
+    setModalWidth('400px')
+    setModalHeight('250px')
     setOpenUpload(false)
     setOpenConfig(false)
     setOpenSaveToFile(true)
@@ -63,8 +63,35 @@ export default function App(props) {
     setOpenModal(true)
   }
 
-  function openPrintModelModal() {
-    window.print()
+  function openPrintBPMNModal() {
+    var printContent = document.getElementById('bpmn');
+
+    var WinPrint = window.open('', '_blank', 'width=900,height=650');
+    WinPrint.document.write(printContent.innerHTML);
+    WinPrint.document.close();
+    WinPrint.focus();
+    WinPrint.print();
+    WinPrint.close();
+  }
+
+  function openPrintDMNModal() {
+    var dataUrl = document.getElementsByTagName('canvas')[2].toDataURL(); //attempt to save base64 string to server using this var  
+    console.log(dataUrl)
+
+    let html = document.createElement('html');
+    let h1 = document.createElement('h1');
+    h1.innerHTML = "DMN"
+    let image = document.createElement('img');
+    image.src = dataUrl;
+    html.appendChild(h1);
+    html.appendChild(image);
+
+    var WinPrint = window.open('', '_blank', 'width=900,height=650');
+    WinPrint.document.write(html.innerHTML);
+    WinPrint.document.close();
+    WinPrint.focus();
+    WinPrint.print();
+    WinPrint.close();
   }
 
   function modalContent() {
@@ -100,7 +127,8 @@ export default function App(props) {
     if (openSaveToFile) {
       return <SaveToFileScreen
         closeDelegate={closeModal}
-        decisionModel={decisionModel} />
+        decisionModel={decisionModel}
+        bpmn={bpmn} />
     }
   }
 
@@ -110,8 +138,10 @@ export default function App(props) {
         openUploadFileModalClick={openUploadFileModal}
         openConfigurationModalClick={openConfigModal}
         openSaveToFileModalClick={openSaveToFileModal}
-        printModelModalClick={openPrintModelModal}
-        disableButtons={!decisionModel} />
+        printBPMNModalClick={openPrintBPMNModal}
+        printDMNModalClick={openPrintDMNModal}
+        disableButtons={!decisionModel}
+      />
 
       <SummaryScreen
         decisionRules={decisionRules}

@@ -6,7 +6,7 @@ export default function FeatureBox(props) {
             <div className="flex flex-col box-border rounded-md m-1 p-4 border border-white bg-gray-900 h-full w-full overflow-scroll box-border">
                 <div className="text-xl mb-2">{props.title}</div>
                 {
-                    <div className="flex flex-col items-center justify-center h-full mt-3 box-border">
+                    <div className="flex flex-col items-center h-full mt-3 box-border">
                         {props.content}
                     </div>
                 }

@@ -1,19 +1,24 @@
 import { useState } from "react";
 import UtilityButton from "../shared/UtilityButton";
+import { saveAs } from 'file-saver';
 
 export default function SaveToFileScreen(props) {
-    const [fileName, setFileName] = useState('decision_model')
+    const [bpmnFileName, setBpmnFileName] = useState('bpmn')
+    const [dmnFileName, setDmnFileName] = useState('dmn')
 
-    const saveToFile = () => {
-        let a = document.getElementById("fileHook");
-        const text = JSON.stringify(
+    const saveBpmnToFile = () => {
+        var bpmnModel = new Blob([props.bpmn], { type: "text/xml" });
+        saveAs(bpmnModel, `${bpmnFileName}.xml`);
+    }
+
+    const saveDmnToFile = () => {
+        const dmnJson = JSON.stringify(
             {
                 "decision model": props.decisionModel
             })
-        const file = new Blob([text], { type: 'application/json' });
-        a.href = URL.createObjectURL(file);
-        a.download = fileName + '.json';
-        a.click()
+
+        var dmnModel = new Blob([dmnJson], { type: "application/json" });
+        saveAs(dmnModel, `${bpmnFileName}.json`);
     }
 
     return (
@@ -24,17 +29,28 @@ export default function SaveToFileScreen(props) {
             </div>
             <div className={'flex flex-col h-full justify-center m-2 mt-5'}>
                 <div className="flex w-full mb-2 items-center">
-                    <div className="w-[100px]">File name:</div>
-                    <div>
+                    <div className="w-[150px]">BPMN file name:</div>
+                    <div className="m-2">
                         <input
                             className="w-[200px] h-full rounded-md text-black p-1"
                             type="text"
-                            value={fileName}
-                            onChange={(e) => setFileName(e.target.value)} />
+                            value={bpmnFileName}
+                            onChange={(e) => setBpmnFileName(e.target.value)} />
                     </div>
+                    <UtilityButton text="Save" clickDelegate={saveBpmnToFile} />
+                </div>
+                <div className="flex w-full mb-2 items-center">
+                    <div className="w-[150px]">DMN file name:</div>
+                    <div className="m-2">
+                        <input
+                            className="w-[200px] h-full rounded-md text-black p-1"
+                            type="text"
+                            value={dmnFileName}
+                            onChange={(e) => setDmnFileName(e.target.value)} />
+                    </div>
+                    <UtilityButton text="Save" clickDelegate={saveDmnToFile} />
                 </div>
                 <a href="none" id="fileHook" className="hidden">x</a>
-                <UtilityButton text="Save" clickDelegate={saveToFile} />
             </div>
         </div>
     )

@@ -46,13 +46,15 @@ def get_bpmn():
     response.headers.add("Access-Control-Allow-Headers", "*")
     response.headers.add("Access-Control-Allow-Methods", "*")
 
-    remove_files()
+    # remove_files()
 
     return response
 
 
 @app.route('/decision_model', methods=['GET', 'POST'])
 def decision_model():
+    print("Sending file ...")
+
     csvToXesConverter = CsvToXesConverter()
     xesToDataFrameConverter = XesToDataFrameConverter()
     decision_model_service = DecisionModelService()
@@ -72,6 +74,12 @@ def decision_model():
         print('Reading model from file')
 
     log = xesToDataFrameConverter.apply(UPLOAD_FOLDER + file_name + '.xes')
+    print(log.info())
+    print("====================")
+    print(log['case:concept:name'])
+    print("====================")
+    print(log['concept:name'])
+    print("====================")
     processModel = decision_model_service.get_process_model(log)
     cfd, rule_base_data_decisions, functional_data_decisions, attributes, decisionModel, decisionRules = decision_model_service.get_decision_model(
         log)
@@ -97,7 +105,7 @@ def decision_model():
         "decisionModel": decisionModel
     })
     content_type = "application/json"
-    remove_files()
+    # remove_files()
 
     return create_http_request(data, content_type)
 

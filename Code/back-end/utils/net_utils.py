@@ -14,14 +14,21 @@ class NetUtils():
     def get_input_transition_for_place(self, net, place):
         for arc in net.arcs:
             if arc.target.name == place:
-                return arc.source.label
+                print('get_input_transition_for_place')
+                if arc.source.label != None:
+                    return arc.source.label
+
         return
 
     def get_output_transitions_for_place(self, net, place):
         outputs = []
         for arc in net.arcs:
             if arc.source.name == place:
-                outputs.append(arc.target.label)
+                print('get_output_transitions_for_place')
+                print(arc.target)
+                if arc.target.label != None:
+                    outputs.append(arc.target.label)
+
         return outputs
 
     def find_arc_in_net(self, net, source):

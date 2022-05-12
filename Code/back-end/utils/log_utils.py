@@ -7,11 +7,15 @@ class LogUtils:
     def __init__(self):
         self.net_utils = NetUtils()
 
-    def filter_log_for_place(self, log, net, place):
+    def filter_log_for_place(self, log, net, place):  # wrong here
+        print('filter_log_for_placefilter_log_for_placefilter_log_for_place')
+        print(log)
         transitions_names = self.net_utils.get_output_transitions_for_place(
             net, place)
         transitions_names.append(
             self.net_utils.get_input_transition_for_place(net, place))
+        print('transitions_names')
+        print(transitions_names)
         return log.loc[log['concept:name'].isin(transitions_names)]
 
     def get_all_attributes_from_log(self, log):
@@ -55,7 +59,7 @@ class LogUtils:
 
     def find_transition_in_log(self, log, attribute):
         log = log.replace({'True': '1', 'False': '0'})
-        log.replace("", float("NaN"), inplace=True)
+        log = log.replace("", float("NaN"))
         index = 0
         while index < log.shape[0]:
             if log.iloc[index][attribute] != nan and not pd.isna(log.iloc[index][attribute]):

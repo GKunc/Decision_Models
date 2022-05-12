@@ -18,8 +18,6 @@ class DataDecisionMiner:
     def apply(self, net, log):
         self.net = net
         self.log = log
-        print('self.log.info()')
-        print(self.log.info())
         self.attributes = self.log_utils.get_all_attributes_from_log(self.log)
         rule_base_data_decisions, functional_data_decisions, decision_rules = self.find_data_decisions()
         data_nodes = self.find_data_nodes(
@@ -63,7 +61,7 @@ class DataDecisionMiner:
                     rule = ''
                     for str_d in decision_rule:
                         rule += str(str_d)
-                    decision_rules.append(rule)
+                    decision_rules.append((attribute, rule))
 
                 rule_base_data_decisions.append((attribute, columns))
 
@@ -73,7 +71,7 @@ class DataDecisionMiner:
             if attribute != None:
                 functional_data_decisions.append(
                     (attribute, possible_attributes))
-                decision_rules.append(decision_rule)
+                decision_rules.append((attribute, decision_rule))
 
         return self.filter_duplicated_decisions(rule_base_data_decisions), self.filter_duplicated_decisions(functional_data_decisions), decision_rules
 
@@ -140,9 +138,6 @@ class DataDecisionMiner:
         return (None, None, None)
 
     def is_rule_base_data_decision(self, model, data, real_labels):
-        print('is_rule_base_data_decisionis_rule_base_data_decision')
-        print(data)
-        print(real_labels)
         predicted_labels = model.predict(data)
         lab = preprocessing.LabelEncoder()
         predicted_labels = lab.fit_transform(predicted_labels)
@@ -154,9 +149,5 @@ class DataDecisionMiner:
 
     def possible_influencing_attributes(self, attribute):
         transition = self.log_utils.find_transition_in_log(self.log, attribute)
-        print("TRANSITION")
-        print(transition)
-        print("ATTRIBUTE TO TRAN")
-        print(attribute)
 
         return self.log_utils.get_all_previous_transitions(self.net, transition)

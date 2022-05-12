@@ -13,6 +13,16 @@ html, body, #root {
   -moz-osx-font-smoothing: grayscale;
 }
 
+table{
+  width:100%;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none;
+}
+
 .loader {
   border: 10px solid #f3f3f3;
   border-top: 10px solid #3498db;

@@ -32,8 +32,8 @@ class DataframeUtils:
 
         log = log.drop(log.index[rows_to_remove])
         table = log.replace({'True': '1', 'False': '0'})
-        table.replace("", float("NaN"), inplace=True)
-        table.dropna(how='all', axis=1, inplace=True)
+        table = table.replace("", float("NaN"))
+        table = table.dropna(how='all', axis=1)
 
         return self.get_traning_data(table)
 
@@ -65,8 +65,8 @@ class DataframeUtils:
             possible_attributes)]
         labels = self.get_column_names(filtered_log, attribute)
         filtered_log = filtered_log.rename(columns={attribute: "label"})
-        filtered_log.replace("", float("NaN"), inplace=True)
-        filtered_log.dropna(how='all', axis=1, inplace=True)
+        filtered_log = filtered_log.replace("", float("NaN"))
+        filtered_log = filtered_log.dropna(how='all', axis=1)
 
         traces_id = list(set(filtered_log['case:concept:name']))
         for trace_id in traces_id:
@@ -75,7 +75,6 @@ class DataframeUtils:
 
             index = 0
             row = []
-            print(single_trace_log)
             while index < single_trace_log.shape[0]:
                 for column_name in labels:
                     value = single_trace_log.at[index, column_name]  # nan
@@ -120,9 +119,9 @@ class DataframeUtils:
     def get_column_names(self, log, attribute):
         log = log.drop(['concept:name', 'time:timestamp',
                         'case:concept:name'], axis=1)
-        log.replace("", float("NaN"), inplace=True)
-        log.dropna(how='all', axis=1, inplace=True)
-        log.rename(columns={attribute: "label"}, inplace=True)
+        log = log.replace("", float("NaN"))
+        log = log.dropna(how='all', axis=1)
+        log = log.rename(columns={attribute: "label"})
         return list(log.columns)
 
     def get_column_names_old(self, log, attribute):
@@ -151,7 +150,8 @@ class DataframeUtils:
         return decision_table[numeric_columns]
 
     def get_traning_data(self, decision_table):
-        print('get_traning_dataget_traning_dataget_traning_dataget_traning_data')
+        print('get_traning_dataget_traning_dataget_traning_data')
+        print(decision_table.shape)
         print(decision_table)
         y = decision_table["label"].to_frame(name='label')
         X = decision_table.drop(['label'], axis=1)

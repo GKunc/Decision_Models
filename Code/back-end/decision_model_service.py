@@ -6,6 +6,7 @@ from data_decision import DataDecisionMiner
 
 class DecisionModelService:
     def get_attributes(self, log):
+        print('Get Attributes ...')
         process_model_miner = ProcessModelMiner()
         ddMiner = DataDecisionMiner()
 
@@ -14,6 +15,8 @@ class DecisionModelService:
         return atttibutes
 
     def get_nodes(self, log):
+        print('Get Decision Nodes ...')
+
         process_model_miner = ProcessModelMiner()
         ddMiner = DataDecisionMiner()
         cfdMiner = ControlFlowDecisionMiner()
@@ -40,6 +43,7 @@ class DecisionModelService:
         return nodes
 
     def get_process_model(self, log):
+        print('Get Process Model ...')
         process_model_miner = ProcessModelMiner()
         net = process_model_miner.apply(log)
 

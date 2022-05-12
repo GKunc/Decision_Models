@@ -28,7 +28,9 @@ export default function ProcessModelVisualisation(props) {
 
     return (
         props.bpmn !== null ?
-            <div id='bpmn' className='flex w-[100%] min-h-[100%] items-center justify-center bg-white border rounded-md'></div>
+            <div id="bpmn-container" className='flex w-[100%] min-h-[100%] items-center justify-center bg-white border rounded-md'>
+                <div id='bpmn' className='flex w-[100%] min-h-[100%] items-center justify-center bg-white border rounded-md'></div>
+            </div>
             : <div className="underline">No data</div>
     )
 }

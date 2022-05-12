@@ -1,0 +1,97 @@
+case,activity,timestamp,Amount,Rate,Duration,Premium,Risk
+1,Register Claim,01.04.21 22:10,84,5.25,16,FALSE,
+1,Full Check,01.04.21 22:11,,,,,
+1,Evaluate,01.04.21 22:12,,,,,4
+1,Send Rejection,01.04.21 22:13,,,,,
+2,Register Claim,01.04.21 22:10,100,5,20,TRUE,
+2,No Check,01.04.21 22:11,,,,,
+2,Evaluate,01.04.21 22:12,,,,,4
+2,Send Rejection,01.04.21 22:13,,,,,
+3,Register Claim,01.04.21 22:10,61.5,3,20.5,FALSE,
+3,Full Check,01.04.21 22:11,,,,,
+3,Evaluate,01.04.21 22:12,,,,,4
+3,Send Rejection,01.04.21 22:13,,,,,
+4,Register Claim,01.04.21 22:10,66,3,22,TRUE,
+4,No Check,01.04.21 22:11,,,,,
+4,Evaluate,01.04.21 22:12,,,,,4
+4,Send Rejection,01.04.21 22:13,,,,,
+5,Register Claim,01.04.21 22:10,75,5,15,FALSE,
+5,Full Check,01.04.21 22:11,,,,,
+5,Evaluate,01.04.21 22:12,,,,,3
+5,Send Rejection,01.04.21 22:13,,,,,
+6,Register Claim,01.04.21 22:10,60,6,10,TRUE,
+6,No Check,01.04.21 22:11,,,,,
+6,Evaluate,01.04.21 22:12,,,,,3
+6,Send Rejection,01.04.21 22:13,,,,,
+7,Register Claim,01.04.21 22:10,72,6,12,FALSE,
+7,Full Check,01.04.21 22:11,,,,,
+7,Evaluate,01.04.21 22:12,,,,,3
+7,Send Rejection,01.04.21 22:13,,,,,
+8,Register Claim,01.04.21 22:10,102,8.5,12,TRUE,
+8,No Check,01.04.21 22:11,,,,,
+8,Evaluate,01.04.21 22:12,,,,,3
+8,Send Rejection,01.04.21 22:13,,,,,
+9,Register Claim,01.04.21 22:10,60,15,4,FALSE,
+9,Full Check,01.04.21 22:11,,,,,
+9,Evaluate,01.04.21 22:12,,,,,2
+9,Send Approval,01.04.21 22:13,,,,,
+10,Register Claim,01.04.21 22:10,55,11,5,FALSE,
+10,Full Check,01.04.21 22:11,,,,,
+10,Evaluate,01.04.21 22:12,,,,,2
+10,Send Approval,01.04.21 22:13,,,,,
+11,Register Claim,01.04.21 22:10,75,25,3,TRUE,
+11,No Check,01.04.21 22:11,,,,,
+11,Evaluate,01.04.21 22:12,,,,,2
+11,Send Approval,01.04.21 22:13,,,,,
+12,Register Claim,01.04.21 22:10,80,20,4,TRUE,
+12,No Check,01.04.21 22:11,,,,,
+12,Evaluate,01.04.21 22:12,,,,,2
+12,Send Approval,01.04.21 22:13,,,,,
+13,Register Claim,01.04.21 22:10,42,2,21,FALSE,
+13,Standard Check,01.04.21 22:11,,,,,
+13,Evaluate,01.04.21 22:12,,,,,3
+13,Send Rejection,01.04.21 22:13,,,,,
+14,Register Claim,01.04.21 22:10,30,1.2,25,FALSE,
+14,Standard Check,01.04.21 22:11,,,,,
+14,Evaluate,01.04.21 22:12,,,,,3
+14,Send Rejection,01.04.21 22:13,,,,,
+15,Register Claim,01.04.21 22:10,33,1.1,30,FALSE,
+15,Standard Check,01.04.21 22:11,,,,,
+15,Evaluate,01.04.21 22:12,,,,,3
+15,Send Rejection,01.04.21 22:13,,,,,
+16,Register Claim,01.04.21 22:10,46,2,23,TRUE,
+16,No Check,01.04.21 22:11,,,,,
+16,Evaluate,01.04.21 22:12,,,,,3
+16,Send Rejection,01.04.21 22:13,,,,,
+17,Register Claim,01.04.21 22:10,30,2,15,TRUE,
+17,No Check,01.04.21 22:11,,,,,
+17,Evaluate,01.04.21 22:12,,,,,2
+17,Send Approval,01.04.21 22:13,,,,,
+18,Register Claim,01.04.21 22:10,48,3,16,FALSE,
+18,Full Check,01.04.21 22:11,,,,,
+18,Evaluate,01.04.21 22:12,,,,,2
+18,Send Approval,01.04.21 22:13,,,,,
+19,Register Claim,01.04.21 22:10,44,4,11,FALSE,
+19,Full Check,01.04.21 22:11,,,,,
+19,Evaluate,01.04.21 22:12,,,,,2
+19,Send Approval,01.04.21 22:13,,,,,
+20,Register Claim,01.04.21 22:10,28,2.8,10,FALSE,
+20,Full Check,01.04.21 22:11,,,,,
+20,Evaluate,01.04.21 22:12,,,,,2
+20,Send Approval,01.04.21 22:13,,,,,
+21,Register Claim,01.04.21 22:10,24,3,8,FALSE,
+21,Full Check,01.04.21 22:11,,,,,
+21,Evaluate,01.04.21 22:12,,,,,1
+21,Send Approval,01.04.21 22:13,,,,,
+22,Register Claim,01.04.21 22:10,40,10,4,FALSE,
+22,Full Check,01.04.21 22:11,,,,,
+22,Evaluate,01.04.21 22:12,,,,,1
+22,Send Approval,01.04.21 22:13,,,,,
+23,Register Claim,01.04.21 22:10,28,4,7,TRUE,
+23,No Check,01.04.21 22:11,,,,,
+23,Evaluate,01.04.21 22:12,,,,,1
+23,Send Approval,01.04.21 22:13,,,,,
+24,Register Claim,01.04.21 22:10,33,11,3,TRUE,
+24,No Check,01.04.21 22:11,,,,,
+24,Evaluate,01.04.21 22:12,,,,,1
+24,Send Approval,01.04.21 22:13,,,,,

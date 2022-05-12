@@ -10,7 +10,8 @@ export default function UtilityBar(props) {
         <UtilityButton text={"Configuration"} clickDelegate={props.openConfigurationModalClick} />
         <UtilityButton text={"Upload File"} clickDelegate={props.openUploadFileModalClick} />
         <UtilityButton text={"Save to file"} clickDelegate={props.openSaveToFileModalClick} disabled={props.disableButtons} />
-        <UtilityButton text={"Print Model"} clickDelegate={props.printModelModalClick} disabled={props.disableButtons} />
+        <UtilityButton text={"Print BPMN"} clickDelegate={props.printBPMNModalClick} disabled={props.disableButtons} />
+        <UtilityButton text={"Print DMN"} clickDelegate={props.printDMNModalClick} disabled={props.disableButtons} />
       </div>
     </div>
   );
