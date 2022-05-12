@@ -129,4 +129,6 @@ dmypy.json
 .pyre/
 
 */Logs/*
+/Logs/*
 */uploads/*
+/uploads/*
