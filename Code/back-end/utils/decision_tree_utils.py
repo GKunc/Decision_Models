@@ -17,6 +17,7 @@ class DecisionTreeUtils:
         print(X.shape)
 
         lab = preprocessing.LabelEncoder()
+        # X = X.dropna() # need to drop same number in y
         X = X.to_numpy()
         print('X.shape')
         print(X.shape)
@@ -91,5 +92,8 @@ class DecisionTreeUtils:
         else:
             value = [i for i, e in enumerate(
                 tree_.value[node][0]) if e != 0]
-            result.append((pathto[parent], ' then ',
-                          attribute, '=', value[0] + 1))
+            try:
+                result.append((pathto[parent], ' then ',
+                               attribute, '=', value[0] + 1))
+            except KeyError:
+                return

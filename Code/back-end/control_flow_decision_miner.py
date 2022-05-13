@@ -25,8 +25,10 @@ class ControlFlowDecisionMiner():
                 self.log, self.net, place)
             print('dataframe_for_place')
             print(dataframe_for_place)
-            (X, y) = self.dataframe_utils.create_decision_table(dataframe_for_place)
-            decision_tree = self.decision_tree_utils.classify(X, y)
-            places_with_relations.append(
-                (place, self.decision_tree_utils.get_dependand_features(decision_tree, X.columns)))
+            if dataframe_for_place.shape[0] > 0:
+                (X, y) = self.dataframe_utils.create_decision_table(
+                    dataframe_for_place)
+                decision_tree = self.decision_tree_utils.classify(X, y)
+                places_with_relations.append(
+                    (place, self.decision_tree_utils.get_dependand_features(decision_tree, X.columns)))
         return places_with_relations

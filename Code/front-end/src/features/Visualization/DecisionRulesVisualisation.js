@@ -17,6 +17,7 @@ export default function DecisionRulesVisualisation(props) {
             const uniqueAttributes = [...new Set(attributes)];
             setDecisionAttributes(uniqueAttributes)
         }
+        console.log(decisionAttributes)
     }, [props.decisionRules]);
 
     function clickedExpand(element) {

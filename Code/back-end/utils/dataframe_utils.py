@@ -19,13 +19,13 @@ class DataframeUtils:
 
     def create_decision_table(self, log):
         log = log.reset_index()
-        log = log.drop(['time:timestamp',
+        log = log.drop([
                        'case:concept:name', 'index'], axis=1)
         log = log.rename(columns={"concept:name": "label"})
 
         index = 0
         rows_to_remove = []
-        while index < log.shape[0]:
+        while index < log.shape[0] - 1:
             log.at[index, 'label'] = log.at[index+1, 'label']
             rows_to_remove.append(index+1)
             index += 2
@@ -34,6 +34,7 @@ class DataframeUtils:
         table = log.replace({'True': '1', 'False': '0'})
         table = table.replace("", float("NaN"))
         table = table.dropna(how='all', axis=1)
+        table = table.dropna()
 
         return self.get_traning_data(table)
 
@@ -78,8 +79,11 @@ class DataframeUtils:
             while index < single_trace_log.shape[0]:
                 for column_name in labels:
                     value = single_trace_log.at[index, column_name]  # nan
-                    isNaN = np.isnan(value)
-                    if not isNaN:
+
+                    try:
+                        if not np.isnan(value):
+                            row.append(value)
+                    except:
                         row.append(value)
                 index += 1
             data.append(row)
@@ -117,7 +121,7 @@ class DataframeUtils:
         return self.get_traning_data(self.convert_to_dataframe(data, labels))
 
     def get_column_names(self, log, attribute):
-        log = log.drop(['concept:name', 'time:timestamp',
+        log = log.drop(['concept:name',
                         'case:concept:name'], axis=1)
         log = log.replace("", float("NaN"))
         log = log.dropna(how='all', axis=1)
@@ -142,6 +146,8 @@ class DataframeUtils:
 
     def get_only_numeric_columns(self, decision_table):
         decision_table = decision_table.apply(pd.to_numeric, errors='ignore')
+        print(decision_table.info())
+        print(decision_table)
         columns = decision_table.columns
         numeric_columns = []
         for column in columns:
@@ -153,6 +159,9 @@ class DataframeUtils:
         print('get_traning_dataget_traning_dataget_traning_data')
         print(decision_table.shape)
         print(decision_table)
+        decision_table.dropna()
+        print(decision_table)
+
         y = decision_table["label"].to_frame(name='label')
         X = decision_table.drop(['label'], axis=1)
         return (X, y)

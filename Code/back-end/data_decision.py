@@ -57,11 +57,12 @@ class DataDecisionMiner:
             if self.is_rule_base_data_decision(model, X, y):
                 decision_list = self.decision_tree_utils.get_decision_rules(
                     model, columns, attribute)
-                for decision_rule in decision_list:
-                    rule = ''
-                    for str_d in decision_rule:
-                        rule += str(str_d)
-                    decision_rules.append((attribute, rule))
+                if decision_list != None:
+                    for decision_rule in decision_list:
+                        rule = ''
+                        for str_d in decision_rule:
+                            rule += str(str_d)
+                        decision_rules.append((attribute, rule))
 
                 rule_base_data_decisions.append((attribute, columns))
 
@@ -114,7 +115,10 @@ class DataDecisionMiner:
             for index in range(decision_table.shape[1]):
                 value_1 = decision_table.iloc[index][combination[0]]
                 value_2 = decision_table.iloc[index][combination[1]]
-                expected_result = float(expected_results[index])
+                try:
+                    expected_result = float(expected_results[index])
+                except:
+                    return (None, None, None)
 
                 if value_1 + value_2 != expected_result:
                     is_function[0] = False
@@ -138,8 +142,16 @@ class DataDecisionMiner:
         return (None, None, None)
 
     def is_rule_base_data_decision(self, model, data, real_labels):
-        predicted_labels = model.predict(data)
         lab = preprocessing.LabelEncoder()
+        print('data = lab.fit_transform(data)')
+        print(data)
+        data = data.to_numpy()
+
+        for i in range(data.shape[1]):
+            if (isinstance(data[:, i][0], str)):
+                data[:, i] = lab.fit_transform(data[:, i])
+        print(data)
+        predicted_labels = model.predict(data)
         predicted_labels = lab.fit_transform(predicted_labels)
         real_labels = lab.fit_transform(real_labels)
         acc = accuracy_score(real_labels, predicted_labels)

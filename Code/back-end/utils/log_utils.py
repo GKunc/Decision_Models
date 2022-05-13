@@ -19,7 +19,7 @@ class LogUtils:
         return log.loc[log['concept:name'].isin(transitions_names)]
 
     def get_all_attributes_from_log(self, log):
-        log = log.drop(['concept:name', 'time:timestamp',
+        log = log.drop(['concept:name',
                        'case:concept:name'], axis=1)
         return list(log.columns)
 
