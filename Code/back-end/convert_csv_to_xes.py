@@ -14,6 +14,7 @@ class CsvToXesConverter:
             'time:timestamp': 'timestamp'
         })
 
+        print('CsvToXesConverter - log.info()')
         print(log.info())
         new_file_name = folder_name + Path(file_name).stem + '.xes'
         pm4py.write_xes(log, new_file_name)

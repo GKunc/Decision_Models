@@ -14,7 +14,6 @@ class NetUtils():
     def get_input_transition_for_place(self, net, place):
         for arc in net.arcs:
             if arc.target.name == place:
-                print('get_input_transition_for_place')
                 if arc.source.label != None:
                     return arc.source.label
 
@@ -24,8 +23,6 @@ class NetUtils():
         outputs = []
         for arc in net.arcs:
             if arc.source.name == place:
-                print('get_output_transitions_for_place')
-                print(arc.target)
                 if arc.target.label != None:
                     outputs.append(arc.target.label)
 

@@ -32,7 +32,7 @@ def get_bpmn():
         csvToXesConverter.apply(UPLOAD_FOLDER, file_path)
 
     if file_ext == 'json':
-        print('Reading model from file')
+        print('Reading model from json file ...')
 
     log = xesToDataFrameConverter.apply(UPLOAD_FOLDER + file_name + '.xes')
     tree = pm4py.discover_process_tree_inductive(log)
@@ -71,15 +71,9 @@ def decision_model():
         csvToXesConverter.apply(UPLOAD_FOLDER, file_path)
 
     if file_ext == 'json':
-        print('Reading model from file')
+        print('Reading model from json file ...')
 
     log = xesToDataFrameConverter.apply(UPLOAD_FOLDER + file_name + '.xes')
-    print(log.info())
-    print("====================")
-    print(log['case:concept:name'])
-    print("====================")
-    print(log['concept:name'])
-    print("====================")
     processModel = decision_model_service.get_process_model(log)
     cfd, rule_base_data_decisions, functional_data_decisions, attributes, decisionModel, decisionRules = decision_model_service.get_decision_model(
         log)

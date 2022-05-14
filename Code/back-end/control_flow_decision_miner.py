@@ -23,8 +23,6 @@ class ControlFlowDecisionMiner():
         for place in control_flow_decisions:
             dataframe_for_place = self.log_utils.filter_log_for_place(
                 self.log, self.net, place)
-            print('dataframe_for_place')
-            print(dataframe_for_place)
             if dataframe_for_place.shape[0] > 0:
                 (X, y) = self.dataframe_utils.create_decision_table(
                     dataframe_for_place)

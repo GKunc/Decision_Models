@@ -10,7 +10,7 @@ export default function NodesModelVisualisation(props) {
     return (
 
         props.decisionNodes !== null && props.dataDecisions !== null && props.attributes !== null ?
-            <div>
+            <div className='w-[100%] flex-wrap'>
                 <div className="p-2 flex items-center border border-dashed border-white">
                     <div className="w-[200px]">Attributes</div>
 

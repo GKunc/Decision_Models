@@ -146,8 +146,6 @@ class DataframeUtils:
 
     def get_only_numeric_columns(self, decision_table):
         decision_table = decision_table.apply(pd.to_numeric, errors='ignore')
-        print(decision_table.info())
-        print(decision_table)
         columns = decision_table.columns
         numeric_columns = []
         for column in columns:
@@ -156,11 +154,7 @@ class DataframeUtils:
         return decision_table[numeric_columns]
 
     def get_traning_data(self, decision_table):
-        print('get_traning_dataget_traning_dataget_traning_data')
-        print(decision_table.shape)
-        print(decision_table)
         decision_table.dropna()
-        print(decision_table)
 
         y = decision_table["label"].to_frame(name='label')
         X = decision_table.drop(['label'], axis=1)

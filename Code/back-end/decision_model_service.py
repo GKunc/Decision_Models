@@ -6,7 +6,7 @@ from data_decision import DataDecisionMiner
 
 class DecisionModelService:
     def get_attributes(self, log):
-        print('Get Attributes ...')
+        print('DecisionModelService - get Attributes ...')
         process_model_miner = ProcessModelMiner()
         ddMiner = DataDecisionMiner()
 
@@ -15,7 +15,7 @@ class DecisionModelService:
         return atttibutes
 
     def get_nodes(self, log):
-        print('Get Decision Nodes ...')
+        print('DecisionModelService - get Decision Nodes ...')
 
         process_model_miner = ProcessModelMiner()
         ddMiner = DataDecisionMiner()
@@ -43,7 +43,7 @@ class DecisionModelService:
         return nodes
 
     def get_process_model(self, log):
-        print('Get Process Model ...')
+        print('DecisionModelService - get Process Model ...')
         process_model_miner = ProcessModelMiner()
         net = process_model_miner.apply(log)
 
@@ -79,11 +79,11 @@ class DecisionModelService:
         dependencies = dDependencies.apply(log, net, all_decisions, data_nodes)
 
         self.print_result(data_nodes, rule_base_data_decisions,
-                          functional_data_decisions, all_decisions, dependencies, cfd)
+                          functional_data_decisions, all_decisions, dependencies, cfd, decision_rules)
 
         return cfd, rule_base_data_decisions, functional_data_decisions, data_nodes, dependencies, decision_rules
 
-    def print_result(self, data_nodes, rule_base_data_decisions, functional_data_decisions, all_decisions, dependencies, relations):
+    def print_result(self, data_nodes, rule_base_data_decisions, functional_data_decisions, all_decisions, dependencies, relations, decision_rules):
         print("================================")
         print('ddMiner.attributes')
         print(data_nodes)
@@ -103,3 +103,7 @@ class DecisionModelService:
         print("================================")
         print('dependencies.find')
         print(dependencies)
+
+        print("================================")
+        print('decision_rules')
+        print(decision_rules)

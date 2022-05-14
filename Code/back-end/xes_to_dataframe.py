@@ -15,12 +15,14 @@ class XesToDataFrameConverter:
             if is_datetime(log[column]):
                 to_delete.append(column)
 
-        print("COLUMNS TO DELETE")
+        print("XesToDataFrameConverter - columns")
+        print(to_delete)
         log = log.drop(columns=to_delete)
-        # log = log.drop(columns=['case:REG_DATE'])
-        # log = log.drop(columns=['time:timestamp'])
+        log = log.drop(columns=['case:REG_DATE'])
+        log = log.drop(columns=['time:timestamp'])
         log = self.__fill_empty_values(log)
-        print('XesToDataFrameConverterXesToDataFrameConverterXesToDataFrameConverter')
+
+        print("XesToDataFrameConverter - transformed log")
         print(log)
         return log
 

@@ -11,31 +11,21 @@ class DecisionTreeUtils:
     def classify(self, X, y):
         decision_tree = DecisionTreeClassifier(
             criterion="entropy", min_samples_split=3, random_state=99)
-        # X = X.apply(
-        #     pandas.to_numeric, errors='ignore')  # here wrong
-        print('X.shape')
-        print(X.shape)
 
         lab = preprocessing.LabelEncoder()
-        # X = X.dropna() # need to drop same number in y
         X = X.to_numpy()
-        print('X.shape')
-        print(X.shape)
-        print('y.shape')
-        print(y.shape)
-        print(type(X))
-        print('BEFORE TRANSFORM XXXXX')
+        print('DecisionTreeUtils - before transform XXXXX')
         print(X)
         for i in range(X.shape[1]):
             print(type(X[:, i]))
             if (isinstance(X[:, i][0], str)):
                 X[:, i] = lab.fit_transform(X[:, i])
 
-        print('AFTER TRANSFORM XXXXX')
+        print('DecisionTreeUtils - after transform XXXXX')
         print(X)
         y_transformed = lab.fit_transform(y)
 
-        print('AFTER TRANSFORM YYYY')
+        print('DecisionTreeUtils - after transform YYYYYY')
         print(y_transformed)
         decision_tree.fit(X, y_transformed)
         return decision_tree

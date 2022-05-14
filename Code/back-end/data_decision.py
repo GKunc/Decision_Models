@@ -143,14 +143,11 @@ class DataDecisionMiner:
 
     def is_rule_base_data_decision(self, model, data, real_labels):
         lab = preprocessing.LabelEncoder()
-        print('data = lab.fit_transform(data)')
-        print(data)
         data = data.to_numpy()
 
         for i in range(data.shape[1]):
             if (isinstance(data[:, i][0], str)):
                 data[:, i] = lab.fit_transform(data[:, i])
-        print(data)
         predicted_labels = model.predict(data)
         predicted_labels = lab.fit_transform(predicted_labels)
         real_labels = lab.fit_transform(real_labels)
