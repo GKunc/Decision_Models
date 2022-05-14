@@ -42,6 +42,7 @@ export default function FileUploadScreen(props) {
     fetch(url, { method: 'post', body: new FormData(formElement), mode: 'cors' })
       .then(r => r.json()
         .then(data => {
+          console.log("Decision model")
           console.log(data)
           setAttributes(data['attributes'])
           setDecisionRules(data['decisionRules'])
@@ -91,7 +92,6 @@ export default function FileUploadScreen(props) {
     const dropZone = document.getElementById('drop-zone')
     dropZone.classList.remove('active-dropzone')
     dropZone.classList.add('inactive-dropzone')
-    console.log(e.dataTransfer.files[0])
     inputFileRef.current.files = e.dataTransfer.files
     handleFileSelected()
   };

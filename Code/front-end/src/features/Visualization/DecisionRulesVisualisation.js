@@ -6,7 +6,6 @@ export default function DecisionRulesVisualisation(props) {
     const [expandedRow, setExpandedRow] = useState(null)
 
     useEffect(() => {
-        console.log(props.decisionRules)
         const attributes = []
         const rules = []
         if (props.decisionRules) {
@@ -17,7 +16,6 @@ export default function DecisionRulesVisualisation(props) {
             const uniqueAttributes = [...new Set(attributes)];
             setDecisionAttributes(uniqueAttributes)
         }
-        console.log(decisionAttributes)
     }, [props.decisionRules]);
 
     function clickedExpand(element) {

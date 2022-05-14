@@ -75,8 +75,7 @@ export default function App(props) {
   }
 
   function openPrintDMNModal() {
-    var dataUrl = document.getElementsByTagName('canvas')[2].toDataURL(); //attempt to save base64 string to server using this var  
-    console.log(dataUrl)
+    var dataUrl = document.getElementsByTagName('canvas')[2].toDataURL();
 
     let html = document.createElement('html');
     let h1 = document.createElement('h1');

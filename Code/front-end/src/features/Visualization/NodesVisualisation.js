@@ -1,11 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 export default function NodesModelVisualisation(props) {
-    useEffect(() => {
-        console.log(props.decisionNodes)
-        console.log(props.dataDecisions)
-        console.log(props.attributes)
-    })
 
     return (
 
