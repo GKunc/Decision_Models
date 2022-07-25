@@ -23,20 +23,26 @@ export default function FileUploadScreen(props) {
   }
 
   const handleFileSelected = () => {
-    setFile(inputFileRef.current.files[0])
-    submitButton.current.click()
+    if (inputFileRef.current.files[0].name.split(".")[1] === "csv" ||
+      inputFileRef.current.files[0].name.split(".")[1] === "xes") {
+      setFile(inputFileRef.current.files[0])
+      submitButton.current.click()
+    } else {
+      console.log(inputFileRef.current.files[0].name.split(".")[1])
+      setErrorMessage("Unsuported file extension. Please upload 'csv' or 'xes'.")
+    }
   }
 
   const getDecisionModel = () => {
     var url1 = "http://127.0.0.1:5000/get_bpmn"
     var formElement = document.querySelector("form");
-    // fetch(url1, { method: 'post', body: new FormData(formElement), mode: 'cors' })
-    //   .then(r => r.text())
-    //   .then(async (data) => {
-    //     setBpmn(data)
-    //   }).catch((error) => {
-    //     setErrorMessage(error.message)
-    //   })
+    fetch(url1, { method: 'post', body: new FormData(formElement), mode: 'cors' })
+      .then(r => r.text())
+      .then(async (data) => {
+        setBpmn(data)
+      }).catch((error) => {
+        setErrorMessage(error.message)
+      })
 
     var url = "http://127.0.0.1:5000/decision_model"
     fetch(url, { method: 'post', body: new FormData(formElement), mode: 'cors' })

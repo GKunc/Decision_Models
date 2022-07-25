@@ -15,6 +15,7 @@ class XesToDataFrameConverter:
             if is_datetime(log[column]):
                 to_delete.append(column)
 
+        print(log.info())
         print("XesToDataFrameConverter - columns")
         print(to_delete)
         log = log.drop(columns=to_delete)

@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^13.5.0",
     "bpmn-js": "^9.0.3",
     "cytoscape": "^3.21.0",
+    "dmn-js": "^12.2.0",
     "file-saver": "^2.0.5",
     "print-js": "^1.6.0",
     "react": "^17.0.2",

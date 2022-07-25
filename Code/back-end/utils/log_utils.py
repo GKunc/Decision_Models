@@ -7,7 +7,7 @@ class LogUtils:
     def __init__(self):
         self.net_utils = NetUtils()
 
-    def filter_log_for_place(self, log, net, place):  # wrong here
+    def filter_log_for_place(self, log, net, place):
         transitions_names = self.net_utils.get_output_transitions_for_place(
             net, place)
         transitions_names.append(

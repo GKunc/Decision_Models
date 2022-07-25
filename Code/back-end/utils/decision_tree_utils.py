@@ -1,7 +1,8 @@
-import pandas
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.tree import _tree
 from sklearn import preprocessing
+from graphviz import Source
+from sklearn.tree import export_graphviz
 
 
 class DecisionTreeUtils:
@@ -31,6 +32,12 @@ class DecisionTreeUtils:
         return decision_tree
 
     def get_dependand_features(self, tree, feature_names):
+        dotfile = open("decision_tree.dot", 'w')
+
+        Source(export_graphviz(
+            tree, out_file=dotfile, feature_names=feature_names))
+        dotfile.close()
+
         tree_ = tree.tree_
         feature_name = [
             feature_names[i] if i != _tree.TREE_UNDEFINED else "undefined!"
@@ -82,6 +89,8 @@ class DecisionTreeUtils:
         else:
             value = [i for i, e in enumerate(
                 tree_.value[node][0]) if e != 0]
+            print('DecisionTreeUtils - decision rule VALUE')
+            print(value)
             try:
                 result.append((pathto[parent], ' then ',
                                attribute, '=', value[0] + 1))

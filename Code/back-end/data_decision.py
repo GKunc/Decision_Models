@@ -148,6 +148,7 @@ class DataDecisionMiner:
         for i in range(data.shape[1]):
             if (isinstance(data[:, i][0], str)):
                 data[:, i] = lab.fit_transform(data[:, i])
+
         predicted_labels = model.predict(data)
         predicted_labels = lab.fit_transform(predicted_labels)
         real_labels = lab.fit_transform(real_labels)
