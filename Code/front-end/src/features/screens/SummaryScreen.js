@@ -52,7 +52,7 @@ export default function SummaryScreen(props) {
                 hidden={props.hiddenDecision}
                 content={
                     <div id="decision-model" className="flex w-[100%] min-h-[100%] justify-center">
-                        < DecisionModelVisualisation decisionModel={props.decisionModel} />
+                        < DecisionModelVisualisation dmn={props.dmn} />
                     </div>
                 }
                 hideDelegate={() => props.setHiddenDecision(true)} />

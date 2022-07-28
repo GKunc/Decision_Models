@@ -1,70 +1,41 @@
-import cytoscape from 'cytoscape'
-import { useEffect } from 'react';
+import { useEffect } from "react";
+import DmnJS from 'dmn-js';
 
 export default function DecisionModelVisualisation(props) {
     useEffect(() => {
-        const addAllNodes = (cy) => {
-            let allNodes = []
-            props.decisionModel.forEach(elements => {
-                elements.forEach(element => {
-                    allNodes.push(element)
-                })
-            });
-
-            allNodes = [...new Set(allNodes)]
-
-            allNodes.forEach(element => {
-                cy.add({
-                    group: 'nodes',
-                    data: { id: element }
-                })
-            });
+        function clearContainer() {
+            document.getElementById('dmn').innerHTML = "";
         }
 
-        const addAllConnections = (cy) => {
-            props.decisionModel.forEach((element, id) => {
-                cy.add({ group: 'edges', data: { id: 'e' + id, source: element[0], target: element[1] } })
+        async function createDMN() {
+            console.log(props.dmn)
+
+            const dmnViewer = new DmnJS({
+                container: '#dmn'
             });
+
+            try {
+                await dmnViewer.importXML(props.dmn);
+                const activeEditor = dmnViewer.getActiveViewer();
+                const canvas = activeEditor.get('canvas');
+                canvas.zoom('fit-viewport');
+            } catch (err) {
+                console.error('could not import DMN 1.3 diagram', err);
+            }
+
         }
 
-        if (props.decisionModel) {
-            var cy = cytoscape({
-                container: document.getElementById('cy'),
-                elements: [
-                ],
-                style: [
-                    {
-                        selector: 'node',
-                        style: {
-                            'background-color': '#666',
-                            'label': 'data(id)',
-                            'color': 'white'
-                        }
-                    },
+        if (props.dmn)
+            clearContainer();
+        createDMN();
 
-                    {
-                        selector: 'edge',
-                        style: {
-                            'width': 3,
-                            'line-color': '#ccc',
-                            'target-arrow-color': '#ccc',
-                            'target-arrow-shape': 'triangle',
-                            'curve-style': 'bezier'
-                        }
-                    }
-                ]
-            })
-
-            addAllNodes(cy)
-            addAllConnections(cy)
-            cy.layout({ name: 'cose' }).run();
-        }
-    }, [props.decisionModel]);
-
+    }, [props.dmn]);
 
     return (
-        props.decisionModel !== null ?
-            <div id='cy' className='flex w-[100%] min-h-[100%] border rounded-md'></div>
+        props.dmn !== null ?
+            <div id="dmn-container" className='flex w-[100%] min-h-[100%] items-center justify-center bg-white border rounded-md'>
+                <div id='dmn' className='flex w-[100%] min-h-[100%] items-center justify-center bg-white border rounded-md'></div>
+            </div>
             : <div className="underline">No data</div>
     )
 }

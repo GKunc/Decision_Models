@@ -12,7 +12,6 @@ export default function ProcessModelVisualisation(props) {
                 container: '#bpmn'
             });
 
-            // import diagram
             try {
                 await bpmnViewer.importXML(props.bpmn);
                 bpmnViewer.get('canvas').zoom('fit-viewport', 'auto');

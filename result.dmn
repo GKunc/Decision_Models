@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="definitions_0cccl92" name="definitions" namespace="http://camunda.org/schema/1.0/dmn" exporter="dmn-js (https://demo.bpmn.io/dmn)" exporterVersion="12.1.1">
+  <decision id="decision_1ma2to1" name="Test">
+    <informationRequirement id="InformationRequirement_03dv5od">
+      <requiredInput href="#InputData_04x6o15" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1f3e1hg">
+      <requiredInput href="#InputData_1qob7gt" />
+    </informationRequirement>
+  </decision>
+  <inputData id="InputData_1qob7gt" name="Input 1" />
+  <inputData id="InputData_04x6o15" name="Input 2" />
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="DMNDiagram_1gs13s6">
+      <dmndi:DMNShape id="DMNShape_08nv7xn" dmnElementRef="decision_1ma2to1">
+        <dc:Bounds height="80" width="180" x="270" y="260" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0rnor8r" dmnElementRef="InputData_1qob7gt">
+        <dc:Bounds height="45" width="125" x="407" y="118" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1dscjg2" dmnElementRef="InputData_04x6o15">
+        <dc:Bounds height="45" width="125" x="158" y="119" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1lcqwlj" dmnElementRef="InformationRequirement_03dv5od">
+        <di:waypoint x="221" y="164" />
+        <di:waypoint x="330" y="240" />
+        <di:waypoint x="330" y="260" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_06on7r2" dmnElementRef="InformationRequirement_1f3e1hg">
+        <di:waypoint x="470" y="163" />
+        <di:waypoint x="390" y="240" />
+        <di:waypoint x="390" y="260" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

@@ -17,6 +17,7 @@ export default function FileUploadScreen(props) {
   const closeModal = props.closeModal
 
   const setBpmn = props.setBpmn
+  const setDmn = props.setDmn
 
   const browseForFile = () => {
     inputFileRef.current.click()
@@ -33,19 +34,37 @@ export default function FileUploadScreen(props) {
     }
   }
 
-  const getDecisionModel = () => {
-    var url1 = "http://127.0.0.1:5000/get_bpmn"
-    var formElement = document.querySelector("form");
-    fetch(url1, { method: 'post', body: new FormData(formElement), mode: 'cors' })
+  const getBPMN = async () => {
+    let formElement = document.querySelector("form");
+    let url = "http://127.0.0.1:5000/get_bpmn"
+    await fetch(url, { method: 'post', body: new FormData(formElement), mode: 'cors' })
       .then(r => r.text())
       .then(async (data) => {
         setBpmn(data)
+        console.log("SET BPMN")
       }).catch((error) => {
         setErrorMessage(error.message)
       })
+  }
 
-    var url = "http://127.0.0.1:5000/decision_model"
-    fetch(url, { method: 'post', body: new FormData(formElement), mode: 'cors' })
+  const getDMN = async () => {
+    let formElement = document.querySelector("form");
+    let url = "http://127.0.0.1:5000/get_dmn"
+    await fetch(url, { method: 'post', body: new FormData(formElement), mode: 'cors' })
+      .then(r => r.text())
+      .then(async (data) => {
+        setDmn(data)
+        console.log("SET DMN")
+      }).catch((error) => {
+        console.log(error)
+        setErrorMessage(error.message)
+      })
+  }
+
+  const getDecisionModel = async () => {
+    let formElement = document.querySelector("form");
+    let url = "http://127.0.0.1:5000/decision_model"
+    await fetch(url, { method: 'post', body: new FormData(formElement), mode: 'cors' })
       .then(r => r.json()
         .then(data => {
           console.log("Decision model")
@@ -61,11 +80,17 @@ export default function FileUploadScreen(props) {
         })
   }
 
+  const downloadData = () => {
+    getBPMN();
+    getDecisionModel();
+    getDMN();
+  }
+
   const getDataFromServer = () => {
     setErrorMessage(null)
     setDecisionModel(null)
 
-    getDecisionModel()
+    downloadData()
   }
 
   const handleDragEnter = e => {

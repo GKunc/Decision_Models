@@ -19,8 +19,8 @@ class XesToDataFrameConverter:
         print("XesToDataFrameConverter - columns")
         print(to_delete)
         log = log.drop(columns=to_delete)
-        log = log.drop(columns=['case:REG_DATE'])
-        log = log.drop(columns=['time:timestamp'])
+        # log = log.drop(columns=['case:REG_DATE'])
+        # log = log.drop(columns=['time:timestamp'])
         log = self.__fill_empty_values(log)
 
         print("XesToDataFrameConverter - transformed log")

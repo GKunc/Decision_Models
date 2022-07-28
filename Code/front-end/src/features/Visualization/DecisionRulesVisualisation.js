@@ -44,11 +44,11 @@ export default function DecisionRulesVisualisation(props) {
                                     {element}
                                     {
                                         decisionRules.length > 0 && expandedRow === element ?
-                                            <span class="material-symbols-outlined">
+                                            <span className="material-symbols-outlined">
                                                 expand_more
                                             </span>
                                             :
-                                            <span class="material-symbols-outlined">
+                                            <span className="material-symbols-outlined">
                                                 chevron_right
                                             </span>
                                     }
@@ -60,7 +60,7 @@ export default function DecisionRulesVisualisation(props) {
                                                 {rule}
                                             </td>
                                         ))
-                                        : ''
+                                        : ' '
                                 }
                             </tr>
                         </table>))

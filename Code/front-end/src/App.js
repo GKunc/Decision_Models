@@ -22,6 +22,7 @@ export default function App(props) {
   const [decisionModel, setDecisionModel] = useState(null)
 
   const [bpmn, setBpmn] = useState(null)
+  const [dmn, setDmn] = useState(null)
 
 
   const [hiddenExample, setHiddenExample] = useState(null);
@@ -105,6 +106,7 @@ export default function App(props) {
         closeModal={closeModal}
         closeDelegate={closeModal}
         setBpmn={setBpmn}
+        setDmn={setDmn}
       />
     }
     if (openConfig) {
@@ -160,6 +162,7 @@ export default function App(props) {
         setHiddenProcess={setHiddenProcess}
 
         decisionModel={decisionModel}
+        dmn={dmn}
         hiddenDecision={hiddenDecision}
         setHiddenDecision={setHiddenDecision}
       />

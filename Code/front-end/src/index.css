@@ -2,7 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body, #root {
+html,
+body,
+#root {
   margin: 0;
   width: 100%;
   height: 100%;
@@ -13,13 +15,34 @@ html, body, #root {
   -moz-osx-font-smoothing: grayscale;
 }
 
-table{
-  width:100%;
-  -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none; /* Safari */
-  -khtml-user-select: none; /* Konqueror HTML */
-  -moz-user-select: none; /* Old versions of Firefox */
-  -ms-user-select: none; /* Internet Explorer/Edge */
+#dmn,
+#bpmn {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  background-color: white;
+}
+
+.dmn-js-parent {
+  position: absolute !important;
+}
+
+.dmn-drd-container {
+  height: 100%;
+}
+
+table {
+  width: 100%;
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Safari */
+  -khtml-user-select: none;
+  /* Konqueror HTML */
+  -moz-user-select: none;
+  /* Old versions of Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
   user-select: none;
 }
 
@@ -44,6 +67,7 @@ table{
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }

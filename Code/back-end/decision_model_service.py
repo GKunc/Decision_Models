@@ -78,8 +78,8 @@ class DecisionModelService:
         all_decisions = rule_base_data_decisions + functional_data_decisions + cfd
         dependencies = dDependencies.apply(log, net, all_decisions, data_nodes)
 
-        self.print_result(data_nodes, rule_base_data_decisions,
-                          functional_data_decisions, all_decisions, dependencies, cfd, decision_rules)
+        # self.print_result(data_nodes, rule_base_data_decisions,
+        #   functional_data_decisions, all_decisions, dependencies, cfd, decision_rules)
 
         return cfd, rule_base_data_decisions, functional_data_decisions, data_nodes, dependencies, decision_rules
 
