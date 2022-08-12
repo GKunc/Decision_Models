@@ -1,7 +1,9 @@
 import xml.etree.cElementTree as ET
+import uuid
+
+# add guid to req
 
 
-# add only 1 element!!
 class DMNCreator:
     def apply(self, decisions, cfds, attributes, decision_model):
         print("++++++++++++")
@@ -11,9 +13,9 @@ class DMNCreator:
         print(decision_model)
         print("++++++++++++")
 
+        connected_elements = {}
         width = 100
         height = 40
-        added_elements = []
         root = ET.Element(
             "definitions", xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/")
         root.attrib["xmlns:dmndi"] = "https://www.omg.org/spec/DMN/20191111/DMNDI/"
@@ -22,27 +24,36 @@ class DMNCreator:
         # add all decisions
         # create decision
         # add dependend features
-        for decision, reqs in decisions:
-            added_elements.append(decision)
+        for decision, _ in decisions:
             decision_element = ET.SubElement(
                 root, "decision", id=f"{decision}", name=f"{decision}")
-            for req in reqs:
-                req_element = ET.SubElement(
-                    decision_element, "informationRequirement", id=f"{req}_req")
-                ET.SubElement(req_element, "requiredInput", href=f"#{req}")
+            for el1, el2 in decision_model:
+                if el2 == decision:
+                    el_id = f"{el1}_req_{uuid.uuid4()}"
+                    if el2 not in connected_elements:
+                        connected_elements[el2] = []
+                    connected_elements[el2].append(el_id)
 
-        for cfd, reqs in cfds:
-            added_elements.append(cfd)
+                    req_element = ET.SubElement(
+                        decision_element, "informationRequirement", id=el_id)
+                    ET.SubElement(req_element, "requiredInput", href=f"#{el1}")
+
+        for cfd, _ in cfds:
             decision_element = ET.SubElement(
                 root, "decision", id=f"{cfd}", name=f"{cfd}")
-            for req in reqs:
-                req_element_cfd = ET.SubElement(
-                    decision_element, "informationRequirement", id=f"{req}_req")
-                ET.SubElement(req_element_cfd, "requiredInput", href=f"#{req}")
+            for el1, el2 in decision_model:
+                if el2 == cfd:
+                    el_id = f"{el1}_req_{uuid.uuid4()}"
+                    if el2 not in connected_elements:
+                        connected_elements[el2] = []
+                    connected_elements[el2].append(el_id)
+
+                    req_element = ET.SubElement(
+                        decision_element, "informationRequirement", id=el_id)
+                    ET.SubElement(req_element, "requiredInput", href=f"#{el1}")
 
         # add all attributes
         for attribute in attributes:
-            added_elements.append(attribute)
             ET.SubElement(root, "inputData",
                           id=f'{attribute.replace(" ", "")}', name=f'{attribute}')
 
@@ -63,7 +74,7 @@ class DMNCreator:
             elements_with_coords[f"{attribute}"] = [x, y]
         x = 170
         y = 260
-        for decision, reqs in decisions:
+        for decision, _ in decisions:
             x += 150
             shape = ET.SubElement(diagram, "dmndi:DMNShape",
                                   dmnElementRef=f"{decision}")
@@ -87,18 +98,20 @@ class DMNCreator:
         for el1, el2 in decision_model:
             x1, y1 = elements_with_coords[el1]
             x2, y2 = elements_with_coords[el2]
-            if "p_" in el1:
-                edge = ET.SubElement(diagram, "dmndi:DMNEdge",
-                                     dmnElementRef=f"{el1}")
-            else:
-                edge = ET.SubElement(diagram, "dmndi:DMNEdge",
-                                     dmnElementRef=f"{el1}_req")
+
+            new_id = el1
+            for id in connected_elements[el2]:
+                if f"{el1}" in id:
+                    new_id = id
+
+            edge = ET.SubElement(diagram, "dmndi:DMNEdge",
+                                 dmnElementRef=f"{new_id}")
             ET.SubElement(edge, "di:waypoint",
                           x=f"{x1 + width/2}", y=f"{y1 + height}")
             ET.SubElement(edge, "di:waypoint",
                           x=f"{x2 + width/2}", y=f"{y2}")
 
-        print(elements_with_coords)
         tree = ET.ElementTree(root)
-        tree.write("./uploads/result.dmn")
+        ET.indent(tree, space="\t", level=0)
+        tree.write("./uploads/result.dmn", encoding="utf-8")
         return
