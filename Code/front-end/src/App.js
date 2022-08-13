@@ -76,18 +76,10 @@ export default function App(props) {
   }
 
   function openPrintDMNModal() {
-    var dataUrl = document.getElementsByTagName('canvas')[2].toDataURL();
-
-    let html = document.createElement('html');
-    let h1 = document.createElement('h1');
-    h1.innerHTML = "DMN"
-    let image = document.createElement('img');
-    image.src = dataUrl;
-    html.appendChild(h1);
-    html.appendChild(image);
+    var printContent = document.getElementById('dmn');
 
     var WinPrint = window.open('', '_blank', 'width=900,height=650');
-    WinPrint.document.write(html.innerHTML);
+    WinPrint.document.write(printContent.innerHTML);
     WinPrint.document.close();
     WinPrint.focus();
     WinPrint.print();
@@ -128,7 +120,7 @@ export default function App(props) {
     if (openSaveToFile) {
       return <SaveToFileScreen
         closeDelegate={closeModal}
-        decisionModel={decisionModel}
+        dmn={dmn}
         bpmn={bpmn} />
     }
   }

@@ -1,28 +1,34 @@
 import { useEffect } from "react";
-import BpmnJS from 'bpmn-js';
+import BpmnJS from 'bpmn-js/lib/Modeler';
+
+import "bpmn-js/dist/assets/diagram-js.css";
+import "bpmn-js/dist/assets/bpmn-js.css";
+import "bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css";
 
 export default function ProcessModelVisualisation(props) {
-    useEffect(() => {
+    useEffect(async () => {
         function clearContainer() {
             document.getElementById('bpmn').innerHTML = "";
         }
 
         async function createBPMN() {
             var bpmnViewer = new BpmnJS({
-                container: '#bpmn'
+                container: '#bpmn',
+                keyboard: {
+                    bindTo: window
+                }
             });
 
             try {
                 await bpmnViewer.importXML(props.bpmn);
                 bpmnViewer.get('canvas').zoom('fit-viewport', 'auto');
             } catch (err) {
-                alert('could not import BPMN 2.0 XML, see console');
                 console.error('could not import BPMN 2.0 diagram', err);
             }
         }
         if (props.bpmn)
             clearContainer()
-        createBPMN();
+        await createBPMN();
     }, [props.bpmn]);
 
     return (

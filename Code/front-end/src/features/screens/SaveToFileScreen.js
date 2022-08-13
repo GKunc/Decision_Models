@@ -8,17 +8,12 @@ export default function SaveToFileScreen(props) {
 
     const saveBpmnToFile = () => {
         var bpmnModel = new Blob([props.bpmn], { type: "text/xml" });
-        saveAs(bpmnModel, `${bpmnFileName}.xml`);
+        saveAs(bpmnModel, `${bpmnFileName}.bpmn`);
     }
 
     const saveDmnToFile = () => {
-        const dmnJson = JSON.stringify(
-            {
-                "decision model": props.decisionModel
-            })
-
-        var dmnModel = new Blob([dmnJson], { type: "application/json" });
-        saveAs(dmnModel, `${bpmnFileName}.json`);
+        var dmnModel = new Blob([props.dmn], { type: "text/xml" });
+        saveAs(dmnModel, `${dmnFileName}.dmn`);
     }
 
     return (
